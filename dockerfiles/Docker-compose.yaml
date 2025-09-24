@@ -1,0 +1,19 @@
+services:
+  #Web
+  web: 
+    build: 
+      context: ..
+      dockerfile: ./dockerfiles/Dockerfile.front
+    ports: 
+      - 080:8080
+    volumes: 
+      - ../:/app
+      - /app/node_modules
+    networks:
+      - nodejs-mysql-network
+
+networks:
+  nodejs-mysql-network:
+    name: nodejs-mysql-network
+    external: true
+

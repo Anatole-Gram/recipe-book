@@ -43,8 +43,7 @@ module.exports = {
     },
     devtool: 'source-map',
     devServer: {
-        // watchFiles: path.join(__dirname, 'src'),
         hot: true,
-        port: 3000
+        port: 8080
     }
 }
