@@ -5,13 +5,24 @@ services:
       context: ..
       dockerfile: ./dockerfiles/Dockerfile.front
     ports: 
-      - 080:8080
+      - 8080:8080
     volumes: 
       - ../:/app
       - /app/node_modules
     networks:
       - nodejs-mysql-network
-
+  #back
+  back: 
+    build: 
+      context: ../app/server
+      dockerfile: ../../dockerfiles/Dockerfile.back
+    ports: 
+      - 3000:3000
+    volumes:
+      - ../app/server:/app/server
+      - /app/server/node_modules
+    networks:
+      - nodejs-mysql-network
 networks:
   nodejs-mysql-network:
     name: nodejs-mysql-network
