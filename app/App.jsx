@@ -1,9 +1,8 @@
 import React from "react";
+import HeaderContainer from "./components/header/TheHeader";
 
 const App = () => (
-    <div>
-        <h1>Hellow World!</h1>
-    </div>
+    <HeaderContainer />
 )
 
 export default App;

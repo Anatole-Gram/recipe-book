@@ -1,17 +1,20 @@
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
-const FileManagerPlugin = require("filemanager-webpack-plugin");
 
-let mode = process.env.NODE_ENV === 'production' ? 'production' : 'development'
+const production = process.env.NODE_ENV === 'production';
 
 module.exports = {
-    mode,
+    mode: production ? 'production' : 'development',
+
     entry: path.join(__dirname, 'app', 'index.js'),
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'index.[contenthash].js',
         clean: true
     },
+
     module: {
         rules: [
             {
@@ -24,27 +27,44 @@ module.exports = {
             },
         ],
     },
+
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'app', 'template.html'),
             filename: 'index.html'
         }),
-        // заменил на output.clean
-        // new FileManagerPlugin({
-        //     events: {
-        //         onStart: {
-        //             delete: ['dist']
-        //         }
-        //     }
-        // })
+
+        new webpack.HotModuleReplacementPlugin(),
+
+        new MiniCssExtractPlugin({
+            filename: production ? '[name].[contenthash].css' : '[name].css',
+        }),
     ],
+
     resolve: {
-        extensions: ['.js', '.jsx']  // чтобы не писать расширение при импорте
+        extensions: ['.js', '.jsx', ".scss", ".*"],  // чтобы не писать расширение при импорте
+        alias: {
+            '@': path.resolve(__dirname, "./app")
+        },
     },
+
     devtool: 'source-map',
     devServer: {
         hot: true,
         host: '0.0.0.0',
-        port: 8080
+        port: 8080,
+        client: {
+            overlay: true,
+            progress: true
+        },
+        proxy: [
+            {
+                context: ['/api'],
+                target: 'http://back:3000',
+                pathRewrite: { '^/api': '' },
+                changeOrigin: true,
+                secure: false,
+            },
+        ],
     }
 }
