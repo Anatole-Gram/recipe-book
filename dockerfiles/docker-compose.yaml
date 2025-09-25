@@ -7,7 +7,7 @@ services:
     ports: 
       - 8080:8080
     depends_on:
-      db:
+      mysqldb:
         condition: service_healthy
     volumes: 
       - ../:/app
@@ -23,7 +23,7 @@ services:
     ports: 
       - 3000:3000
     depends_on:
-      db:
+      mysqldb:
         condition: service_healthy
     environment:
       - NODE_ENV=development
@@ -39,7 +39,7 @@ services:
       - nodejs-mysql-network
 
   #db
-  db: 
+  mysqldb: 
     image: mysql:8.0.33
     ports: 
       - 3306:3306
