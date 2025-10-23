@@ -1,0 +1,24 @@
+@use "/app/assets/styles/variables" as var;
+
+.formTitle {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 3fr 3fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var.$second-gap;
+    grid-template-areas:
+        "title title title"
+        "photo photo photo"
+        "description description description";
+
+    & > :nth-child(1) {
+        grid-area: title;
+    };
+        & > :nth-child(2) {
+        grid-area: photo;
+    };
+    & > :nth-child(3) {
+        grid-area: description;
+    };
+
+}

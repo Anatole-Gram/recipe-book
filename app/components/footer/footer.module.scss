@@ -1,0 +1,7 @@
+@use "../../assets/styles/variables" as var;
+
+.footer {
+    display: flex;
+    grid-area: footer;
+    background-color: var.$main-color;
+ }

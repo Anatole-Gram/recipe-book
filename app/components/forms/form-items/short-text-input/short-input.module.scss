@@ -1,0 +1,8 @@
+.shortInput {
+        display: flex;
+        flex-direction: column;
+        & input {
+                height: 36px;
+        }
+        
+}

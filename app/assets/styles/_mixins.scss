@@ -1,0 +1,6 @@
+@mixin font-rules($size:1em, $family) {
+    font: {
+        size: $size;
+        family :$family;
+    }
+}

@@ -1,13 +1,11 @@
 import React from "react";
-import HeaderMenu from "./menu/HeaderMenu";
+import * as styles from './header.module.scss';
 
-export default function HeaderContainer () {
+export default function TheHeader () {
+
     return (
-        <div>
-
-        <h1>Hellow World from header</h1>
-        <HeaderMenu />
-
+        <div className={styles.header}>
+            <h1>Recipe Book</h1>
         </div>
     );
 }

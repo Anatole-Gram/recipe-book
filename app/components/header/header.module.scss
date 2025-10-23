@@ -1,0 +1,14 @@
+@use  "../../assets/styles/variables.scss" as var; 
+
+.header {
+    display: flex;
+    grid-area: header;
+    background-color: var.$main-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & h1 {
+        color: aliceblue;
+    }
+ }

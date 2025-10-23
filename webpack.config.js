@@ -25,6 +25,32 @@ module.exports = {
                 }
 
             },
+            {
+                test: /\.module\.scss$/, // Обработка CSS модулей
+                use: [
+                    'style-loader',
+                    {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true,
+                    },
+                    },
+                    'sass-loader'
+                ],
+                },
+            {
+                test: /\.scss$/, // Обработка обычных стилей
+                exclude: /\.module\.scss$/, // исключить, чтобы не пересекаться с модульными
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
+                ],
+            },
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack'],
+            },
         ],
     },
 
@@ -52,6 +78,7 @@ module.exports = {
     devServer: {
         hot: true,
         host: '0.0.0.0',
+        compress: true,
         port: 8080,
         client: {
             overlay: true,

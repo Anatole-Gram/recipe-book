@@ -1,0 +1,14 @@
+@use "../../../assets/styles/variables.scss" as var;
+.recipeForm {
+    display:  flex;
+    flex-direction: column;
+    height: 100%;
+
+    & h3 {
+        text-align: center;
+        font: {
+            family: "Rubik";
+        }
+        margin-bottom: var.$main-gap;
+    }
+}

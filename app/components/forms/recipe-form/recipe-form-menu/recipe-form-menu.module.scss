@@ -1,0 +1,12 @@
+@use "@/assets/styles/_variables.scss" as var;
+
+.icon {
+    color: var.$text-on-black;
+}
+.menu {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: var.$main-gap;
+}
