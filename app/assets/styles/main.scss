@@ -18,7 +18,7 @@ body {
 #root {
     display: grid;
     height: 100vh;
-    grid-template-rows: 1fr 8fr 1fr;
+    grid-template-rows: 1fr 8fr var.$footer-height;
     grid-template-columns: 1fr 1fr;
     gap: var.$main-gap;
     grid-template-areas: 
@@ -35,5 +35,6 @@ body {
     &_field {
         @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
         padding: 0 var.$second-gap;
+        border-radius: var.$main-box-radius;
     }
 }

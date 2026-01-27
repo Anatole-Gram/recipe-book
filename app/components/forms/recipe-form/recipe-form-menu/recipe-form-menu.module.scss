@@ -4,9 +4,13 @@
     color: var.$text-on-black;
 }
 .menu {
+    position: absolute;
+    z-index: 2;
+    bottom: - calc(var.$footer-height + var.$main-gap);
+    left: - var.$main-gap;
     display: flex;
-    width: 100%;
+    width: calc(100% + var.$main-gap * 2);
     justify-content: space-between;
     align-items: center;
-    padding: var.$main-gap;
+    background-color: var.$main-color;
 }

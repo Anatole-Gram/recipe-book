@@ -3,7 +3,7 @@
 .content {
     grid-area: content;
     border: 2px solid var.$main-color;
-    border-radius: 4px;
+    border-radius: var.$main-box-radius;
     margin: 0 var.$main-gap;
     padding: var.$second-gap;
 

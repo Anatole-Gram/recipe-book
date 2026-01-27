@@ -1,0 +1,37 @@
+/*!**********************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./app/assets/styles/main.scss ***!
+  \**********************************************************************************************************************/
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url(d3c04283940221abf09a.ttf) format("truetype");
+}
+body {
+  background-color: hsla(0, 8%, 88%, 0.5);
+}
+
+#root {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  grid-template-areas: "header header" "content content" "footer footer";
+}
+
+.input-item_title {
+  font-size: 18px;
+  font-family: "Rubik";
+}
+.input-item_field {
+  font-size: 16px;
+  font-family: "Rubik";
+  padding: 0 8px;
+}
+
+/*# sourceMappingURL=main.css.map*/
