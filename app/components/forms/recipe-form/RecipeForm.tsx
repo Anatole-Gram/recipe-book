@@ -1,7 +1,8 @@
 import React from "react"; 
-import * as styles from "./form.module.scss";
+import styles from "./recipe-form.module.scss";
 import RecipeFormSummary from "./recipe-form-summary/RecipeFormSummary";
-import RecipeFormMenu from "./recipe-form-menu/RecipeFomMenu";
+import RecipeFormMenu from "./recipe-form-menu/RecipeFormMenu";
+
 
 export default function RecipeForm() {
     const [recipe, setRecipe] = React.useState({

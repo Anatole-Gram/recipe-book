@@ -1,5 +1,5 @@
 import React from "react";
-import * as styles from "./short-input.module.scss";
+import styles from "./short-input.module.scss";
 
 export default function ShortTextInput(props) {
 const idRef = React.useRef(`id${Date.now()}`)

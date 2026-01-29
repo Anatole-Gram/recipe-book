@@ -1,0 +1,1 @@
+declare module '*.module.scss' { const classes: { [key: string]: string | any }; export default classes; }

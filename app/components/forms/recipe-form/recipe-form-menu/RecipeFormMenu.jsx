@@ -1,10 +1,10 @@
 import React from "react";
-import * as styles from "./recipe-form-menu.module.scss"
+import styles from "./recipe-form-menu.module.scss"
 import ArrowLeft from "@/assets/svg/left-arrow.svg"
 import ArrowRight from "@/assets/svg/right-arrow.svg"
 import AddOrClose from "@/assets/svg/close-x.svg"
 
-export default function RecipeFomMenu(props) {
+export default function RecipeFormMenu(props) {
 
     return(
         <div className={styles.menu}>

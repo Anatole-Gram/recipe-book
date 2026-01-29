@@ -1,5 +1,5 @@
 import React from "react";
-import * as styles from "./form-summary.module.scss"
+import styles from "./form-summary.module.scss"
 import ShortTextInput from "../../form-items/short-text-input/ShortTextInput";
 import PhotoInput from "../../form-items/photo-input/PhotoInput";
 import LongTextInput from "../../form-items/long-text-input/LongTextInput";
