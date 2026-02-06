@@ -13,4 +13,27 @@
     justify-content: space-between;
     align-items: center;
     background-color: var.$main-color;
+
+    // menu_btn
+    &Btn {
+        color: var.$active-btn;
+        //menuBtnAdd
+        &Add {
+            transform: rotate(45deg)
+        };
+        //menuBtnClose
+        &Close {
+            &:hoover {
+                background-color: red;
+            }
+        };
+        //menu_btn--active
+        &Active {
+            color: var.$active-btn;
+        };
+        // menu_btn--non-active
+        &NonActive {
+            color: var.$non-active-btn;
+        };
+    }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./long-input.module.scss";
 
+
 export default function LongTextInput(props) {
     const idRef = React.useRef(`id${Date.now()}`)
     return(

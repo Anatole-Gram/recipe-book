@@ -1,12 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit"; 
+import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSteps, RecipeTuple, RecipeFormState, } from "./recipeFormSlice.types"
 
-export interface RecipeFormState {
-    step: number
-}
 
 const initialState: RecipeFormState = {
-    step: 0
+    step: 0,
+    stepAvailable: false,
+    summaryTemplate: {title: 'template', img: 'https://placehold.jp/200x150.png', description: 'template'},
+    ingridientTemplate: {title: 'template', count: '5кг'},
+    recipeStepTemplate: {description: '', img: ''},
+    recipe: [{title: '', img: 'https://placehold.jp/200x150.png', description: ''}, new Map(), new Map()]
 }
 
 const recipeFormSlice = createSlice({
@@ -18,9 +21,18 @@ const recipeFormSlice = createSlice({
         },
         decrement: (state) => {
             state.step -= 1;
+        },
+        setStepAvalibel: (state, action: PayloadAction<boolean>) => {
+            (state.stepAvailable !== action.payload) && (state.stepAvailable = action.payload)
+        },
+        setRecipeItem: (state, action: PayloadAction<RecipeSummary>) => {
+            state.recipe[state.step] = action.payload
+        },
+        removeRecipeItem: (state) => {
+            state.recipe.splice(state.step, 1)
         }
     }
 });
 
-export const {increment, decrement} = recipeFormSlice.actions;
+export const {increment, decrement, setRecipeItem} = recipeFormSlice.actions;
 export default recipeFormSlice.reducer

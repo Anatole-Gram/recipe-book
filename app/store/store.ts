@@ -1,7 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
+import recipeFormReducer from './recipe/recipeFormSlice'
 
 export const store = configureStore({
-    reducer: {},
+    reducer: {
+        recipeForm: recipeFormReducer,
+    },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
