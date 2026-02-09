@@ -18,6 +18,7 @@
 .inputCountWraper {
     display: flex;
     margin-top: 12px;
+    margin-bottom: 12px;
     & input {
         height: var.$secontHS;
         padding: 8px;
@@ -67,7 +68,10 @@
             height: var.$firstHS;
             border-radius: 50%;
             background-color: red;
-        }
-    }
+        };
+    };
 
 }
+.addBtn {
+    width: 300px;
+};

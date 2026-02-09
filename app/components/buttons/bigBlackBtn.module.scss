@@ -1,0 +1,12 @@
+@use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins";
+
+.btn {
+    width: 100%;
+    height: var.$firstHS;
+    background-color: var.$main-color;
+    @include mixins.font-rules(var.$inputTitleFS, var.$inputTitleFF);
+    color: var.$text-on-black;
+    border-radius: var.$main-btn-radius;
+    padding: var.$btn-padding;
+}

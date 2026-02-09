@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useEffect, useState } from "react"; 
 import styles from "./recipe-form.module.scss";
 import RecipeFormSummary from "./recipe-form-summary/RecipeFormSummary";
 import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredints"
@@ -11,16 +11,19 @@ import { RecipeSummary, RecipeIngredient, RecipeStep, RecipeIngredients} from ".
 
 
 type StepComponentProps = {
-    setData: (e: any) => void;
+    setDataItem: (e: any) => void;
+    setDatalist?: (e: any) => void;
     data: RecipeSummary | RecipeIngredients | RecipeStep | any;
 }
 type StepComponent = React.ComponentType<StepComponentProps>;
 
 interface Ingredient {
-    key: string;
+    id: string;
     title: string;
     count: string;
-}
+    unit: string;
+};
+type IngredientsList = Ingredient[]
 
 const STEP_COMPONENTS: StepComponent[] = [
   RecipeFormSummary, 
@@ -47,23 +50,18 @@ export default function RecipeForm() {
     }, [recipeForm.recipe[0]]);
 
 //ingridients
-    const [ingredient, setIngredient] = React.useState({id: `id${Date.now()}`, title: 'template', count: '100г'})
-    const [ingredientsList, setingredientsList] =  React.useState([ingredient])
+    const [ingredient, setIngredient] = React.useState({id: `id${Date.now()}`, title: 'вода', count: '100', unit: 'мл'})
+    const [list, setList] =  React.useState<IngredientsList>([])
     const handleChangeIngredient = (e: any): void => {
         const {name, value} = e.target; setIngredient(prev => ({...prev, [name]: value}))
+    };
+    const addIngredient = (e: any): void => {
+        setList(prev => [...prev, ingredient])
     }
-    // const handleChangeIngredientsList = (): void => {
-    //     setingredientsList(prev => ([...prev, ]))
-    // }
-
-    console.log(ingredient)
-    // const [ingredients, setIngredients] = React.useState(structuredClone(recipeForm.recipe[1]))
-    // const [inredientsList, setIgrediantsList] = 
-
-    // const createIngredient = (id: string = '0', ing? : Ingredient): Ingredient  => {
-    //     const value = ing ?? {key: id, title: '', count: ''}
-    //     return value
-    // };
+    
+    useEffect(()=> {
+        console.log(list)
+    }, [ingredient, list])
 
 
 
@@ -73,13 +71,13 @@ export default function RecipeForm() {
     const componentnByStep = () => {
         switch(true) {
             case step === 0:
-                return {component: STEP_COMPONENTS[0], props: {setData: handleChangeSummary, data: summary}};
+                return {component: STEP_COMPONENTS[0], props: {setDataItem: handleChangeSummary, data: summary}};
             case step === 1:
-                return {component: STEP_COMPONENTS[1], props: {setData: handleChangeSummary, data: ingredientsList}};
+                return {component: STEP_COMPONENTS[1], props: {setDataItem: handleChangeIngredient, setDatalist: addIngredient, data: {list: list, item: ingredient}}};
             case step >=2: 
-                return {component: STEP_COMPONENTS[2], props: {setData: handleChangeSummary, data: summary}};
+                return {component: STEP_COMPONENTS[2], props: {setDataItem: handleChangeSummary, data: summary}};
             default: 
-                return {component: STEP_COMPONENTS[0], props: {setData: handleChangeSummary, data: summary}};
+                return {component: STEP_COMPONENTS[0], props: {setDataItem: handleChangeSummary, data: summary}};
         }
 
     }
