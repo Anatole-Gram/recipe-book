@@ -1,14 +1,27 @@
 @use  "../../assets/styles/variables.scss" as var; 
 
 .header {
+    position: relative;
     display: flex;
     grid-area: header;
     background-color: var.$main-color;
+    
     display: flex;
     align-items: center;
     justify-content: center;
 
     & h1 {
         color: aliceblue;
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: var.$main-box-radius;
+        background: var.$bg-color;
+        width: 100%;
+        border-radius: var.$main-box-radius var.$main-box-radius 0 0;
+        
     }
  }

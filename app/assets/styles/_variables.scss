@@ -1,13 +1,29 @@
-$bg-color: hsla(0, 8%, 88%, 0.5);
+$bg-color: #F2F2F2;
 $main-color: #000;
 $text-on-black: aliceblue;
+$whiteColor: #fff;
 $main-gap: 16px;
 $second-gap: 8px;
+
+//height-size
+//HS
+$footer-height: 70px;
+$firstHS: 36px;
+$secontHS: 20px;
+//box-radius
+//BR
+$main-box-radius: 10px;
+$secondBR: 5px;
 
 //font
     //size
 $inputTitleFS: 18px;
 $inppuFieldFS: 16px;
+$listItemFS: 14px;
     //family
 $inputTitleFF: "Rubik";
 $inputFieldFF: "Rubik";
+
+// btns
+$non-active-btn: rgba(240, 248, 255, 0.5);
+$active-btn: aliceblue;

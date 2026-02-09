@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const path = require("path");
 
 const production = process.env.NODE_ENV === 'production';
@@ -8,7 +9,7 @@ const production = process.env.NODE_ENV === 'production';
 module.exports = {
     mode: production ? 'production' : 'development',
 
-    entry: path.join(__dirname, 'app', 'index.js'),
+    entry: path.join(__dirname, 'app', 'index.tsx'),
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'index.[contenthash].js',
@@ -17,32 +18,34 @@ module.exports = {
 
     module: {
         rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-
+            { 
+                test: /.(js|jsx|ts|tsx)$/, 
+                exclude: /node_modules/, 
+                use: { loader: 'babel-loader', 
+                options: { cacheDirectory: true } } 
             },
             {
-                test: /\.module\.scss$/, // Обработка CSS модулей
+                test: /\.module\.scss$/,
                 use: [
                     'style-loader',
                     {
                     loader: 'css-loader',
                     options: {
-                        modules: true,
+                        modules: {
+                            namedExport: false,
+                        },
+                    importLoaders: 1,
+                    sourceMap: !production
                     },
                     },
                     'sass-loader'
                 ],
                 },
             {
-                test: /\.scss$/, // Обработка обычных стилей
-                exclude: /\.module\.scss$/, // исключить, чтобы не пересекаться с модульными
+                test: /\.scss$/,
+                exclude: /\.module\.scss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    production ? MiniCssExtractPlugin.loader: 'style-loader',
                     'css-loader',
                     'sass-loader'
                 ],
@@ -65,10 +68,11 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: production ? '[name].[contenthash].css' : '[name].css',
         }),
+        new ForkTsCheckerWebpackPlugin({ async: true, typescript: { diagnosticOptions: { semantic: true, syntactic: true } } })
     ],
 
     resolve: {
-        extensions: ['.js', '.jsx', ".scss", ".*"],  // чтобы не писать расширение при импорте
+        extensions: ['.tsx', '.ts','.js', '.jsx', ".scss", ".*"],
         alias: {
             '@': path.resolve(__dirname, "./app")
         },

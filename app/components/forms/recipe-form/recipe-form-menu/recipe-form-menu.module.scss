@@ -4,9 +4,36 @@
     color: var.$text-on-black;
 }
 .menu {
+    position: absolute;
+    z-index: 2;
+    bottom: - calc(var.$footer-height + var.$main-gap);
+    left: - var.$main-gap;
     display: flex;
-    width: 100%;
+    width: calc(100% + var.$main-gap * 2);
     justify-content: space-between;
     align-items: center;
-    padding: var.$main-gap;
+    background-color: var.$main-color;
+
+    // menu_btn
+    &Btn {
+        color: var.$active-btn;
+        //menuBtnAdd
+        &Add {
+            transform: rotate(45deg)
+        };
+        //menuBtnClose
+        &Close {
+            &:hoover {
+                background-color: red;
+            }
+        };
+        //menu_btn--active
+        &Active {
+            color: var.$active-btn;
+        };
+        // menu_btn--non-active
+        &NonActive {
+            color: var.$non-active-btn;
+        };
+    }
 }

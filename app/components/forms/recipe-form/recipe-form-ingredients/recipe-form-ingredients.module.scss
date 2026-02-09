@@ -1,0 +1,73 @@
+@use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins";
+
+.ingrredientsForm {
+    display: grid;
+    height: 100%;
+    grid-template-rows: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        'input input'
+        'list list';
+}
+
+.inputWraper {
+    grid-area: input;
+}
+
+.inputCountWraper {
+    display: flex;
+    margin-top: 12px;
+    & input {
+        height: var.$secontHS;
+        padding: 8px;
+        border-radius: var.$secondBR;
+    }
+}
+
+.inputCount {
+    width: 70px;
+    margin-right: 16px;
+}
+
+.inputUnit {
+    flex: 1 1 auto;
+}
+
+.list {
+    grid-area: list;
+    overflow-y: auto;
+    & li {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr var.$firstHS;
+        grid-template-areas: 'text btn';
+        height: var.$firstHS;
+        padding: 5px;
+        margin-bottom: var.$second-gap;
+        background-color: var.$whiteColor;
+        @include mixins.font-rules(var.$listItemFS, var.$inputFieldFF);
+        & p {
+                grid-area: text;
+            };
+
+        &:nth-child(1) {
+            border-radius: 5px 5px 0 0;
+        };
+
+        &:last-child {
+            border-radius: 0 0 5px 5px;
+        };
+    };
+    &Item{
+
+        &Btn {
+            grid-area: btn;
+            width: var.$firstHS;
+            height: var.$firstHS;
+            border-radius: 50%;
+            background-color: red;
+        }
+    }
+
+}
