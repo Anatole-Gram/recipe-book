@@ -4,7 +4,8 @@
     position: relative;
     z-index: 1;
     display: flex;
-    grid-area: footer;
+    height: var.$footer-height;
+    // grid-area: footer;
     background-color: var.$main-color;
     &::before {
         content: "";

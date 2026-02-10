@@ -3,10 +3,9 @@
 .header {
     position: relative;
     display: flex;
-    grid-area: header;
+    height: var.$header-height;
     background-color: var.$main-color;
-    
-    display: flex;
+
     align-items: center;
     justify-content: center;
 

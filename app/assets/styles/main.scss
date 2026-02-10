@@ -19,16 +19,10 @@ body {
 }
 
 #root {
-    display: grid;
     height: 100vh;
-    grid-template-rows: 1fr 8fr var.$footer-height;
-    grid-template-columns: 1fr 1fr;
-    gap: var.$main-gap;
-    grid-template-areas: 
-        "header header"
-        "content content"
-        "footer footer"
-    ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .input-item {

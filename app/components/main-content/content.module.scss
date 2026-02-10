@@ -1,10 +1,11 @@
 @use "../../assets/styles/variables.scss" as var;
 
 .content {
-    grid-area: content;
+    flex: 1 1 auto;
     border: 2px solid var.$main-color;
     border-radius: var.$main-box-radius;
-    margin: 0 var.$main-gap;
+    margin:  var.$main-gap;
     padding: var.$second-gap;
+    background-color: var.$bg-color;
 
 }
