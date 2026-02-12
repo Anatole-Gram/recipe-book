@@ -1,28 +1,28 @@
 export interface RecipeSummary {
-    title: string,
-    img: string,
-    description: string
+    title: string;
+    img: string;
+    description: string;
 };
 
 export interface RecipeIngredient {
-    title: string,
-    count: string
+    id?: string;
+    title: string;
+    count: string;
+    unit: string;
 };
 export type RecipeIngredients = Map<string, RecipeIngredient>
 
 export interface RecipeStep {
-    description: string,
-    img?: string
+    id?: number;
+    img: string;
+    description: string;
 }
 export type RecipeSteps = Map<string, RecipeStep>
 
-export type RecipeTuple = [RecipeSummary, RecipeIngredients, RecipeSteps?];
+export type RecipeTuple = [RecipeSummary, RecipeIngredients, RecipeSteps];
 
 export interface RecipeFormState {
-    step: number,
-    stepAvailable: boolean,
-    summaryTemplate: RecipeSummary,
-    ingridientTemplate: RecipeIngredient,
-    recipeStepTemplate: RecipeStep, 
-    recipe: RecipeTuple,
+    step: number;
+    stepAvailable: boolean;
+    recipe: RecipeTuple;
 }

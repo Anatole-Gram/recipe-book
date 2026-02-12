@@ -4,12 +4,9 @@ import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSt
 
 
 const initialState: RecipeFormState = {
-    step: 0,
+    step: 1,
     stepAvailable: false,
-    summaryTemplate: {title: 'template', img: 'https://placehold.jp/200x150.png', description: 'template'},
-    ingridientTemplate: {title: 'template', count: '5кг'},
-    recipeStepTemplate: {description: '', img: ''},
-    recipe: [{title: '', img: 'https://placehold.jp/200x150.png', description: ''}, new Map(), new Map()]
+    recipe: [{title: '', img: '', description: ''}, new Map(), new Map()]
 }
 
 const recipeFormSlice = createSlice({

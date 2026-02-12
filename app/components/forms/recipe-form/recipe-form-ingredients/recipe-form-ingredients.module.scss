@@ -2,17 +2,13 @@
 @use "@/assets/styles/mixins";
 
 .ingrredientsForm {
-    display: grid;
-    height: 100%;
-    grid-template-rows: 1fr 2fr;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
-        'input input'
-        'list list';
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .inputWraper {
-    grid-area: input;
+
 }
 
 .inputCountWraper {
@@ -36,20 +32,20 @@
 }
 
 .list {
-    grid-area: list;
-    overflow-y: auto;
+    flex: 1 1 auto;
+    // overflow-y: auto;
     & li {
-        display: grid;
-        grid-template-rows: 1fr;
-        grid-template-columns: 1fr var.$firstHS;
-        grid-template-areas: 'text btn';
+        // display: grid;
+        // grid-template-rows: 1fr;
+        // grid-template-columns: 1fr var.$firstHS;
+        // grid-template-areas: 'text btn';
         height: var.$firstHS;
         padding: 5px;
         margin-bottom: var.$second-gap;
         background-color: var.$whiteColor;
         @include mixins.font-rules(var.$listItemFS, var.$inputFieldFF);
         & p {
-                grid-area: text;
+                // grid-area: text;
             };
 
         &:nth-child(1) {
@@ -63,7 +59,7 @@
     &Item{
 
         &Btn {
-            grid-area: btn;
+            // grid-area: btn;
             width: var.$firstHS;
             height: var.$firstHS;
             border-radius: 50%;
