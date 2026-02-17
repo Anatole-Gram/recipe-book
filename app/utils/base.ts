@@ -1,0 +1,1 @@
+export const minMax = (val: number, limits: number[]): number => Math.max(limits[0], Math.min(val, limits[1]));

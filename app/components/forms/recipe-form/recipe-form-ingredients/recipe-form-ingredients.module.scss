@@ -8,66 +8,83 @@
 }
 
 .inputWraper {
+    display:  grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 100px 1fr;
+    grid-template-areas: 
+        'title title'
+        'count unit'
+        'btn btn';
+        gap: var.$second-gap;
 
-}
-
-.inputCountWraper {
-    display: flex;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    & input {
-        height: var.$secontHS;
-        padding: 8px;
+    & input { 
         border-radius: var.$secondBR;
-    }
-}
-
-.inputCount {
-    width: 70px;
-    margin-right: 16px;
-}
-
-.inputUnit {
-    flex: 1 1 auto;
-}
-
-.list {
-    flex: 1 1 auto;
-    // overflow-y: auto;
-    & li {
-        // display: grid;
-        // grid-template-rows: 1fr;
-        // grid-template-columns: 1fr var.$firstHS;
-        // grid-template-areas: 'text btn';
         height: var.$firstHS;
-        padding: 5px;
-        margin-bottom: var.$second-gap;
-        background-color: var.$whiteColor;
-        @include mixins.font-rules(var.$listItemFS, var.$inputFieldFF);
-        & p {
-                // grid-area: text;
-            };
-
+    };
+    & label {
         &:nth-child(1) {
-            border-radius: 5px 5px 0 0;
+        grid-area: title;
         };
+    }
+    & button {
+        grid-area: btn;
+    }
+ };
 
-        &:last-child {
-            border-radius: 0 0 5px 5px;
-        };
+ .count {
+    grid-area: count;
+    & input {
+        width: 100%;
+    };
+ };
+ .unit {
+    grid-area: unit;
+    & input {
+        width: 100%;
+    };
+ };
+ .btn {
+    grid-area: btn;
+ };
+.list {
+    height: 300px;
+    overflow: auto;
+    margin: 16px 0;
+    & hr { width: 100%; height: 2px; color: black;}
+    & li {
+        height: var.$firstHS;
+        min-height: 36px;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 16px;
+        padding-left: 32px;
+        padding-right: 8px;
+        margin-bottom: var.$second-gap;
+        @include mixins.font-rules(var.$listItemFS, var.$inputFieldFF);
+        border-radius: var.$main-btn-radius;
+        background-color: gray;
+        color: var.$text-on-black
+
     };
     &Item{
-
-        &Btn {
-            // grid-area: btn;
-            width: var.$firstHS;
-            height: var.$firstHS;
-            border-radius: 50%;
-            background-color: red;
-        };
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.25);
     };
 
-}
-.addBtn {
-    width: 300px;
 };
+
+.circle {
+    position: absolute;
+    left: -16px;
+    top: -4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 4px solid var.$bg-color;
+    border-radius: 50%;
+    background-color: var.$main-color;
+    color: var.$text-on-black;
+}

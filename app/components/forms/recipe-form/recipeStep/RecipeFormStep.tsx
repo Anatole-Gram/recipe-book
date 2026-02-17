@@ -10,7 +10,7 @@ export default function RecipeFormStep (props: any) {
     const changeItem = props.setDataItem
     return (
         <fieldset  className={styles.formStep}>
-            <StepPhoto />
+            <StepPhoto className={styles.photo}/>
             <Description label="описание" name="description" value={item.description} handleChange={changeItem}/>
         </fieldset>
     )

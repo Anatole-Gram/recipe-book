@@ -5,14 +5,22 @@ import styles from "./short-input.module.scss";
 export default function ShortTextInput(props: any) {
 
     return(
-            <label className={`${styles.shortInput} input-item_title`}>
-                {props.label}
+        <div className='input-field'>
 
-                <input name={props.name}
+                <input placeholder=''
+                    name={props.name}
                     value={props.value}
                     onChange={props.handleChange}
-                    className={`input-item_field`}/>
+                    id={props.name}
+                    className={`input-field_input`}/>
 
-            </label>
+                <label htmlFor={props.name} 
+                    aria-label={props.label} 
+                    className='input-field_label'>
+
+                        {props.label}
+
+                </label>
+        </div>
     )
 }

@@ -13,7 +13,7 @@ export default function LongTextInput(props) {
                 name={props.name}
                 onChange={props.handleChange}
                 id={idRef.current}
-                className="input-item_field">
+                className="input-item_field input-item">
             </textarea> 
 
         </label>

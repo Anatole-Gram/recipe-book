@@ -36,5 +36,8 @@ export type RecipeFormStepProps = {
     data: RecipeStep;
 }
 
-//RecipeFormCOmponentprops
-export type StepComponent = React.ComponentType<RecipeFormSummaryProps | RecipeIngredientsProps | RecipeFormStepProps>;
+//RecipeFormComponent
+export type RecipeFormComponent = React.ComponentType<RecipeFormSummaryProps | RecipeIngredientsProps | RecipeFormStepProps>;
+
+
+export type RecipeFormProps = RecipeFormSummaryProps | RecipeIngredientsProps | RecipeFormStepProps;

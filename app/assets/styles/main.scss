@@ -5,9 +5,17 @@
     margin: 0;
     border: none;
 }
+input {
+    outline: none;
+}
 ul {
     list-style-type: none;    
 }
+
+@font-face {
+    font-family: "Hachi Maru Pop";
+    src: url("../fonts/HachiMaruPop-Regular.ttf") format('truetype');
+};
 
 @font-face {
     font-family: "Rubik";
@@ -15,7 +23,8 @@ ul {
 }
 
 body {
-    background-color: var.$bg-color;
+    background-color: var.$main-color;
+    font-family: "Rubik";
 }
 
 #root {
@@ -25,13 +34,73 @@ body {
     justify-content: space-between;
 }
 
+
+.input-field {
+
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &_input {
+        height: 36px;
+        flex: 1 1 auto;
+        padding: 0 var.$second-gap;
+        border-radius: var.$secondBR;
+        @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
+        padding: 0 var.$second-gap;
+        border-radius: var.$secondBR;
+        -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+        -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+        box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+
+    };
+
+    &_label {
+        position: absolute; 
+        left: 12px; top: 50%; 
+        transform: translateY(-50%); 
+        color: #888; 
+        font-size: 16px; 
+        pointer-events: none; 
+        transition: all 0.2s ease; 
+        background: transparent; 
+        padding: 0 6px; 
+        border-radius: 4px; 
+        z-index: 1; 
+        @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
+    }
+};
+
+ 
+.input-field_input:focus + .input-field_label, .input-field_input:not(:placeholder-shown) + .input-field_label { 
+
+        top: 0; 
+        transform: translateY(-100%); 
+        font-size: 14px; 
+        color: #555; 
+        padding: 0 6px; 
+
+};
+
 .input-item {
+
+    @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
+    padding: 0 var.$second-gap;
+    border-radius: var.$secondBR;
+    -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+    -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+    box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
     &_title {
+        font-family: "Rubik";
+        font-size: 14px;
+
         @include mixins.font-rules(var.$inputTitleFS, var.$inputTitleFF);
     }
     &_field {
         @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
         padding: 0 var.$second-gap;
-        border-radius: var.$main-box-radius;
+        border-radius: var.$secondBR;
     }
 }
+

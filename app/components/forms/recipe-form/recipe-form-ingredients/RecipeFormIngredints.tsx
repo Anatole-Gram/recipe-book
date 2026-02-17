@@ -14,27 +14,39 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
     return (
         <fieldset className={styles.ingrredientsForm}>
             <div className={styles.inputWraper}>
-                <ShortTextInput label="название" name="title" 
-                    value={item.title} handleChange={changeItem}
-                    />
+                <ShortTextInput label="название" name="title"
+                    value={item.title} handleChange={changeItem}/>
                 
-                <div className={styles.inputCountWraper}>
-
+                <label  className={styles.count}>
+                    количество
                     <input type="number" name="count"
                         value={item.count} onChange={changeItem}
-                        className={styles.inputCount}/>
+                        className={`${styles.inputCount} input-item`}/>
+                </label>
 
+                <label className={styles.unit}>
+                    ед. измерения
                     <input type="text" name="unit"
                         value={item.unit} onChange={changeItem}
-                        className={styles.inputUnit}/>
+                        className={`input-item`}/>
+                </label>
 
-                </div>
-                <AddButton btnText='добавить' btnAction={setList} disabled={!canSave}/>
+                <AddButton btnText='добавить' btnAction={setList} disabled={!canSave}
+                    
+                    />
             </div>
             <ul className={styles.list}>
-                {list.map((item: any) => (
-                    <li key={item[0]}>{item[1].title} <br/> {item[1].count} {item[1].unit}</li>
-                    ))}
+                {/* {list.map((item: any) => (
+                    <li key={item[0]} className={styles.listItem}>{item[1].title} <br/> {item[1].count} {item[1].unit}</li>
+                    ))} */}
+
+                    <li><div className={styles.circle}>1</div> <span>лук репчатый</span> 1 луковица</li>
+                    <li><div className={styles.circle}>2</div> <span>лук репчатый</span> 1 луковица</li>
+                    <li><div className={styles.circle}>3</div> <span>лук репчатый</span> 1 луковица</li>
+                    <li><div className={styles.circle}>4</div> <span>лук репчатый</span> 1 луковица</li>
+                    <li><div className={styles.circle}>5</div> <span>лук репчатый</span> 1 луковица</li>
+                    <li><div className={styles.circle}>6</div> <span>лук репчатый</span> 1 луковица</li>
+                    
             </ul>
         </fieldset>
     )

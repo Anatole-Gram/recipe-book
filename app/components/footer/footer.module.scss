@@ -6,14 +6,4 @@
     display: flex;
     height: var.$footer-height;
     background-color: var.$main-color;
-    &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: var.$main-box-radius;
-        background: var.$bg-color;
-        width: 100%;
-        border-radius: 0 0 var.$main-box-radius var.$main-box-radius;
-    }
- }
+ };

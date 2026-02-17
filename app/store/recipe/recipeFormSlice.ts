@@ -4,10 +4,12 @@ import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSt
 
 
 const initialState: RecipeFormState = {
-    step: 1,
+    step: 0,
     stepAvailable: false,
     recipe: [{title: '', img: '', description: ''}, new Map(), new Map()]
-}
+};
+
+
 
 const recipeFormSlice = createSlice({
     name: "recipe-form",

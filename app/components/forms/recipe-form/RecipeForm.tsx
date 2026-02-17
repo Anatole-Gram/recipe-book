@@ -6,16 +6,17 @@ import RecipeFormStep from "../recipe-form/recipeStep/RecipeFormStep" ;
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { RecipeSummary, RecipeIngredient, RecipeStep, RecipeIngredients} from "../../../store/recipe/recipeFormSlice.types";
-import { Ingredient, IngredientsList, StepComponent } from "./RecipeForm.types";
+import { Ingredient, IngredientsList, RecipeFormComponent, RecipeFormProps } from "./RecipeForm.types";
 import { validateSummary, validateIngredient, validateStep } from "../../../utils/validation/RecipeFormValidators";
+import { minMax } from "../../../utils/base";
 
 
-const STEP_COMPONENTS: StepComponent[] = [
+const COMPONENTS: RecipeFormComponent[] = [
   RecipeFormSummary, 
   RecipeFormIngredients,    
   RecipeFormStep
 ];
-
+ 
 
 export default function RecipeForm() {
 
@@ -75,28 +76,28 @@ export default function RecipeForm() {
 
 
 
-    const componentnByStep = () => {
-        switch(true) {
-            case step === 0:
-                return {component: STEP_COMPONENTS[0], props: {setDataItem: handleChangeSummary, data: summary}};
-            case step === 1:
-                return {component: STEP_COMPONENTS[1], props: {setDataItem: handleChangeIngredient, setDataList: addIngredient, 
-                    data: {list: list, item: ingredient, canSave: validIngredient},
-                    }
-                };
-            case step >=2:
-                return {component: STEP_COMPONENTS[2], props: {setDataItem: handleChangeRecipeStep, data: recipeStep}};
-            default: 
-                return {component: STEP_COMPONENTS[0], props: {setDataItem: handleChangeSummary, data: summary}};
-        }
+    const componentsProps: RecipeFormProps[] = [
+        {setDataItem: handleChangeSummary, data: summary},
+        {setDataItem: handleChangeIngredient, setDataList: addIngredient, data: {list: list, item: ingredient, canSave: validIngredient},},
+        {setDataItem: handleChangeRecipeStep, data: recipeStep}
+    ];
 
-    };
-    const current = componentnByStep();
+ 
+    const componentByStep = (step: number, components: RecipeFormComponent[], props: RecipeFormProps[]): {component: RecipeFormComponent, props: RecipeFormProps} => {
+        const index = minMax(step, [0, components.length-1]);
+        const component = components[index];
+        const prop = props[index];
+        return {component: component, props: prop}
+    }
+    
+
+    //
+    const current = componentByStep(step, COMPONENTS, componentsProps);
 
     return(
     <form className={styles.recipeForm}>
 
-        <h3>{ formTitle }</h3>
+        <h5>{ formTitle }</h5>
 
         {current.component ? <current.component {...current.props}/> : null}
 
