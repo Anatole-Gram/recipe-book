@@ -3,19 +3,23 @@ import styles from "./long-input.module.scss";
 
 
 export default function LongTextInput(props) {
-    const idRef = React.useRef(`id${Date.now()}`)
     return(
-        <label className={`${styles.longInput} input-item_title`}>
-            {props.name}
+        <div className="input-field">
 
             <textarea 
+                aria-label={props.label}
+                placeholder=""
                 value={props.value}
                 name={props.name}
                 onChange={props.handleChange}
-                id={idRef.current}
-                className="input-item_field input-item">
+                id={props.name}
+                className={`input-field_input ${styles.input}`}>
             </textarea> 
-
-        </label>
+            <label 
+                htmlFor={props.name}
+                className={`input-field_label ${styles.label}`}>
+                    {props.label}
+            </label>
+        </div>
     );
 };

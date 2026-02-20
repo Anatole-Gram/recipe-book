@@ -3,6 +3,11 @@
 .icon {
     color: var.$text-on-black;
 }
+.btn { 
+    width: 36px;
+    height: 36px;
+    color: var.$text-on-black;
+}
 .menu {
     display: flex;
     width: calc(100% + var.$main-gap * 2);

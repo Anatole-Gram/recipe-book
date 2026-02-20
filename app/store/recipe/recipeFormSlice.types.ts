@@ -10,19 +10,27 @@ export interface RecipeIngredient {
     count: string;
     unit: string;
 };
-export type RecipeIngredients = Map<string, RecipeIngredient>
+export interface ValidTemplate {
+    summary: boolean;
+    ingredients: boolean;
+    step: boolean;
+}
+export type RecipeIngredients = Record<string, RecipeIngredient>
 
 export interface RecipeStep {
     id?: number;
     img: string;
     description: string;
 }
-export type RecipeSteps = Map<string, RecipeStep>
+export type RecipeSteps = Record<string, RecipeStep>
 
 export type RecipeTuple = [RecipeSummary, RecipeIngredients, RecipeSteps];
 
 export interface RecipeFormState {
     step: number;
     stepAvailable: boolean;
+    valid: ValidTemplate;
+    summaryTemplate: RecipeSummary;
+    ingredientTemplate: RecipeIngredient;
     recipe: RecipeTuple;
 }

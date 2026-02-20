@@ -1,7 +1,10 @@
 
-
-export type BigBlackBtnRpops = {
+type BtnProps = {
     disabled: boolean;
-    btnText: string;
-    btnAction: () => void;
+    action: () => void;
+    className?: string;
 }
+
+export type BigBlackBtnRpops = BtnProps & { btnText: string; };
+
+export type ArrowBtnProps =  BtnProps & { direction: 0 | 1; };

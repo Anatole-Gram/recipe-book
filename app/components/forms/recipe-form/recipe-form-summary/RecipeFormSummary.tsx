@@ -12,7 +12,7 @@ export default function RecipeFormSummary(props: RecipeFormSummaryProps | any) {
 
     return(
         <fieldset className={styles.formSummary}>
-            <RecipeName label="название" name="title" value={item.title} handleChange={changeItem} />
+            <RecipeName label="название" name="title" value={item.title} handleChange={changeItem}  className={styles.title}/>
 
             <RecipePhoto label="изображение" name="img" value={item.img} handleChange={changeItem} 
                 className={styles.photo}/>

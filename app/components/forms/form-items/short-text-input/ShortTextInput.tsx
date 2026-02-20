@@ -5,9 +5,10 @@ import styles from "./short-input.module.scss";
 export default function ShortTextInput(props: any) {
 
     return(
-        <div className='input-field'>
+        <div className={`input-field ${props.className}`}>
 
-                <input placeholder=''
+                <input 
+                    placeholder=''
                     name={props.name}
                     value={props.value}
                     onChange={props.handleChange}
@@ -16,7 +17,7 @@ export default function ShortTextInput(props: any) {
 
                 <label htmlFor={props.name} 
                     aria-label={props.label} 
-                    className='input-field_label'>
+                    className={`input-field_label ${styles.label}`}>
 
                         {props.label}
 

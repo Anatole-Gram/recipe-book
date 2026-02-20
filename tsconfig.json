@@ -1,14 +1,14 @@
 { "compilerOptions": { 
-    "rootDir": "./app",
-    "outDir": "./dist",
-    "target": "es5", 
+    "rootDir": "./app", 
+    "outDir": "./dist", 
+    "target": "es6", 
     "lib": ["dom", "dom.iterable", "es2020"], 
     "allowJs": true, 
     "skipLibCheck": true, 
     "strict": true, 
-    "noEmit": true,
+    "noEmit": true, 
     "noImplicitAny": true, 
-    "isolatedModules": true,
+    "isolatedModules": true, 
     "esModuleInterop": true, 
     "forceConsistentCasingInFileNames": true, 
     "module": "esnext", 
@@ -16,8 +16,8 @@
     "resolveJsonModule": true, 
     "jsx": "react-jsx", 
     "baseUrl": ".", 
-    "paths": { "@/": ["app/"] } 
+    "paths": { "@/*": ["app/*"] } 
     }, 
     "include": ["app/**/*"], 
-    "exclude": ["node_modules"] 
-}
+    "exclude": ["node_modules"]
+ }

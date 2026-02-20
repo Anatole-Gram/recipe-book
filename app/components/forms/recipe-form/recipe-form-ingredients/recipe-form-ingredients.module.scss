@@ -9,48 +9,44 @@
 
 .inputWraper {
     display:  grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-columns: 100px 1fr;
+    grid-template-rows: 36px 36px 36px;
+    grid-template-columns: 100px 230px;
     grid-template-areas: 
         'title title'
         'count unit'
         'btn btn';
-        gap: var.$second-gap;
-
-    & input { 
-        border-radius: var.$secondBR;
-        height: var.$firstHS;
-    };
-    & label {
-        &:nth-child(1) {
+        gap: 20px 14px;
+ };
+ .input {
+    height: 36px;
+    
+    //input title
+    &Title {
         grid-area: title;
-        };
     }
-    & button {
+    //input count
+    &Count {
+        grid-area: count;
+    }
+    //input unit
+    &Unit {
+        grid-area: unit;
+    }
+    //input Button
+    &Btn {
         grid-area: btn;
     }
  };
+ .label {
+    top: 50%;
+ }
 
- .count {
-    grid-area: count;
-    & input {
-        width: 100%;
-    };
- };
- .unit {
-    grid-area: unit;
-    & input {
-        width: 100%;
-    };
- };
- .btn {
-    grid-area: btn;
- };
 .list {
     height: 300px;
     overflow: auto;
     margin: 16px 0;
-    & hr { width: 100%; height: 2px; color: black;}
+    padding: 0 5px;
+    
     & li {
         height: var.$firstHS;
         min-height: 36px;

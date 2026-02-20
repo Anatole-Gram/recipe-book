@@ -1,12 +1,6 @@
-.longInput {
-    display: flex;
-    flex-direction: column;
-
-    & textarea {
-        min-height: 200px;
-        padding: {
-            top: 8px;
-            bottom: 8px;
-        }
-    }
+.input {
+    height: 200px;
+}
+.label {
+    top: 10%;
 }

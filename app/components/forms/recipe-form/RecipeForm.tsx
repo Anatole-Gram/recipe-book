@@ -5,10 +5,11 @@ import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredint
 import RecipeFormStep from "../recipe-form/recipeStep/RecipeFormStep" ;
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { RecipeSummary, RecipeIngredient, RecipeStep, RecipeIngredients} from "../../../store/recipe/recipeFormSlice.types";
+import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients} from "@/store/recipe/recipeFormSlice"
+import { RecipeSummary, RecipeIngredient, RecipeStep, RecipeIngredients} from "@/store/recipe/recipeFormSlice.types";
 import { Ingredient, IngredientsList, RecipeFormComponent, RecipeFormProps } from "./RecipeForm.types";
-import { validateSummary, validateIngredient, validateStep } from "../../../utils/validation/RecipeFormValidators";
-import { minMax } from "../../../utils/base";
+import { validateSummary, validateIngredient, validateStep} from "@/utils/validation/RecipeFormValidators";
+import { minMax } from "@/utils/base";
 
 
 const COMPONENTS: RecipeFormComponent[] = [
@@ -16,12 +17,11 @@ const COMPONENTS: RecipeFormComponent[] = [
   RecipeFormIngredients,    
   RecipeFormStep
 ];
- 
 
 export default function RecipeForm() {
 
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const step = recipeForm.step ;
 
 //recipe title
@@ -35,34 +35,30 @@ export default function RecipeForm() {
     }, [step]);
 
 //summary
-
-    const [summary, setSummary] = React.useState<RecipeSummary>(structuredClone(recipeForm.recipe[0]));
+    const summary = recipeForm.summaryTemplate;
 
     const handleChangeSummary = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const {name, value} = e.target; 
-        setSummary(prev => ({...prev, [name]: value}));
+        dispatch(setSummaryTemplate({[name]: value}))
     }, []);
 
-    const validSummary = React.useMemo(() => validateSummary(summary), [summary])
-
+    const validSummary = React.useMemo(() => validateSummary(summary), [summary]);
+    React.useEffect(() => { dispatch(setValid({summary: validSummary.valid})); }, [validSummary]);
 
 
 //ingridients
-
-    const [ingredient, setIngredient] = React.useState<Ingredient>([`id:${Date.now()}`, {title: '', count: '', unit: ''}]);
+    const ingredient = recipeForm.ingredientTemplate;
 
     const handleChangeIngredient = React.useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
         const {name, value} = e.target; 
-        setIngredient(prev => ([prev[0], {...prev[1], [name]: value}]));
+        dispatch(setIngredientTemplate({[name]: value}));
     }, []);
 
-    const validIngredient = React.useMemo(() => validateIngredient(ingredient[1]).valid, [ingredient[1]])
+    const validIngredient = React.useMemo(() => validateIngredient(ingredient).valid, [ingredient])
 
-    const [list, setList] =  React.useState<IngredientsList> ([]);
-    const addIngredient = (): void => {
-        setList(prev => [...prev, ingredient]);
-        setIngredient([`id:${Date.now()}`, {title: '', count: '', unit: ''}]);
-    };
+    const ingredientsRecord = recipeForm.recipe[1];
+
+    const addIngredient = (): void => { dispatch(setIngredients()) };
 
 //steps
     const [recipeStep, setRecipeStep] = React.useState<RecipeStep>({id: step, img: '', description: ''});
@@ -74,11 +70,13 @@ export default function RecipeForm() {
     const validStep = React.useMemo(() => validateStep(recipeStep), [recipeStep])
 
 
-
+    React.useEffect(()=> {
+        console.log(recipeForm.recipe)
+    }, [recipeForm.recipe])
 
     const componentsProps: RecipeFormProps[] = [
         {setDataItem: handleChangeSummary, data: summary},
-        {setDataItem: handleChangeIngredient, setDataList: addIngredient, data: {list: list, item: ingredient, canSave: validIngredient},},
+        {setDataItem: handleChangeIngredient, setDataList: addIngredient, data: {list: ingredientsRecord, item: ingredient, canSave: validIngredient},},
         {setDataItem: handleChangeRecipeStep, data: recipeStep}
     ];
 

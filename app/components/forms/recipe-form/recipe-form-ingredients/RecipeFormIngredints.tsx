@@ -1,52 +1,91 @@
 import React from "react";
 import styles from "./recipe-form-ingredients.module.scss"
 import ShortTextInput from "../../form-items/short-text-input/ShortTextInput";
-import AddButton from "../../../buttons/bigBlackBtn";
-import {RecipeIngredientsProps} from "../RecipeForm.types"
+import AddButton from "@/components/buttons/BigBlackBtn";
+import { RecipeIngredientsProps } from "../RecipeForm.types";
+import { RecipeIngredients } from "@/store/recipe/recipeFormSlice.types";
 
 
 export default function RecipeFormIngredients(props: RecipeIngredientsProps | any) {
 
     const {list, canSave} = props.data
-    const item = props.data.item[1]
+    const item = props.data.item
     const changeItem = props.setDataItem
     const setList = props.setDataList
     return (
         <fieldset className={styles.ingrredientsForm}>
             <div className={styles.inputWraper}>
-                <ShortTextInput label="название" name="title"
-                    value={item.title} handleChange={changeItem}/>
                 
-                <label  className={styles.count}>
-                    количество
-                    <input type="number" name="count"
-                        value={item.count} onChange={changeItem}
-                        className={`${styles.inputCount} input-item`}/>
-                </label>
+                <ShortTextInput 
+                    label="название" 
+                    name="title"
+                    value={item.title} 
+                    handleChange={changeItem}
+                    className={styles.inputTitle}/>
+                
+                <div className={`input-field ${styles.inputCount}`}>
 
-                <label className={styles.unit}>
-                    ед. измерения
-                    <input type="text" name="unit"
+                    <input 
+                        type="number" 
+                        aria-label="count"
+                        placeholder=""
+                        name="count"
+                        value={item.count} 
+                        onChange={changeItem}
+                        id="count"
+                        className={`input-field_input ${styles.input}`}/>
+
+                    <label  
+                        htmlFor="count"
+                        className={`input-field_label ${styles.label}`}>
+                            кол-во
+                    </label>
+
+                </div>
+
+                <div className={`input-field ${styles.inputUnit}`}>
+
+                    <input 
+                        type="text"
+                        aria-placeholder="unit"
+                        placeholder=""
+                        name="unit"
                         value={item.unit} onChange={changeItem}
-                        className={`input-item`}/>
-                </label>
+                        id="unit"
+                        className={`input-field_input ${styles.input}`}/>
 
-                <AddButton btnText='добавить' btnAction={setList} disabled={!canSave}
-                    
+                    <label htmlFor="unit"
+                        className={`input-field_label ${styles.label}`}>
+                        ед. измерения
+                    </label>
+
+                </div>
+
+                <AddButton btnText='добавить' action={setList} disabled={!canSave}
+                    className={styles.inputBtn}
                     />
             </div>
             <ul className={styles.list}>
-                {/* {list.map((item: any) => (
-                    <li key={item[0]} className={styles.listItem}>{item[1].title} <br/> {item[1].count} {item[1].unit}</li>
-                    ))} */}
 
-                    <li><div className={styles.circle}>1</div> <span>лук репчатый</span> 1 луковица</li>
-                    <li><div className={styles.circle}>2</div> <span>лук репчатый</span> 1 луковица</li>
-                    <li><div className={styles.circle}>3</div> <span>лук репчатый</span> 1 луковица</li>
-                    <li><div className={styles.circle}>4</div> <span>лук репчатый</span> 1 луковица</li>
-                    <li><div className={styles.circle}>5</div> <span>лук репчатый</span> 1 луковица</li>
-                    <li><div className={styles.circle}>6</div> <span>лук репчатый</span> 1 луковица</li>
-                    
+                {Object.entries(list as RecipeIngredients).map(([id, ing], index) =>   {
+                    const { title, count, unit} = ing
+                    return (
+                        <li key={id} className={styles.listItem}>
+
+                            <span className={styles.circle}>
+                                {index+1}
+                            </span> 
+
+                            <span>
+                                {title}
+                            </span>
+
+                            {count} {unit}
+
+                        </li>
+                        );
+                })}
+ 
             </ul>
         </fieldset>
     )

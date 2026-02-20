@@ -28,25 +28,25 @@ function validateWithSchema<T>(data: T, schema: ValidationSchema<T>): { valid: b
 
 // RecipeIngredient 
 const ingredientSchema: ValidationSchema<RecipeIngredient> = { 
-    title: (v: any) => CYRILLIC_3_PLUS.test(v) ? undefined : 'Укажите ингредиент', 
+    title: (v: any) => CYRILLIC_3_PLUS(v) ? undefined : 'Укажите ингредиент', 
     count: (v: any) => NON_ZERO_NUMBER.test(v) ? undefined : 'Укажите количество', 
-    unit: (v: any) => CYRILLIC_1_PLUS.test(v) ? undefined : 'Укажите единицы измерения', 
+    unit: (v: any) => CYRILLIC_1_PLUS(v) ? undefined : 'Укажите единицы измерения', 
 };
 
 export const validateIngredient = (data: RecipeIngredient) => validateWithSchema(data, ingredientSchema);
 
 // RecipeSummary 
 const summarySchema: ValidationSchema<RecipeSummary> = { 
-    title: (v: any) => CYRILLIC_3_PLUS.test(v) ? undefined : 'Укажите заголовок', 
-    img: (v: any) => IMG_URL_REGEX.test(v) ? undefined : 'Укажите валидное изображение', 
-    description: (v: any) => CYRILLIC_10_PLUS.test(v) ? undefined : 'Укажите описание', 
+    title: (v: any) => CYRILLIC_3_PLUS(v) ? undefined : 'Укажите заголовок', 
+    // img: (v: any) => IMG_URL_REGEX.test(v) ? undefined : 'Укажите валидное изображение', 
+    description: (v: any) => CYRILLIC_10_PLUS(v) ? undefined : 'Укажите описание', 
 };
 
 export const validateSummary = (data: RecipeSummary) => validateWithSchema(data, summarySchema);
 
 // RecipeStep 
 const stepSchema: ValidationSchema<RecipeStep> = { 
-    description: (v: any) => CYRILLIC_10_PLUS.test(v) ? undefined : 'Укажите описание шага', 
+    description: (v: any) => CYRILLIC_10_PLUS(v) ? undefined : 'Укажите описание шага', 
     img: (v: any) => IMG_URL_REGEX.test(v) ? undefined : 'Укажите изображение', 
 };
 

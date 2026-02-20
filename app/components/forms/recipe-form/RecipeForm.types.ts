@@ -13,12 +13,12 @@ export type RecipeFormSummaryProps = {
 
 //Ingrediens
 
-export type Ingredient = [string, RecipeIngredient];
+export type Ingredient = RecipeIngredient;
 
 export type IngredientsList = Ingredient[];
 
 export interface IngredientsData {
-    list: IngredientsList;
+    list: RecipeIngredients;
     item: Ingredient;
     canSave: boolean;
 };
