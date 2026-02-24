@@ -13,24 +13,32 @@ export type RecipeFormSummaryProps = {
 
 //Ingrediens
 
-export type Ingredient = RecipeIngredient;
-
-export type IngredientsList = Ingredient[];
+export type IngredientsList = RecipeIngredient[];
 
 export interface IngredientsData {
     list: RecipeIngredients;
-    item: Ingredient;
+    item: RecipeIngredient;
     canSave: boolean;
 };
 
-// RecipeFormIngredientsProps
+    // IngredienntListItem
+export type IngredientListItem  = [string, RecipeIngredient];
+
+
+//props
+    //RecipeIngredientList props
+export type IngredientListProps = {
+    list: IngredientListItem[];
+}
+    // RecipeFormIngredientsProps
 export type RecipeIngredientsProps = {
     setDataItem: (e: React.ChangeEvent<HTMLInputElement>) => void; 
     setDataList: () => void;
     data: IngredientsData;
 };
 
-//RecipeFormStepProps
+
+    //RecipeFormStepProps
 export type RecipeFormStepProps = {
     setDataItem: (e: any) => void;
     data: RecipeStep;

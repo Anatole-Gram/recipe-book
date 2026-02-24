@@ -4,7 +4,8 @@ import ShortTextInput from "../../form-items/short-text-input/ShortTextInput";
 import AddButton from "@/components/buttons/BigBlackBtn";
 import { RecipeIngredientsProps } from "../RecipeForm.types";
 import { RecipeIngredients } from "@/store/recipe/recipeFormSlice.types";
-
+import IngredientsList  from "./recipe-form-ingredients-list/RecipeFormIngredientList";
+ 
 
 export default function RecipeFormIngredients(props: RecipeIngredientsProps | any) {
 
@@ -65,28 +66,9 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
                     className={styles.inputBtn}
                     />
             </div>
-            <ul className={styles.list}>
 
-                {Object.entries(list as RecipeIngredients).map(([id, ing], index) =>   {
-                    const { title, count, unit} = ing
-                    return (
-                        <li key={id} className={styles.listItem}>
-
-                            <span className={styles.circle}>
-                                {index+1}
-                            </span> 
-
-                            <span>
-                                {title}
-                            </span>
-
-                            {count} {unit}
-
-                        </li>
-                        );
-                })}
- 
-            </ul>
+            <IngredientsList list={Object.entries(list)}/>
+            
         </fieldset>
     )
 }

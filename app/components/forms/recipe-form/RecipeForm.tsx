@@ -26,11 +26,9 @@ export default function RecipeForm() {
  
 //recipe title
     const titleList: string[] = ['новый рецепт', 'список ингредиентов', `шаг рецепта: ${step-1}`];
+    
     const [formTitle, setFormTitle] = React.useState<string>('');
-
-    React.useEffect(():void => {
-       setFormTitle(titleList[minMax(step, [0, titleList.length-1])]) 
-    }, [step]);
+    React.useEffect(():void => setFormTitle(titleList[minMax(step, [0, titleList.length-1])]) , [step]);
 
 //summary
     const summary = recipeForm.summaryTemplate;
