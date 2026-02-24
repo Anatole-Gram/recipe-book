@@ -44,4 +44,16 @@
     border-radius: 50%;
     background-color: var.$main-color;
     color: var.$text-on-black;
+};
+
+.menu {
+
+    //menuShow
+    &Show {
+        display: flex;
+    }
+    // menuHide
+    &Hide  {
+        display: none;
+    }
 }

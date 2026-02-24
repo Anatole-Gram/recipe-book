@@ -55,7 +55,9 @@ export default function RecipeForm() {
     const ingredientsRecord = recipeForm.recipe[1];
 
     const addIngredient = (): void => { dispatch(setIngredients()) };
-
+    React.useEffect(() => {
+        console.log(recipeForm.ingredientTemplate)
+    }, [recipeForm.ingredientTemplate])
 //steps
     const recipeStep = recipeForm.stepTemplate;
     

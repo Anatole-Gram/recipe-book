@@ -3,7 +3,6 @@ import styles from "./recipe-form-ingredients.module.scss"
 import ShortTextInput from "../../form-items/short-text-input/ShortTextInput";
 import AddButton from "@/components/buttons/BigBlackBtn";
 import { RecipeIngredientsProps } from "../RecipeForm.types";
-import { RecipeIngredients } from "@/store/recipe/recipeFormSlice.types";
 import IngredientsList  from "./recipe-form-ingredients-list/RecipeFormIngredientList";
  
 
@@ -68,7 +67,7 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
             </div>
 
             <IngredientsList list={Object.entries(list)}/>
-            
+
         </fieldset>
     )
 }

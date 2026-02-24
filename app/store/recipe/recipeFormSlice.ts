@@ -33,6 +33,8 @@ const recipeFormSlice = createSlice({
         setValid: (state, action: PayloadAction<Partial<ValidTemplate>>): void => {
             Object.assign(state.valid, action.payload)
         },
+
+        // Summary
         setSummaryTemplate: (state, action: PayloadAction<Partial<RecipeIngredient>>): void=> {
             Object.assign(state.summaryTemplate, action.payload);
         },
@@ -40,15 +42,27 @@ const recipeFormSlice = createSlice({
             state.valid.summary && Object.assign(state.recipe[0], state.summaryTemplate);
             increment(state);
         },
+
+        // Ingredients
         setIngredientTemplate: (state, action: PayloadAction<Partial<RecipeIngredient>>): void => {
-            Object.assign(state.ingredientTemplate, action.payload);
+            const id = action.payload?.id;
+            const sources = id ? {...state.recipe[1][id], ...action.payload} : action.payload;
+            Object.assign(state.ingredientTemplate, sources);
         },
 
         setIngredients: (state): void => {
-                const id = `id:${Date.now()}`;
-                state.recipe[1][id] = {...state.ingredientTemplate};
+                const id = state.ingredientTemplate?.id ?? `id:${Date.now()}`;
+                const target = state.recipe[1]?.[id];
+                if (target) {
+                    state.recipe[1][id] = {...target, ...state.ingredientTemplate}
+                } else state.recipe[1][id] = {...state.ingredientTemplate};
                 newIngredient(state);
         },
+        removeIngredient: (state, action: PayloadAction<string>): void => {
+            const id = action.payload;
+            delete state.recipe[1][id];
+        },
+        // Steps
         setStepTemplate: (state, action: PayloadAction<Partial<RecipeStep>>): void => {
             Object.assign(state.stepTemplate, action.payload);
         },
@@ -68,6 +82,7 @@ const recipeFormSlice = createSlice({
         setStepAvalibel: (state, action: PayloadAction<boolean>) => {
             (state.stepAvailable !== action.payload) && (state.stepAvailable = action.payload)
         },
+        // Menu 
         stepForward: (state): void => {
             increment(state);
         },
@@ -77,5 +92,5 @@ const recipeFormSlice = createSlice({
     }
 });
 
-export const { stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, setStepTemplate, resetStepTemplate, setRecipeStep} = recipeFormSlice.actions;
+export const { stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, resetStepTemplate, setRecipeStep} = recipeFormSlice.actions;
 export default recipeFormSlice.reducer
