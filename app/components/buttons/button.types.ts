@@ -1,10 +1,15 @@
 
-type BtnProps = {
-    disabled: boolean;
+export type BtnProps = {
     action: () => void;
     className?: string;
 }
 
-export type BigBlackBtnRpops = BtnProps & { btnText: string; };
+type BntConditional = {
+    disabled: boolean;
+}
 
-export type ArrowBtnProps =  BtnProps & { direction: 0 | 1; };
+
+export type BigBlackBtnRpops = BtnProps & { btnText: string; } & BntConditional;
+
+export type ArrowBtnProps =  BtnProps & { direction: 0 | 1; } & BntConditional;
+

@@ -1,6 +1,7 @@
 @use "@/assets/styles/variables" as var;
 
 .formStep {
+    position: relative;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -9,5 +10,14 @@
 };
 .photo {
     align-self: center;
+}
+
+.removeBtn {
+    position: absolute;
+    top: -16px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+
 }
 

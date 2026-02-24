@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./bigBlackBtn.module.scss"
+import styles from "./big-black-btn.module.scss"
 import { BigBlackBtnRpops } from "./button.types"
 
 

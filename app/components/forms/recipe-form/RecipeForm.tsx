@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./recipe-form.module.scss";
 import RecipeFormSummary from "./recipe-form-summary/RecipeFormSummary";
 import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredints";
-import RecipeFormStep from "../recipe-form/recipeStep/RecipeFormStep" ;
+import RecipeFormStep from "./recipe-step/RecipeFormStep" ;
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate} from "@/store/recipe/recipeFormSlice"
@@ -55,9 +55,7 @@ export default function RecipeForm() {
     const ingredientsRecord = recipeForm.recipe[1];
 
     const addIngredient = (): void => { dispatch(setIngredients()) };
-    React.useEffect(() => {
-        console.log(recipeForm.ingredientTemplate)
-    }, [recipeForm.ingredientTemplate])
+
 //steps
     const recipeStep = recipeForm.stepTemplate;
     

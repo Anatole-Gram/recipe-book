@@ -4,7 +4,7 @@ import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSt
 
 
 const initialState: RecipeFormState = {
-    step: 1,
+    step: 0,
     stepAvailable: false,
     valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', img: '', description: ''},
@@ -24,6 +24,14 @@ const newIngredient = (state: RecipeFormState): void =>  {
 };
 const newStep = (state: RecipeFormState): void => {
     state.stepTemplate = {description: '', img: ''};
+};
+const nextStepTemplate = (state: RecipeFormState, id: string|null ): void => {
+    if(!id) { 
+        state.stepTemplate = {description: '', img: ''};
+    } else {
+        Object.assign(state.stepTemplate, state.recipe[2][id]);
+    };
+
 };
 
 const recipeFormSlice = createSlice({
@@ -79,6 +87,37 @@ const recipeFormSlice = createSlice({
             };
 
         },
+        removeStep: (state, action: PayloadAction<string>): void => {
+
+            const deleted = action.payload;
+            const steps = state.recipe[2];
+            const keys = Object.keys(steps || {});
+            const idx = keys.findIndex(key => key === deleted);
+
+            let nextTemplateId: string | null = null;
+
+            if (idx >= 0) {
+                const hasRight = idx < keys.length - 1;
+                const hasLeft = idx > 0;
+
+                if (hasRight) {
+                    nextTemplateId = keys[idx + 1];
+                    increment(state);
+
+                } else if (hasLeft) {
+                    nextTemplateId = keys[idx - 1];
+                    decrement(state);
+
+                } else {
+                    nextTemplateId = null;
+                }
+            }
+
+    nextStepTemplate(state, nextTemplateId);
+    if (idx >= 0) {
+        delete steps[deleted];
+    }
+        },
         setStepAvalibel: (state, action: PayloadAction<boolean>) => {
             (state.stepAvailable !== action.payload) && (state.stepAvailable = action.payload)
         },
@@ -92,5 +131,5 @@ const recipeFormSlice = createSlice({
     }
 });
 
-export const { stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, resetStepTemplate, setRecipeStep} = recipeFormSlice.actions;
+export const { stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, resetStepTemplate, setRecipeStep, removeStep} = recipeFormSlice.actions;
 export default recipeFormSlice.reducer

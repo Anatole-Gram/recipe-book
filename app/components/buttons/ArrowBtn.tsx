@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./arrowBtn.module.scss"
+import styles from "./arrow-btn.module.scss"
 import ArrowLeft from "@/assets/svg/left-arrow.svg";
 import ArrowRight from "@/assets/svg/right-arrow.svg";
 import { ArrowBtnProps } from "./button.types";
