@@ -47,7 +47,7 @@ export const validateSummary = (data: RecipeSummary) => validateWithSchema(data,
 // RecipeStep 
 const stepSchema: ValidationSchema<RecipeStep> = { 
     description: (v: any) => CYRILLIC_10_PLUS(v) ? undefined : 'Укажите описание шага', 
-    img: (v: any) => IMG_URL_REGEX.test(v) ? undefined : 'Укажите изображение', 
+    // img: (v: any) => IMG_URL_REGEX.test(v) ? undefined : 'Укажите изображение', 
 };
 
 export const validateStep = (data: RecipeStep) => validateWithSchema(data, stepSchema);

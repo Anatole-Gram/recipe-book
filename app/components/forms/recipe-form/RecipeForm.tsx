@@ -5,9 +5,8 @@ import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredint
 import RecipeFormStep from "../recipe-form/recipeStep/RecipeFormStep" ;
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients} from "@/store/recipe/recipeFormSlice"
-import { RecipeSummary, RecipeIngredient, RecipeStep, RecipeIngredients} from "@/store/recipe/recipeFormSlice.types";
-import { Ingredient, IngredientsList, RecipeFormComponent, RecipeFormProps } from "./RecipeForm.types";
+import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate} from "@/store/recipe/recipeFormSlice"
+import { RecipeFormComponent, RecipeFormProps } from "./RecipeForm.types";
 import { validateSummary, validateIngredient, validateStep} from "@/utils/validation/RecipeFormValidators";
 import { minMax } from "@/utils/base";
 
@@ -23,15 +22,14 @@ export default function RecipeForm() {
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
     const dispatch = useDispatch()
     const step = recipeForm.step ;
-
+    const recipeSteps = recipeForm.recipe[2]
+ 
 //recipe title
-    const titleList: string[] = ['новый рецепт', 'список ингредиентов', 'шаг рецепта'];
+    const titleList: string[] = ['новый рецепт', 'список ингредиентов', `шаг рецепта: ${step-1}`];
     const [formTitle, setFormTitle] = React.useState<string>('');
 
     React.useEffect(():void => {
-        if (step === 0) { setFormTitle(`${titleList[0]}`); return };
-        if (step === 1) { setFormTitle(`${titleList[1]}`); return };
-        setFormTitle(`${titleList[2]}: ${step - 1}`);
+       setFormTitle(titleList[minMax(step, [0, titleList.length-1])]) 
     }, [step]);
 
 //summary
@@ -42,7 +40,7 @@ export default function RecipeForm() {
         dispatch(setSummaryTemplate({[name]: value}))
     }, []);
 
-    const validSummary = React.useMemo(() => validateSummary(summary), [summary]);
+    const validSummary = validateSummary(summary);
     React.useEffect(() => { dispatch(setValid({summary: validSummary.valid})); }, [validSummary]);
 
 
@@ -54,20 +52,33 @@ export default function RecipeForm() {
         dispatch(setIngredientTemplate({[name]: value}));
     }, []);
 
-    const validIngredient = React.useMemo(() => validateIngredient(ingredient).valid, [ingredient])
+    const validIngredient = validateIngredient(ingredient).valid;
 
     const ingredientsRecord = recipeForm.recipe[1];
 
     const addIngredient = (): void => { dispatch(setIngredients()) };
 
 //steps
-    const [recipeStep, setRecipeStep] = React.useState<RecipeStep>({id: step, img: '', description: ''});
+    const recipeStep = recipeForm.stepTemplate;
+    
+    React.useEffect(() => {
+        const stepsKeys = Object.keys(recipeSteps);
+        const currenIndex = step - 2;
+        if(currenIndex >= 0 && currenIndex < stepsKeys.length) {
+            const current = stepsKeys[step - 2];
+            dispatch(setStepTemplate({id: current, ...recipeSteps[current]}))
+        }    
+    }, [step])
 
-    const handleChangeRecipeStep = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-        const {name, value} = e.target; setRecipeStep(prev => ({...prev, [name]: value}));
-    }, []);
+    const handleChangeStep =  React.useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
+        const {name, value, id} = e.target;
+        dispatch(setStepTemplate({[name]: value}));
+    }, [])
 
-    const validStep = React.useMemo(() => validateStep(recipeStep), [recipeStep])
+    const validStep = validateStep(recipeStep);
+    React.useEffect(() => {dispatch(setValid({step: validStep.valid}))}, [recipeStep])
+
+
 
 
     React.useEffect(()=> {
@@ -77,7 +88,7 @@ export default function RecipeForm() {
     const componentsProps: RecipeFormProps[] = [
         {setDataItem: handleChangeSummary, data: summary},
         {setDataItem: handleChangeIngredient, setDataList: addIngredient, data: {list: ingredientsRecord, item: ingredient, canSave: validIngredient},},
-        {setDataItem: handleChangeRecipeStep, data: recipeStep}
+        {setDataItem: handleChangeStep, data: recipeStep}
     ];
 
  

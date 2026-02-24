@@ -4,19 +4,26 @@ import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSt
 
 
 const initialState: RecipeFormState = {
-    step: 1,
+    step: 0,
     stepAvailable: false,
-    valid: {summary: true, ingredients: true, step: false},
+    valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', img: '', description: ''},
     ingredientTemplate: {title: '', count: '', unit: ''},
+    stepTemplate: {description: '', img: ''},
     recipe: [{title: '', img: '', description: ''}, {}, {}]
 };
 
 const increment = (state: RecipeFormState): void => {
     state.step += 1;
 };
+const decrement = (state: RecipeFormState): void => {
+    state.step -= 1;
+};
 const newIngredient = (state: RecipeFormState): void =>  {
     state.ingredientTemplate = {title: '', count: '', unit: ''};
+};
+const newStep = (state: RecipeFormState): void => {
+    state.stepTemplate = {description: '', img: ''};
 };
 
 const recipeFormSlice = createSlice({
@@ -38,27 +45,37 @@ const recipeFormSlice = createSlice({
         },
 
         setIngredients: (state): void => {
-            
-            if(state.valid.ingredients) {
                 const id = `id:${Date.now()}`;
                 state.recipe[1][id] = {...state.ingredientTemplate};
                 newIngredient(state);
-            } 
         },
-        setRecipeStep: (state) => {
+        setStepTemplate: (state, action: PayloadAction<Partial<RecipeStep>>): void => {
+            Object.assign(state.stepTemplate, action.payload);
+        },
+        resetStepTemplate: (state): void => {
+            newStep(state);
+        },
+        setRecipeStep: (state): void => {
+
+            if(state.valid.step) {
+                const id = state.stepTemplate?.id ?? `id:${Date.now()}`;
+                state.recipe[2][id] = {...state.stepTemplate};
+                newStep(state);
+                increment(state);
+            };
 
         },
         setStepAvalibel: (state, action: PayloadAction<boolean>) => {
             (state.stepAvailable !== action.payload) && (state.stepAvailable = action.payload)
         },
-        setRecipeItem: (state, action: PayloadAction<RecipeSummary>) => {
-            state.recipe[state.step] = action.payload
+        stepForward: (state): void => {
+            increment(state);
         },
-        removeRecipeItem: (state) => {
-            state.recipe.splice(state.step, 1)
+        stepBack: (state): void => {
+            decrement(state);
         }
     }
 });
 
-export const {setRecipeItem, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, setRecipeStep} = recipeFormSlice.actions;
+export const { stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, setStepTemplate, resetStepTemplate, setRecipeStep} = recipeFormSlice.actions;
 export default recipeFormSlice.reducer

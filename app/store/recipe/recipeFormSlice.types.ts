@@ -18,7 +18,7 @@ export interface ValidTemplate {
 export type RecipeIngredients = Record<string, RecipeIngredient>
 
 export interface RecipeStep {
-    id?: number;
+    id?: string;
     img: string;
     description: string;
 }
@@ -32,5 +32,6 @@ export interface RecipeFormState {
     valid: ValidTemplate;
     summaryTemplate: RecipeSummary;
     ingredientTemplate: RecipeIngredient;
+    stepTemplate: RecipeStep;
     recipe: RecipeTuple;
 }

@@ -3,22 +3,23 @@ import styles from "./long-input.module.scss";
 
 
 export default function LongTextInput(props) {
+    const {label, value, name, id,handleChange} = props
     return(
         <div className="input-field">
 
             <textarea 
-                aria-label={props.label}
+                aria-label={label}
                 placeholder=""
-                value={props.value}
-                name={props.name}
-                onChange={props.handleChange}
-                id={props.name}
+                value={value}
+                name={name}
+                onChange={handleChange}
+                id={id??0}
                 className={`input-field_input ${styles.input}`}>
             </textarea> 
             <label 
-                htmlFor={props.name}
+                htmlFor={name}
                 className={`input-field_label ${styles.label}`}>
-                    {props.label}
+                    {label}
             </label>
         </div>
     );

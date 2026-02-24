@@ -6,12 +6,12 @@ import Description from "../../form-items/long-text-input/LongTextInput"
 
 export default function RecipeFormStep (props: any) {
 
-    const item = props.data
+    const {description, img, id} = props.data
     const changeItem = props.setDataItem
     return (
         <fieldset  className={styles.formStep}>
             <StepPhoto className={styles.photo}/>
-            <Description label="описание" name="description" value={item.description} handleChange={changeItem}/>
+            <Description label="описание" name="description" value={description} handleChange={changeItem} id={id}/>
         </fieldset>
     )
 }
