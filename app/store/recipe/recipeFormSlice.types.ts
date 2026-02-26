@@ -28,7 +28,7 @@ export type RecipeTuple = [RecipeSummary, RecipeIngredients, RecipeSteps];
 
 export interface RecipeFormState {
     step: number;
-    stepAvailable: boolean;
+    stepEditor: boolean;
     valid: ValidTemplate;
     summaryTemplate: RecipeSummary;
     ingredientTemplate: RecipeIngredient;

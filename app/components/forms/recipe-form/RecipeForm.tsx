@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./recipe-form.module.scss";
 import RecipeFormSummary from "./recipe-form-summary/RecipeFormSummary";
 import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredints";
-import RecipeFormStep from "./recipe-step/RecipeFormStep" ;
+import RecipeFormSteps from "./recipe-steps/RecipeFormSteps";
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate} from "@/store/recipe/recipeFormSlice"
@@ -14,7 +14,7 @@ import { minMax } from "@/utils/base";
 const COMPONENTS: RecipeFormComponent[] = [
   RecipeFormSummary, 
   RecipeFormIngredients,    
-  RecipeFormStep
+  RecipeFormSteps
 ];
 
 export default function RecipeForm() {
@@ -73,10 +73,10 @@ export default function RecipeForm() {
         dispatch(setStepTemplate({[name]: value}));
     }, [])
 
-    const validStep = validateStep(recipeStep);
-    React.useEffect(() => {dispatch(setValid({step: validStep.valid}))}, [recipeStep])
+    const validStep = validateStep(recipeStep).valid;
+    React.useEffect(() => {dispatch(setValid({step: validStep}))}, [recipeStep]);
 
-
+    const stepsRecord = recipeForm.recipe[2];
 
 
     React.useEffect(()=> {
@@ -86,7 +86,7 @@ export default function RecipeForm() {
     const componentsProps: RecipeFormProps[] = [
         {setDataItem: handleChangeSummary, data: summary},
         {setDataItem: handleChangeIngredient, setDataList: addIngredient, data: {list: ingredientsRecord, item: ingredient, canSave: validIngredient},},
-        {setDataItem: handleChangeStep, data: recipeStep}
+        {setDataItem: handleChangeStep, setDataList: addIngredient, data: {list: stepsRecord, item: recipeStep, canSave: validStep}}
     ];
 
  

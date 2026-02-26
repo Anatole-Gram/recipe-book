@@ -5,7 +5,7 @@ export type BtnProps = {
 }
 
 type BntConditional = {
-    disabled: boolean;
+    disabled?: boolean;
 }
 
 

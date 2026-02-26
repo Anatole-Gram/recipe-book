@@ -12,6 +12,7 @@ export default function IngredientsList(props: IngredientListProps) {
     //menu
     const [showMenu, setShowMenu] = React.useState<boolean>(false);
     const [activeItem, setActiveIttem] = React.useState<string|null>(null)
+
     const selectItem = (e: React.MouseEvent<HTMLLIElement>): void => {
         const id =  e.currentTarget?.id ?? null;
         if (id) {
@@ -31,6 +32,7 @@ export default function IngredientsList(props: IngredientListProps) {
             dispatch(removeIngredient(activeItem));
         };
     };
+    
     return (
         <ul className={styles.list}>
             {list.map(([id, ing], index) => {
