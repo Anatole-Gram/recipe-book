@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./interactive-list.module.scss";
-import {InteractiveListProps} from "@/components/forms/recipe-form/RecipeForm.types";
+import { InteractiveListProps } from "@/components/forms/recipe-form/RecipeForm.types";
+
 import ListItem from "./interactive-list-item/InteractiveListItem";
 import AddStepBtn from "@/components/buttons/BigBlackBtn";
 
 
-export default function InteractiveList(props: InteractiveListProps) {
+export default function InteractiveList<T>(props: InteractiveListProps<T>) {
 
     const {list, contentFn, remove, edite} = props;
 

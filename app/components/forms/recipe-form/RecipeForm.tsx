@@ -1,7 +1,7 @@
 import React from "react"; 
 import styles from "./recipe-form.module.scss";
 import RecipeFormSummary from "./recipe-form-summary/RecipeFormSummary";
-import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredints";
+import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredients";
 import RecipeFormSteps from "./recipe-steps/RecipeFormSteps";
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";

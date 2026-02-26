@@ -2,8 +2,12 @@ import React from "react";
 import styles from "./recipe-form-ingredients.module.scss"
 import ShortTextInput from "../../form-items/short-text-input/ShortTextInput";
 import AddButton from "@/components/buttons/BigBlackBtn";
-import { RecipeIngredientsProps } from "../RecipeForm.types";
-import IngredientsList  from "./recipe-form-ingredients-list/RecipeFormIngredientList";
+import {  RecipeIngredientsProps } from "../RecipeForm.types";
+import { useDispatch } from "react-redux";
+import { setIngredientTemplate, removeIngredient } from "@/store/recipe/recipeFormSlice";
+import { RecipeIngredient } from "@/store/recipe/recipeFormSlice.types";
+import IngredientList from "@/components/forms/form-items/interactive-list/InteractiveList";
+
  
 
 export default function RecipeFormIngredients(props: RecipeIngredientsProps | any) {
@@ -12,6 +16,23 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
     const item = props.data.item
     const changeItem = props.setDataItem
     const setList = props.setDataList
+
+    const dispatch = useDispatch()
+
+    //for list item
+    const content = (item: any) => {
+        return (
+            `${item.title}`
+        )
+    };
+    const remove = (id: string): void => {
+        dispatch(removeIngredient(id));
+    };
+    
+    const edite = (id: string): void => {
+        dispatch(setIngredientTemplate({id: id}));
+    };
+
     return (
         <fieldset className={styles.ingrredientsForm}>
             <div className={styles.inputWraper}>
@@ -66,7 +87,7 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
                     />
             </div>
 
-            <IngredientsList list={Object.entries(list)}/>
+            <IngredientList<RecipeIngredient> list={Object.entries(list)} contentFn={content} remove={remove} edite={edite}/>
 
         </fieldset>
     )

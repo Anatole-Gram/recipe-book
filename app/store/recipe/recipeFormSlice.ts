@@ -4,7 +4,7 @@ import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSt
 
 
 const initialState: RecipeFormState = {
-    step: 2,
+    step: 1,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', img: '', description: ''},

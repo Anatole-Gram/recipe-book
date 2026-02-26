@@ -26,6 +26,8 @@ export interface IngredientsData {
     // IngredienntListItem
 export type IngredientListItem  = [string, RecipeIngredient];
 
+    //InteractiveListItem
+export type ListItem<T> = [string, T];
 
 //Steps
 
@@ -44,11 +46,11 @@ export type StepsListItem = [string, RecipeStep];
 
 //IntersctiveList props
 
-export type InteractiveListProps = {
-    list: StepsListItem[];
-    contentFn: (item: any) => string;
-    remove: (id: string) => void;
-    edite: (id: string) => void;
+export type InteractiveListProps<T> = {
+  list: ListItem<T>[];
+  contentFn: (item: T) => string;
+  remove: (id: string) => void;
+  edite: (id: string) => void;
 };
 
 
@@ -70,12 +72,6 @@ export type RecipeIngredientsProps = {
     data: IngredientsData;
 };
 
-
-    //RecipeFormStepProps
-// export type RecipeFormStepProps = {
-//     setDataItem: (e: any) => void;
-//     data: StepsData;
-// };
 
     //RecipeFormStepsProps
  
