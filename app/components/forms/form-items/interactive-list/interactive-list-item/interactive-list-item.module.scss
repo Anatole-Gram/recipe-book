@@ -34,14 +34,3 @@
     color: var.$text-on-black;
 };
 
-.menu {
-
-    //menuShow
-    &Show {
-        display: flex;
-    }
-    // menuHide
-    &Hide  {
-        display: none;
-    }
-}

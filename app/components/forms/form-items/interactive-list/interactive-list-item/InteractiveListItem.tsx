@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./interactive-list-item.module.scss";
+import ItemMenu from "./intrractive-list-item-menu/InteractiveListItemMenu";
 
 
 export default function InteractiveListItem(props: any) {
@@ -36,21 +37,10 @@ export default function InteractiveListItem(props: any) {
             className={styles.item}>
 
             <span className={ styles.circle} >{ index + 1}</span>
+            
             <span>{ content }</span>
 
-            <div
-                className={`${styles.menu} ${showMenu?styles.menuShow:styles.menuHide}`}>
-
-                <button type="button"
-                    onClick={editItem}>
-                        редактировать
-                </button>
-
-                <button type="button"
-                    onClick={removeItem}>
-                        удалить
-                    </button>
-            </div>
+            <ItemMenu remove={removeItem} edite={editItem} isActive={showMenu}/>
 
         </li>
     )

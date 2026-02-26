@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./interactive-list-item-menu.module.scss";
+import MenuBtn from "@/components/buttons/ButtonTemplate";
 
 
 export default function interactiveListItemMenu(props: any) {
@@ -8,16 +9,9 @@ export default function interactiveListItemMenu(props: any) {
     return (
         <div
             className={`${styles.menu} ${isActive?styles.menuShow:styles.menuHide}`}>
-
-            <button type="button"
-                onClick={edite}>
-                    редактировать
-            </button>
-
-            <button type="button"
-                onClick={remove}>
-                    удалить
-            </button>
+                
+            <MenuBtn action={remove} btnText="удалить" className=""/>
+            <MenuBtn action={edite} btnText="изменить" className=""/>
 
         </div>
     )

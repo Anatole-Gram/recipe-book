@@ -1,5 +1,13 @@
 @use "@/assets/styles/variables" as var;
 
 .menu {
- color: red;
+
+    //menuShow
+    &Show {
+        display: flex;
+    }
+    // menuHide
+    &Hide  {
+        display: none;
+    }
 }
