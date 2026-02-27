@@ -36,7 +36,7 @@ export default function RecipeFormMenu(props: any) {
         cross: [
             {actioState: stepActionState, action: stepActionState ? addStep : () => dispatch(setStepEditor(true))},
             {actioState: stepActionState, action: stepActionState ? addStep : () => dispatch(setStepEditor(true))},
-            {actioState: stepActionState, action: stepActionState ? addStep : () => dispatch(setStepEditor(true))},
+            {actioState: stepActionState, action: stepActionState ? addStep : () => {} },
         ]
     };
 
@@ -51,7 +51,7 @@ export default function RecipeFormMenu(props: any) {
             <ArrowBtn action={back.action} disabled={back.permission} direction={0} className={styles.btn }/>
 
 
-            <CrossBtn action={cross.action} actionState={cross.actioState} className={styles.cross} />
+            <CrossBtn action={cross.action} isPlus={stepActionState} className={`${styles.cross} ${styles.btn}`} />
 
 
             <ArrowBtn action={next.action} disabled={next.permission} direction={1} className={styles.btn }/>

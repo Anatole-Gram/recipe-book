@@ -2,7 +2,13 @@
 
 
 .icon {
-    width: 36px;
-    height: 36px;
-    color: var.$main-color;
+
+    //iconPlus
+    &Plus {
+        transform: rotate(45deg);
+    }
+    //iconClose
+    &Close {
+
+    }
 }

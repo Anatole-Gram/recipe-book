@@ -7,7 +7,7 @@ export default function ButtonTEmplate(props: BtnProps) {
     return (
         <button type="button"
             onClick={action}
-            className={className ?? ''}>
+            className={className}>
 
                 {btnText}
 

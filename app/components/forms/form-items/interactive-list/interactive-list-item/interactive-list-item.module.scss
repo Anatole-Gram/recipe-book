@@ -6,7 +6,7 @@
         min-height: 36px;
         position: relative;
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         align-items: center;
         margin-left: 16px;
         padding-left: 32px;
@@ -20,17 +20,10 @@
 };
 
 .circle {
-    position: absolute;
-    left: -16px;
-    top: -4px;
+    @include mixins.circle(-16px);
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border: 4px solid var.$bg-color;
-    border-radius: 50%;
-    background-color: var.$main-color;
     color: var.$text-on-black;
 };
-

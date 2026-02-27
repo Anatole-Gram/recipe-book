@@ -9,9 +9,10 @@ export default function interactiveListItemMenu(props: any) {
     return (
         <div
             className={`${styles.menu} ${isActive?styles.menuShow:styles.menuHide}`}>
-                
-            <MenuBtn action={remove} btnText="удалить" className=""/>
-            <MenuBtn action={edite} btnText="изменить" className=""/>
+            
+            <MenuBtn action={remove} btnText="удалить" className={`${styles.menuBtn} ${styles.menuBtnRemove}`}/>
+
+            <MenuBtn action={edite} btnText="изменить" className={`${styles.menuBtn} ${styles.menuBtnEdite}`}/>
 
         </div>
     )

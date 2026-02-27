@@ -37,7 +37,7 @@ export default function InteractiveListItem(props: any) {
             className={styles.item}>
 
             <span className={ styles.circle} >{ index + 1}</span>
-            
+
             <span>{ content }</span>
 
             <ItemMenu remove={removeItem} edite={editItem} isActive={showMenu}/>

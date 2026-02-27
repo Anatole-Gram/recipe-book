@@ -1,3 +1,5 @@
+@use "@/assets/styles/variables" as var;
+
 @mixin font-rules($size:1em, $family) {
     font: {
         size: $size;
@@ -7,4 +9,24 @@
 
 @mixin arch() {
     clip-path: polygon(0 0, 100% 0, 100% 100%);
+};
+
+@mixin circle($left: 0, $right: 0) {
+    content: '';
+    display: block;
+    position: absolute;
+    top: var.$circle-top;
+    left: $left;
+    right: $right;
+    width: var.$circle-diameter;
+    height: var.$circle-diameter;
+    border: 4px solid var.$bg-color;
+    border-radius: 50%;
+    background-color: var.$main-color;
+
+};
+
+
+@mixin semicircle() {
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
 }
