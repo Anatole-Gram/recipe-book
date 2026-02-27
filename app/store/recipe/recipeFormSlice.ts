@@ -4,13 +4,14 @@ import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSt
 
 
 const initialState: RecipeFormState = {
-    step: 2,
+    step: 0,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', img: '', description: ''},
     ingredientTemplate: {title: '', count: '', unit: ''},
     stepTemplate: {description: '', img: ''},
-    recipe: [{title: '', img: '', description: ''}, {}, {'id1234': {id:'id1234', description: 'test 1', img: ''}, 'id1244': {id:'id1244', description: 'test 2', img: ''}}]
+    // recipe: [{}, {}, {}]
+    recipe: [{title: 'суп', img: '', description: 'суп куриный за 30 минут'}, {'id123':{title: 'вода', count: '1', unit: 'л'}}, {'id:321': {description: '', img: ''}} ]
 };
 
 const increment = (state: RecipeFormState): void => {

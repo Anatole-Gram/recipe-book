@@ -24,7 +24,7 @@ export interface RecipeStep {
 }
 export type RecipeSteps = Record<string, RecipeStep>
 
-export type RecipeTuple = [RecipeSummary, RecipeIngredients, RecipeSteps];
+export type RecipeTuple = [Partial<RecipeSummary>, RecipeIngredients, RecipeSteps];
 
 export interface RecipeFormState {
     step: number;

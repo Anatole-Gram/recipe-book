@@ -1,25 +1,22 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, DataTypes) => {
     const Recipe = sequelize.define("recipe", {
         id: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false,
         },
         title: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         description: {
-            type: Sequelize.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
-        time: {
-            type: Sequelize.INTEGER,
-        },
-        photo: {
-            type: Sequelize.STRING,
+        img: {
+            type: DataTypes.STRING,
         },
     });
-    return Recipe
+    return Recipe;
 }

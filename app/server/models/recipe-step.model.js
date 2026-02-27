@@ -1,26 +1,26 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, DataTypes) => {
     const Step = sequelize.define("step", {
         id: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false,
         },
-        title: {
-            type: Sequelize.STRING,
-            allowNull: false,
+        recipeId: { 
+            type: DataTypes.INTEGER, 
+            allowNull: false },
+        img: {
+            type: DataTypes.STRING,
         },
         description: {
-            type: Sequelize.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        step: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-        },
-        photo: {
-            type: Sequelize.STRING,
-        },
+        extras: { 
+            type: DataTypes.JSON, 
+            allowNull: true, 
+        }
+
     });
     return Step
 }

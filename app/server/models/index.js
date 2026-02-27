@@ -13,10 +13,17 @@ db.sequelize = sequelize;
 
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.auth = require("./auth.model.js")(sequelize, Sequelize);
-db.recipe = require("./recipe.model.js")(sequelize, Sequelize);
+
+db.recipe = require("./recipe-summary.model.js")(sequelize, Sequelize);
+db.recipeIngredient = require("./recipe-ingredient.model.js") (sequelize, Sequelize)
 db.recipeStep = require("./recipe-step.model.js")(sequelize, Sequelize);
-db.user.hasOne(db.auth, {onDelete: "cascade"});
-db.user.hasMany(db.recipe);
-db.recipe.hasMany(db.recipeStep, {onDelete: "cascade"});
+
+db.recipe.hasMany(db.recipeIngredient, { as: 'ingredients', foreignKey: 'recipeId', onDelete: 'CASCADE' });
+db.recipeIngredient.belongsTo(db.recipe, { foreignKey: 'recipeId' });
+
+db.recipe.hasMany(db.recipeStep, { as: 'steps', foreignKey: 'recipeId', onDelete: 'CASCADE' });
+db.recipeStep.belongsTo(db.recipe, { foreignKey: 'recipeId' });
+
+module.exports = db;
 
 module.exports = db
