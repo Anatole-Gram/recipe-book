@@ -11,6 +11,7 @@ import { validateSummary, validateIngredient, validateStep} from "@/utils/valida
 import { minMax } from "@/utils/base";
 
 
+
 const COMPONENTS: RecipeFormComponent[] = [
   RecipeFormSummary, 
   RecipeFormIngredients,    
@@ -25,13 +26,19 @@ export default function RecipeForm() {
     const recipeSteps = recipeForm.recipe[2]
  
 //recipe title
-    const titleList: string[] = ['новый рецепт', 'список ингредиентов', `шаг рецепта: ${step-1}`];
+    const titleList: string[] = ['новый рецепт', 'список ингредиентов', `шаги рецепта`];
     
     const [formTitle, setFormTitle] = React.useState<string>('');
     React.useEffect(():void => setFormTitle(titleList[minMax(step, [0, titleList.length-1])]) , [step]);
 
 //summary
     const summary = recipeForm.summaryTemplate;
+    //проверяем пустой ли summary в recipe, если нет устанавливаем его в шаблон
+    React.useEffect(() => {
+        if(Object.keys(recipeForm.recipe[0]).length) {
+            dispatch(setSummaryTemplate(recipeForm.recipe[0]))
+        }
+    })
 
     const handleChangeSummary = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const {name, value} = e.target; 
