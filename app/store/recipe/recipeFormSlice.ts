@@ -1,17 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit"; 
-import {RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSteps, RecipeTuple, RecipeFormState, ValidTemplate} from "./recipeFormSlice.types"
-
+import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "@/store/store";
+import type { RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSteps, RecipeTuple, RecipeFormState, ValidTemplate} from "./recipeFormSlice.types"
+import { submitRecipe } from "./recipeFormThunks";
 
 const initialState: RecipeFormState = {
     step: 0,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', img: '', description: ''},
-    ingredientTemplate: {title: '', count: '', unit: ''},
+    ingredientTemplate: {title: '', count: 0, unit: ''},
     stepTemplate: {description: '', img: ''},
-    // recipe: [{}, {}, {}]
-    recipe: [{title: 'суп', img: '', description: 'суп куриный за 30 минут'}, {'id123':{title: 'вода', count: '1', unit: 'л'}}, {'id:321': {description: '', img: ''}} ]
+    // recipe: [{}, {}, {}],
+    recipe: [{title: 'суп', img: '', description: 'суп куриный за 30 минут'}, {'id123':{title: 'вода', count: 1, unit: 'л'}}, {'id:321': {description: 'вскипятить воду', img: ''}} ],
+    submitting: false,
+    submitError: null,
+    submittedId: null,
+
+
+
 };
 
 const increment = (state: RecipeFormState): void => {
@@ -131,7 +138,22 @@ const recipeFormSlice = createSlice({
         stepBack: (state): void => {
             decrement(state);
         }
-    }
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(submitRecipe.pending, (state) => {
+            state.submitError = null;
+            state.submitting = true;
+        })
+        .addCase(submitRecipe.fulfilled, (state, action) => {
+            state.submitting = false;
+            state.submittedId = action.payload.recipeId;
+        })
+        .addCase(submitRecipe.rejected, (state, action) => {
+            state.submitting = false;
+            state.submitError = action.payload || action.error?.message;
+        })
+  }
 });
 
 export const { stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, setStepEditor, resetStepTemplate, setRecipeStep, removeStep} = recipeFormSlice.actions;

@@ -5,11 +5,10 @@ import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredien
 import RecipeFormSteps from "./recipe-steps/RecipeFormSteps";
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate} from "@/store/recipe/recipeFormSlice"
+import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate} from "@/store/recipe/recipeFormSlice";
 import { RecipeFormComponent, RecipeFormProps } from "./RecipeForm.types";
 import { validateSummary, validateIngredient, validateStep} from "@/utils/validation/RecipeFormValidators";
 import { minMax } from "@/utils/base";
-
 
 
 const COMPONENTS: RecipeFormComponent[] = [
@@ -38,7 +37,7 @@ export default function RecipeForm() {
         if(Object.keys(recipeForm.recipe[0]).length) {
             dispatch(setSummaryTemplate(recipeForm.recipe[0]))
         }
-    })
+    },[])
 
     const handleChangeSummary = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const {name, value} = e.target; 
@@ -104,8 +103,6 @@ export default function RecipeForm() {
         return {component: component, props: prop}
     }
     
-
-    //
     const current = componentByStep(step, COMPONENTS, componentsProps);
 
     return(

@@ -2,22 +2,20 @@ import React from "react";
 import styles from "./recipe-form-menu.module.scss";
 import ArrowBtn from "@/components/buttons/ArrowBtn";
 import CrossBtn from "@/components/buttons/CrossBtn";
-import { RootState } from "app/store/store";
+import { RootState, AppDispatch} from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setSummary, setIngredients,  setRecipeStep, stepForward, stepBack, setStepEditor} from "@/store/recipe/recipeFormSlice";
+import { submitRecipe } from "@/store/recipe/recipeFormThunks";
 import { minMax } from "@/utils/base";
 
 
 
 export default function RecipeFormMenu(props: any) {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
-    const {step, valid, recipe, stepEditor}  = recipeForm
+    const {step, valid, recipe, stepEditor}  = recipeForm;
+    const {submitting, submitError, submittedId, } = recipeForm;
     const ingredientsPermission: boolean =  Boolean(Object.keys(recipe[1]).length);
-
-
-
-
 
 
     //Действия для редактора
@@ -26,15 +24,19 @@ export default function RecipeFormMenu(props: any) {
         dispatch(setStepEditor(false));
     };
     const closeEditor = (): void => {
-        dispatch(setStepEditor(false));
+       console.log('close')
     };
 
     //Выбераем действие для редактора
     const editorAction = (): any => valid.step ? addStep : closeEditor;
 
     //Действия для формы
-    const createRecipe = (): void => {console.log("Create Recipe")};
-    const closeForm = (): void => {console.log("Close Form")};
+    const createRecipe = (): void => {
+        const response = dispatch(submitRecipe());
+    };
+    const closeForm = async (): Promise<any> => {
+        console.log('close form')
+    };
 
     //Устанавливаем состоение для выбора действия формы
     const [canCreate, setCanCreate] = React.useState<boolean>(false);
@@ -48,7 +50,6 @@ export default function RecipeFormMenu(props: any) {
             notEmpty.add(Boolean(Object.keys(recipe[i]).length));
         };
         setCanCreate(!notEmpty.has(false));
-        console.log(notEmpty)
     }, [recipe]);
 
     //Выбераем действие для формы
