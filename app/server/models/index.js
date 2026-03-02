@@ -19,11 +19,9 @@ db.recipeIngredient = require("./recipe-ingredient.model.js") (sequelize, Sequel
 db.recipeStep = require("./recipe-step.model.js")(sequelize, Sequelize);
 
 db.recipe.hasMany(db.recipeIngredient, { as: 'ingredients', foreignKey: 'recipeId', onDelete: 'CASCADE' });
-db.recipeIngredient.belongsTo(db.recipe, { foreignKey: 'recipeId' });
+db.recipeIngredient.belongsTo(db.recipe, {as: 'recipes', foreignKey: 'recipeId' });
 
 db.recipe.hasMany(db.recipeStep, { as: 'steps', foreignKey: 'recipeId', onDelete: 'CASCADE' });
-db.recipeStep.belongsTo(db.recipe, { foreignKey: 'recipeId' });
+db.recipeStep.belongsTo(db.recipe, {as: 'recipes', foreignKey: 'recipeId' });
 
 module.exports = db;
-
-module.exports = db

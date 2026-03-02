@@ -41,7 +41,7 @@ router.post('/recipes', async (req, res) => {
       const { title, count, unit, ...rest } = i;
       return {
         title,
-        count: amount,
+        count,
         unit,
         recipeId: recipe.id,
         extras: rest && Object.keys(rest).length ? rest : null
@@ -80,17 +80,16 @@ router.get('/recipes', async (req, res) => {
   try {
     const recipes = await db.recipe.findAll({
       include: [
-        { model: db.recipeIngredient }, // ингредиенты
-        { model: db.recipeStep }        // шаги
+        { model: db.recipeIngredient, as: 'ingredients' }, // ингредиенты
+        { model: db.recipeStep, as: 'steps' }        // шаги
       ],
       order: [
-        [ db.recipe, 'id', 'ASC' ], // опционально — порядок рецептов
-        [ db.recipeStep, 'id', 'ASC' ],
-        [ db.recipeIngredient, 'id', 'ASC' ]
+        [ 'id', 'ASC' ],
+        [ 'id', 'ASC' ],
+        [ 'id', 'ASC' ]
       ]
     });
 
-    // По желанию: привести к удобному JSON (заменить recipeSteps -> steps и т.д.)
     const out = recipes.map(r => ({
       id: r.id,
       title: r.title,
@@ -117,15 +116,13 @@ router.get('/recipes/:id', async (req, res) => {
         { model: db.recipeIngredient }, // ингредиенты
         { model: db.recipeStep }        // шаги
       ]
-      // можно добавить order если хотите:
-      // order: [[ db.recipeStep, 'id', 'ASC' ], [ db.recipeIngredient, 'id', 'ASC' ]]
     });
 
     if (!recipe) {
       return res.status(404).json({ message: 'Recipe not found' });
     }
 
-    // Опционально: отсортировать шаги/ингредиенты по id на стороне сервера
+    // отсортировать шаги/ингредиенты по id на стороне сервера
     if (recipe.recipeSteps && Array.isArray(recipe.recipeSteps)) {
       recipe.recipeSteps.sort((a, b) => a.id - b.id);
     }
