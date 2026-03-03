@@ -3,15 +3,19 @@
 .header {
     position: relative;
     display: flex;
+    flex-direction: column;
     height: var.$header-height;
     background-color: var.$main-color;
 
     align-items: center;
     justify-content: center;
 
-    & h1 {
+    & h2 {
         color: aliceblue;
         font-family: "Hachi Maru Pop";
+        margin-bottom: 8px;
+        align-self: flex-start;
+        padding-left: 16px;
     }
 
  }
