@@ -88,6 +88,7 @@ module.exports = {
             overlay: true,
             progress: true
         },
+        headers: { "Content-Security-Policy": "default-src 'self'; connect-src 'self' ws: http://localhost:8080; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval';" },
         proxy: [
             {
                 context: ['/api'],
