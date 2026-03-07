@@ -1,6 +1,7 @@
+import React from "react";
 
 export type BtnProps = {
-    action: () => void;
+    action: (param?:any) => void;
     className?: string;
     btnText?: string;
 }
@@ -14,4 +15,6 @@ export type BigBlackBtnRpops = BtnProps & BntConditional;
 
 export type ArrowBtnProps =  BtnProps & { direction: 0 | 1; } & BntConditional;
 
-export type CrossBtnProps = BtnProps & {isPlus: boolean};
+export type CrossBtnProps = BtnProps & { isPlus: boolean };
+
+export type ToggleBtnProps = BtnProps & BntConditional;
