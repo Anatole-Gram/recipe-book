@@ -1,5 +1,16 @@
 @use "./variables" as var;
 @use "./mixins";
+
+@font-face {
+    font-family: "Hachi Maru Pop";
+    src: url("../fonts/HachiMaruPop-Regular.ttf") format('truetype');
+};
+
+@font-face {
+    font-family: "Rubik";
+    src: url("../fonts/Rubik-VariableFont_wght.ttf") format('truetype');
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -22,15 +33,6 @@ a {
     all: unset;
 }
 
-@font-face {
-    font-family: "Hachi Maru Pop";
-    src: url("../fonts/HachiMaruPop-Regular.ttf") format('truetype');
-};
-
-@font-face {
-    font-family: "Rubik";
-    src: url("../fonts/Rubik-VariableFont_wght.ttf") format('truetype');
-}
 
 body {
     background-color: var.$main-color;

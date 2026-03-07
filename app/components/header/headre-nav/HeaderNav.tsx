@@ -8,8 +8,8 @@ export default function HeaderNav(props: any) {
     return (
         <nav className={styles.nav}>
             <Link to={`/`}>главная</Link>
-            <Link to={`/recipes`}>рецепты</Link>
             <Link to={`/recipe-form`}>новый рецепт</Link>
+            <Link to={`/recipes`}>рецепты</Link>
         </nav>
     )
 }
