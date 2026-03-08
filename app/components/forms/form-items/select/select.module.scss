@@ -1,0 +1,29 @@
+@use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins";
+
+
+.select {
+    display: flex;
+    flex-direction: column;
+    // -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+    // -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+    // box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+
+    // @include mixins.grayGradientBg();
+
+    //selectHide 
+    &Hide {
+        display: none;
+    }
+    & input {
+        display: none;
+    }
+}
+
+.label {
+
+    //labelChecked
+    &Checked {
+        color: red;
+    }
+}
