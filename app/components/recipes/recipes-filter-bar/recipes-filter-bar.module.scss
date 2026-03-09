@@ -1,0 +1,61 @@
+@use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins";
+
+
+.filterBar {
+    display: flex;
+    justify-content: space-between;
+    height: var.$firstHS;
+    margin: 16px 0;
+    font: {
+        size: 0.75rem;
+    }
+}
+
+//categories
+.categories {
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    height: 24px;
+
+    //catedoriesWraper
+    &Wraper {
+        width: 100px;
+        padding: 3px;
+        display: flex;
+        border: 1px solid black;
+
+    }
+    //categoriesSelect 
+    &Select {
+        position: absolute;
+        top: 100%;
+        left: -1px;
+        min-height: 36px;
+        height: auto;
+        max-height: 300px;
+
+    }
+}
+
+
+//ownRecipes
+.ownRecipes {
+    display: flex;
+    height: 24px;
+    padding: 3px;
+    justify-content: end;
+    align-items: center;
+    border: 1px solid black;
+
+    & span {
+        margin-right: 5px;
+    }
+}
+
+.arrow {
+    width: 16px;
+    height: 16px;
+}
+

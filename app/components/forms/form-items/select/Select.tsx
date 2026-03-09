@@ -37,7 +37,7 @@ export default function Select(props: MultiSelectProps) {
                 return (
                     <label key={opt.id} className={`${checked ?  styles.labelChecked : ''}`}>
                         {opt.label}
-                        <input type="checkbox" id={opt.id} onChange={handleChange}/>
+                        <input type="checkbox" id={opt.id} onChange={handleChange} />
                     </label>
                 )}
             )}
