@@ -1,4 +1,5 @@
-@use "/app/assets/styles/variables" as var;
+@use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins";
 
 .formSummary {
     display: flex;
@@ -8,9 +9,7 @@
 
 
 };
-.title {
-    height: 36px;
-}
+
 .photo {
     align-self: center;
 }

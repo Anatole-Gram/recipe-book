@@ -1,25 +1,33 @@
 import React from "react";
-import styles from "./short-input.module.scss";
 
 
-export default function ShortTextInput(props: any) {
+type SchortTextInputProps = {
+    name: string;
+    value: string;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    label: string;
+    className?: string;
+}
+
+
+export default function ShortTextInput(props: SchortTextInputProps) {
+    
+    const {name, value, handleChange, label, className} = props
 
     return(
-        <div className={`input-field ${props.className}`}>
+        <div className={className}>
 
                 <input 
                     placeholder=''
-                    name={props.name}
-                    value={props.value}
-                    onChange={props.handleChange}
-                    id={props.name}
-                    className={`input-field_input`}/>
+                    name={name}
+                    value={value}
+                    onChange={handleChange}
+                    id={name}/>
 
-                <label htmlFor={props.name} 
-                    aria-label={props.label} 
-                    className={`input-field_label ${styles.label}`}>
+                <label htmlFor={name} 
+                    aria-label={label} >
 
-                        {props.label}
+                        {label}
 
                 </label>
         </div>

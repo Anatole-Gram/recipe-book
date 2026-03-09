@@ -9,12 +9,10 @@ export default function RecipeStep(props: any) {
         
     return (
 
-        <div  className={styles.formStep}>
-
+        <>
             <StepPhoto className={styles.photo}/>
-            <Description label="описание" name="description" value={template.description} handleChange={templateHandle}/>
-
-        </div>
+            <Description label="описание" name="description" value={template.description} handleChange={templateHandle} className={`recipeFormInputWraper recipeFormLongInput ${styles.formStepDescription}`}/>
+        </>
 
     )
 }

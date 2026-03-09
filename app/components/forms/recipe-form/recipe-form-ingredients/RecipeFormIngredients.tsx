@@ -42,9 +42,9 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
                     name="title"
                     value={item.title} 
                     handleChange={changeItem}
-                    className={styles.inputTitle}/>
+                    className={`recipeFormInputWraper recipeFormShortInput ${styles.inputTitle}`}/>
                 
-                <div className={`input-field ${styles.inputCount}`}>
+                <div className={`recipeFormInputWraper recipeFormShortInput ${styles.inputCount}`}>
 
                     <input 
                         type="number" 
@@ -53,18 +53,17 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
                         name="count"
                         value={item.count} 
                         onChange={changeItem}
-                        id="count"
-                        className={`input-field_input ${styles.input}`}/>
+                        id="count"/>
 
                     <label  
                         htmlFor="count"
-                        className={`input-field_label ${styles.label}`}>
+                        className={styles.labe}>
                             кол-во
                     </label>
 
                 </div>
 
-                <div className={`input-field ${styles.inputUnit}`}>
+                <div className={`recipeFormInputWraper recipeFormShortInput ${styles.inputUnit}`}>
 
                     <input 
                         type="text"
@@ -73,10 +72,10 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
                         name="unit"
                         value={item.unit} onChange={changeItem}
                         id="unit"
-                        className={`input-field_input ${styles.input}`}/>
+                        className={styles.input}/>
 
                     <label htmlFor="unit"
-                        className={`input-field_label ${styles.label}`}>
+                        className={styles.label}>
                         ед. измерения
                     </label>
 

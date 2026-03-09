@@ -41,7 +41,7 @@ export default function(props: RecipeFormStepsProps | any) {
     return(
         <fieldset className={styles.stepsWraper}>
             
-            { editor ? <RecipeStepEditor template={item} templateHandle={setDataItem}/> :
+            { editor ? <RecipeStepEditor template={item} templateHandle={setDataItem} /> :
                 <>
                     <AddStepBtn btnText="новый шаг" action={addStep}/>
                     <InteractiveList<RecipeStep> list={Object.entries(list)} contentFn={content} remove={remove} edite={edite}/>

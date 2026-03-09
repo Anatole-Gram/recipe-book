@@ -32,6 +32,9 @@ ul {
 a {
     all: unset;
 }
+select {
+    all: unset;
+}
 
 
 body {
@@ -47,71 +50,67 @@ body {
 }
 
 
-.input-field {
 
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+// RecipeForm
+.recipeForm {
 
-    &_input {
-        flex: 1 1 auto;
-        padding: 0 var.$second-gap;
-        border-radius: var.$secondBR;
-        @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
-        padding: 0 var.$second-gap;
-        border-radius: var.$secondBR;
-        -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
-        -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
-        box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+    // RecipeFormInputWraper
+    &InputWraper{
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
 
-    };
+        & input, textarea{
+            box-sizing: border-box;
+            flex: 1 1 auto;
+            border-radius: var.$secondBR;
+            @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
+            @include mixins.whiteInputBox;
+        }
 
-    &_label {
-        position: absolute; 
-        left: 3px;
-        transform: translateY(-50%); 
-        color: #888; 
-        font-size: 16px; 
-        pointer-events: none; 
-        transition: all 0.2s ease; 
-        background: transparent; 
-        padding: 0 6px; 
-        border-radius: 4px; 
-        z-index: 1; 
-        @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
+        & label {
+            position: absolute; 
+            left: 3px;
+            transform: translateY(-50%); 
+            color: #888; 
+            font-size: 16px; 
+            pointer-events: none; 
+            transition: all 0.2s ease; 
+            background: transparent; 
+            padding: 0 6px; 
+            border-radius: 4px; 
+            z-index: 1; 
+            @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
+        }
+
+        & input:focus + label, input:not(:placeholder-shown) + label, textarea:focus + label, textarea:not(:placeholder-shown) + label{
+            top: 0; 
+            transform: translateY(-100%); 
+            font-size: 14px; 
+            color: #555; 
+            padding: 0 6px; 
+        }
     }
-};
 
- 
-.input-field_input:focus + .input-field_label, .input-field_input:not(:placeholder-shown) + .input-field_label { 
+    // recipeFormShortInput
+    &ShortInput {
 
-        top: 0; 
-        transform: translateY(-100%); 
-        font-size: 14px; 
-        color: #555; 
-        padding: 0 6px; 
-
-};
-
-.input-item {
-
-    @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
-    padding: 0 var.$second-gap;
-    border-radius: var.$secondBR;
-    -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
-    -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
-    box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
-    &_title {
-        font-family: "Rubik";
-        font-size: 14px;
-
-        @include mixins.font-rules(var.$inputTitleFS, var.$inputTitleFF);
+        & input {
+            height: 36px;
+        }
+        & label {
+            top: 50%;
+        }
     }
-    &_field {
-        @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
-        padding: 0 var.$second-gap;
-        border-radius: var.$secondBR;
+
+    //recipeFormLongInput
+    &LongInput {
+        
+        height: 200px;
+
+        & label {
+            top: 10%;
+        }
     }
 }
-

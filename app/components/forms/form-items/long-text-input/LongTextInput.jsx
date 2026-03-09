@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "./long-input.module.scss";
+
 
 
 export default function LongTextInput(props) {
-    const {label, value, name, id,handleChange} = props
+    const {label, value, name, id,handleChange, className} = props
     return(
-        <div className="input-field">
+        <div className={className}>
 
             <textarea 
                 aria-label={label}
@@ -13,12 +13,11 @@ export default function LongTextInput(props) {
                 value={value}
                 name={name}
                 onChange={handleChange}
-                id={id??0}
-                className={`input-field_input ${styles.input}`}>
+                id={id??0}>
             </textarea> 
+            
             <label 
-                htmlFor={name}
-                className={`input-field_label ${styles.label}`}>
+                htmlFor={name}>
                     {label}
             </label>
         </div>
