@@ -17,6 +17,7 @@
     border: none;
 }
 input, textarea {
+    color: var.$main-text-color;
     &:focus {
         outline: none;
         border: none;

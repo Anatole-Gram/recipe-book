@@ -26,25 +26,32 @@ export default function RecipeFilterBar() {
     const [isMyRecipes, setIsMyRecipes] = React.useState<boolean>(false)
     const isMyRecipeToggle = (condition: boolean): void => setIsMyRecipes(condition);
 
+    React.useEffect(() => {
+        console.log(`
+            Categories: ${categories};
+            SearchValue: ${searchValue};
+            IsMyRecipes: ${isMyRecipes};`)
+    })
 
     return (
         <form action="/recipes" method="GET" aria-label="фидьтры рецептов" className={styles.filterBar}>
 
-            <fieldset onClick={() => setShowCategories(!showCategories)} className={`${styles.categories} ${styles.categoriesWraper}`}>
+            <fieldset onClick={() => setShowCategories(!showCategories)} className={`${styles.categories}`}>
                 <span>категория</span>
                 <AngleDown   width="12"  height="12"/>
-                <SelectCategory checkList={categories} options={options} setValue={handleChangeCategories} display={showCategories} className={`${styles.categoriesSelect} ${styles.categoriesWraper}`}/>
+                <SelectCategory checkList={categories} options={options} setValue={handleChangeCategories} display={showCategories} className={`${styles.categoriesSelect}`}/>
             </fieldset>
+            
 
-            <fieldset className={styles.filterBarSearch}>
-                <SearchInput name="search" label="поиск рецепта" value={searchValue} handleChange={handleChangeSearch}/>
+            <fieldset>
+                <SearchInput name="search" placeholder="поиск" value={searchValue} handleChange={handleChangeSearch} className={styles.serchRecipes}/>
             </fieldset>
 
             <fieldset className={styles.ownRecipes}>
                 <span className={styles.ownRecipesOwn}>мои</span>
                 <ToggleBtn  action={isMyRecipeToggle} disabled={isMyRecipes} className={styles.ownRecipesBtn}/>
+                <span>все</span>
             </fieldset>
-
         </form>
     )
 }

@@ -5,34 +5,35 @@
     width: 35px;
     height: 17px;
     border-radius: 10px;
-    background: -webkit-linear-gradient(180deg, rgb(40, 43, 48), rgb(30, 33, 36) 100%);
-    background: -moz-linear-gradient(180deg, rgb(40, 43, 48), rgb(30, 33, 36) 100%);
-    background: linear-gradient(180deg, rgb(40, 43, 48), rgb(30, 33, 36) 100%);
+    background-color: var.$bg-color;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+    -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
 
     //toggleCircle
     &Circle {
         position: absolute;
-        top: 1px;
-        width: 13px;
-        height: 13px;
-        border: 1px solid #1E1E1F;
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
+        -webkit-box-shadow: -5px -5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+        -moz-box-shadow: -5px -5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+        box-shadow: -5px -5px 5px -5px rgba(34, 60, 80, 0.6) inset;
+
+        background: -webkit-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
+        background: -moz-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
+        background: linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
+
         transition: transform 0.25s ease;
         
         //toggleCircleOn
         &Of{
-            background: -webkit-linear-gradient(180deg, rgb(72, 78, 86), rgb(59, 64, 72) 100%);
-            background: -moz-linear-gradient(180deg, rgb(72, 78, 86), rgb(59, 64, 72) 100%);
-            background: linear-gradient(180deg, rgb(72, 78, 86), rgb(59, 64, 72) 100%);
             transform: translateX(0);
 
         }
 
         //toggleCircleOn
         &On{
-            background: -webkit-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
-            background: -moz-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
-            background: linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
             transform: translateX(20px);
         }
 

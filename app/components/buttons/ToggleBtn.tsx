@@ -6,10 +6,10 @@ import type { ToggleBtnProps } from "@/components/buttons/button.types";
 
 export default function RadioBtn(props: ToggleBtnProps) {
 
-    const { action, disabled } = props;
+    const { action, disabled, className} = props;
     const toggleAction = () => action(!disabled)
     return (
-        <div onClick={toggleAction} className={`${styles.toggle} ${!disabled ? styles.toggleOf : styles.toggleOn}`}>
+        <div onClick={toggleAction} className={`${styles.toggle} ${!disabled ? styles.toggleOf : styles.toggleOn} ${className ?? ''}`}>
             <div className={`${styles.toggleCircle} ${!disabled ? styles.toggleCircleOf : styles.toggleCircleOn}`}></div>
         </div>
     )

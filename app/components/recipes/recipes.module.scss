@@ -1,8 +1,9 @@
 @use "@/assets/styles/variables" as var;
 
-.recipes {
-
-
-    
+.title {
+    margin: var.$second-gap 0 var.$main-gap 0;
+    text-align: center;
 }
+
+
 
