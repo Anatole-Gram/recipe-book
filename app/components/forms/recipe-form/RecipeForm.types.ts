@@ -1,8 +1,7 @@
 
 import React from "react";
 
-
-import { RecipeSummary, RecipeIngredient, RecipeStep, RecipeSteps, RecipeIngredients} from "../../../store/recipe/recipeFormSlice.types"
+import type { RecipeSummary, RecipeIngredient, RecipeStep, RecipeSteps, RecipeIngredients} from "@/store/recipe/recipeFormSlice.types";
 
 //RecipeFormSummaryProps
 export type RecipeFormSummaryProps = {
