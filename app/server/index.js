@@ -5,9 +5,9 @@ const db = require('./models');
 
 // Функция для начального заполнения категорий
 async function seedCategories() {
-  const categoryNames = ['Завтраки', 'Супы', 'Десерты', 'Горячее', 'Закуски', 'Напитки'];
-  for (const name of categoryNames) {
-    await db.category.findOrCreate({ where: { name } });
+  const categoryNames = ['Прочее', 'Завтраки', 'Супы', 'Десерты', 'Горячее', 'Закуски', 'Напитки'];
+  for (const title of categoryNames) {
+    await db.category.findOrCreate({ where: { title } });
   }
   console.log('Seeded initial recipe categories');
 }

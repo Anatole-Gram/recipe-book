@@ -94,7 +94,7 @@ router.get('/recipes', async (req, res) => {
       include: [
         { model: db.recipeIngredient, as: 'ingredients' }, // ингредиенты
         { model: db.recipeStep, as: 'steps' },               // шаги
-        { model: db.category, as: 'categories', attributes: ['id', 'name'] } // категория
+        { model: db.category, as: 'categories', attributes: ['id', 'title'] } // категория
       ],
       order: [
         [ 'id', 'ASC' ]
@@ -111,7 +111,7 @@ router.get('/recipes', async (req, res) => {
         description: r.description,
         img: r.img,
         categoryId: r.categoryId,
-        category: category ? { id: category.id, name: category.name } : null,
+        category: category ? { id: category.id, title: category.title } : null,
         ingredients: r.ingredients || r.recipeIngredients || [],
         steps: r.steps || r.recipeSteps || [],
         createdAt: r.createdAt,
@@ -133,7 +133,7 @@ router.get('/recipes/:id', async (req, res) => {
       include: [
         { model: db.recipeIngredient, as: 'ingredients' }, 
         { model: db.recipeStep, as: 'steps' },               
-        { model: db.category, as: 'categories', attributes: ['id','name'] } 
+        { model: db.category, as: 'categories', attributes: ['id','title'] } 
       ]
     });
 
@@ -150,7 +150,7 @@ router.get('/recipes/:id', async (req, res) => {
       description: recipe.description,
       img: recipe.img,
       categoryId: recipe.categoryId,
-      category: category ? { id: category.id, name: category.name } : null,
+      category: category ? { id: category.id, title: category.title } : null,
       ingredients: recipe.ingredients || recipe.recipeIngredients || [],
       steps: recipe.steps || recipe.recipeSteps || [],
       createdAt: recipe.createdAt,
@@ -168,7 +168,7 @@ router.get('/recipes/:id', async (req, res) => {
 router.get('/categories', async (req, res) => {
   try {
     const categories = await db.category.findAll({
-      attributes: ['id', 'name'],
+      attributes: ['id', 'title'],
       order: [['id', 'ASC']]
     });
     res.json(categories);
