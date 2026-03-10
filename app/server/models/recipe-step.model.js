@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         recipeId: { 
             type: DataTypes.INTEGER, 
-            allowNull: false },
+            allowNull: false 
+        },
         img: {
             type: DataTypes.STRING,
         },
@@ -22,5 +23,5 @@ module.exports = (sequelize, DataTypes) => {
         }
 
     });
-    return Step
+    return Step;
 }

@@ -29,14 +29,26 @@ router.post('/recipes', async (req, res) => {
     const data = normalizeInput(req.body);
     const { summary, ingredients, steps } = data;
 
-    // создать рецепт
+    // Обязателен categoryId
+    if (!summary || !summary.categoryId) {
+      return res.status(400).json({ error: 'categoryId is required' });
+    }
+
+    // Проверка существования категории
+    const category = await db.category.findByPk(summary.categoryId);
+    if (!category) {
+      return res.status(400).json({ error: 'Category not found' });
+    }
+
+    // создать рецепт с categoryId
     const recipe = await db.recipe.create({
       title: summary.title,
       description: summary.description,
-      img: summary.img
+      img: summary.img,
+      categoryId: summary.categoryId
     }, { transaction: t });
 
-    //.ingredients
+    // .ingredients
     const ingRows = (ingredients || []).map(i => {
       const { title, count, unit, ...rest } = i;
       return {
@@ -52,7 +64,7 @@ router.post('/recipes', async (req, res) => {
       await db.recipeIngredient.bulkCreate(ingRows, { transaction: t });
     }
 
-    //.steps
+    // .steps
     const stepRows = (steps || []).map(s => {
       const { description, img, ...rest } = s;
       return {
@@ -81,25 +93,31 @@ router.get('/recipes', async (req, res) => {
     const recipes = await db.recipe.findAll({
       include: [
         { model: db.recipeIngredient, as: 'ingredients' }, // ингредиенты
-        { model: db.recipeStep, as: 'steps' }        // шаги
+        { model: db.recipeStep, as: 'steps' },               // шаги
+        { model: db.category, as: 'categories', attributes: ['id', 'name'] } // категория
       ],
       order: [
-        [ 'id', 'ASC' ],
-        [ 'id', 'ASC' ],
         [ 'id', 'ASC' ]
       ]
     });
 
-    const out = recipes.map(r => ({
-      id: r.id,
-      title: r.title,
-      description: r.description,
-      img: r.img,
-      ingredients: r.recipeIngredients || r.ingredients || [],
-      steps: r.recipeSteps || r.steps || [],
-      createdAt: r.createdAt,
-      updatedAt: r.updatedAt
-    }));
+    const out = recipes.map(r => {
+      // определить категорию из разных возможных имен
+      const category = r.categories || r.category;
+
+      return {
+        id: r.id,
+        title: r.title,
+        description: r.description,
+        img: r.img,
+        categoryId: r.categoryId,
+        category: category ? { id: category.id, name: category.name } : null,
+        ingredients: r.ingredients || r.recipeIngredients || [],
+        steps: r.steps || r.recipeSteps || [],
+        createdAt: r.createdAt,
+        updatedAt: r.updatedAt
+      };
+    });
 
     res.json(out);
   } catch (err) {
@@ -113,8 +131,9 @@ router.get('/recipes/:id', async (req, res) => {
   try {
     const recipe = await db.recipe.findByPk(id, {
       include: [
-        { model: db.recipeIngredient }, // ингредиенты
-        { model: db.recipeStep }        // шаги
+        { model: db.recipeIngredient, as: 'ingredients' }, 
+        { model: db.recipeStep, as: 'steps' },               
+        { model: db.category, as: 'categories', attributes: ['id','name'] } 
       ]
     });
 
@@ -122,15 +141,37 @@ router.get('/recipes/:id', async (req, res) => {
       return res.status(404).json({ message: 'Recipe not found' });
     }
 
-    // отсортировать шаги/ингредиенты по id на стороне сервера
-    if (recipe.recipeSteps && Array.isArray(recipe.recipeSteps)) {
-      recipe.recipeSteps.sort((a, b) => a.id - b.id);
-    }
-    if (recipe.recipeIngredients && Array.isArray(recipe.recipeIngredients)) {
-      recipe.recipeIngredients.sort((a, b) => a.id - b.id);
-    }
+    // определить категорию
+    const category = recipe.categories || recipe.category;
 
-    res.json(recipe); // вернёт объект рецепта + вложенные массивы
+    const result = {
+      id: recipe.id,
+      title: recipe.title,
+      description: recipe.description,
+      img: recipe.img,
+      categoryId: recipe.categoryId,
+      category: category ? { id: category.id, name: category.name } : null,
+      ingredients: recipe.ingredients || recipe.recipeIngredients || [],
+      steps: recipe.steps || recipe.recipeSteps || [],
+      createdAt: recipe.createdAt,
+      updatedAt: recipe.updatedAt
+    };
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+
+
+router.get('/categories', async (req, res) => {
+  try {
+    const categories = await db.category.findAll({
+      attributes: ['id', 'name'],
+      order: [['id', 'ASC']]
+    });
+    res.json(categories);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error', details: err.message });

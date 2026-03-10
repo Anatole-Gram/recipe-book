@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             allowNull: false,
         },
+        categoryId: { 
+            type: DataTypes.INTEGER, 
+            allowNull: false 
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,
