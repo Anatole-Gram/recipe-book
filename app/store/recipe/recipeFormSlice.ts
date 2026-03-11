@@ -8,11 +8,11 @@ const initialState: RecipeFormState = {
     step: 0,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
-    summaryTemplate: {title: '', img: '', description: ''},
+    summaryTemplate: {title: '', categoryId: '0', img: '', description: ''},
     ingredientTemplate: {title: '', count: 0, unit: ''},
     stepTemplate: {description: '', img: ''},
     // recipe: [{}, {}, {}],
-    recipe: [{title: 'суп', img: '', description: 'суп куриный за 30 минут'}, {'id123':{title: 'вода', count: 1, unit: 'л'}}, {'id:321': {description: 'вскипятить воду', img: ''}} ],
+    recipe: [{title: 'суп', categoryId: '1', img: '', description: 'суп куриный за 30 минут'}, {'id123':{title: 'вода', count: 1, unit: 'л'}}, {'id:321': {description: 'вскипятить воду', img: ''}} ],
     submitting: false,
     submitError: null,
     submittedId: null,
@@ -51,7 +51,7 @@ const recipeFormSlice = createSlice({
         },
 
         // Summary
-        setSummaryTemplate: (state, action: PayloadAction<Partial<RecipeIngredient>>): void=> {
+        setSummaryTemplate: (state, action: PayloadAction<Partial<RecipeSummary>>): void=> {
             Object.assign(state.summaryTemplate, action.payload);
         },
         setSummary: (state) => {

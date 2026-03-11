@@ -1,5 +1,6 @@
 export interface RecipeSummary {
     title: string;
+    categoryId: string;
     img: string;
     description: string;
 };

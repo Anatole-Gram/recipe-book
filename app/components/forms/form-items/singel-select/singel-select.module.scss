@@ -3,7 +3,9 @@
     transform: scale(1.1);
     transition: transform 0.25s ease-in;
 }
-
+.hide {
+    display: none;
+}
 .title {
     display: inline-block;
 }

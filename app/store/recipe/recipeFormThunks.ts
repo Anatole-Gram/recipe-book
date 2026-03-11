@@ -22,6 +22,8 @@ export const submitRecipe = createAsyncThunk<
       const state = getState().recipeForm as any;
       const payload = buildRecipePayload(state);
 
+      console.log(payload)
+
       const res = await fetch('/api/recipes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
