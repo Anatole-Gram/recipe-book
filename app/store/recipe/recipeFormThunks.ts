@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '@/store/store';
-import type { RecipeFormState, recipeDataToSubmit, RecipeSummary } from './recipeFormSlice.types';
+import type {RecipeFormState, recipeDataToSubmit, RecipeSummary } from '@/store/store.types';
 
 function buildRecipePayload(state: RecipeFormState): recipeDataToSubmit {
   return {

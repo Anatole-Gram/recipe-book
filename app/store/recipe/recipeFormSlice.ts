@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "@/store/store";
-import type { RecipeSummary, RecipeIngredient, RecipeIngredients, RecipeStep, RecipeSteps, RecipeTuple, RecipeFormState, ValidTemplate} from "./recipeFormSlice.types"
+import type { RecipeFormState, RecipeSummary, RecipeIngredient, RecipeStep, RecipeTuple, ValidTemplate } from "@/store/store.types";
 import { submitRecipe } from "./recipeFormThunks";
+
 
 const initialState: RecipeFormState = {
     step: 0,

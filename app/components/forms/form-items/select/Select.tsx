@@ -4,7 +4,7 @@ import styles from "./select.module.scss";
 type MultiSelectProps = {
     checkList: string[];
     setValue: (id: string[]) => void;
-    options: {label: string, id: string}[];
+    options: {title: string, id: string}[];
     display: boolean;
     id?: string;
     className?: string;
@@ -36,7 +36,7 @@ export default function Select(props: MultiSelectProps) {
                 const checked = checkList.includes(opt.id)
                 return (
                     <label key={opt.id} className={`${checked ?  styles.labelChecked : ''}`}>
-                        {opt.label}
+                        {opt.title}
                         <input type="checkbox" id={opt.id} onChange={handleChange} />
                     </label>
                 )}

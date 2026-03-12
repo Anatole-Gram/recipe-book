@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { Categories } from '../store.types';
+import type { Categories } from '@/store/store.types';
+import type { RootState } from '@/store/store';
 
 
 export const fetchCategories = createAsyncThunk<
@@ -13,7 +14,33 @@ void,
         if(!response.ok) {
             return rejectWithValue('Failed to fetch categories.');
         };
-        const data: Categories = await response.json();
-        return data 
+        const data: Categories = await response.json()
+            .then(data => data.map((category: {id: number, title: string}): {id:string, title: string} => ({id: String(category.id), title: category.title})));
+        return data
     }
 );
+
+export const fetchRecipes = createAsyncThunk<
+any[],
+string,
+{ state: RootState; rejectValue: string }
+    >(
+        'recipes/fetchRecipes',
+        async (url, {getState, rejectWithValue }) => {
+
+            try {
+                const state = getState().recipes
+                const res = await fetch(url)
+                if(!res.ok) {
+                    const text = await res.text();
+                    return rejectWithValue(text || `HTTP ${res.status}`)
+                }
+
+                const data = await res.json()
+                return data;
+
+            } catch (err: any) {
+                return rejectWithValue(err?.message || 'Network error');
+            }
+        }
+    )

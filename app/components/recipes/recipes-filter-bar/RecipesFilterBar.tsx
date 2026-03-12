@@ -4,16 +4,26 @@ import ToggleBtn from "@/components/buttons/ToggleBtn";
 import SelectCategory from "@/components/forms/form-items/select/Select";
 import AngleDown from "@/assets/svg/angle-down.svg";
 import SearchInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store/store";
+// import type { Categories } from "@/store/store.types";
+import { fetchRecipes } from "@/store/recipes/recipesThunks";
+import { AppDispatch } from "@/store/store";
 
 
 
 export default function RecipeFilterBar() {
 
+    const dispatch = useDispatch<AppDispatch>()
+
+
     //SelectCategory
-    const [categories, setCategories] = React.useState<string[]>([]);
-    const handleChangeCategories = (value: string[]): void => setCategories(value);
-    const options = [{label: 'первое', id: 'id1'}, {label: 'второе', id: 'id12'}, {label: 'салат', id: 'id123'}, {label: 'компот', id: 'id4'},];
+    const {categories, recipes} = useSelector((state: RootState) => state.recipes)
+
+    const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
+    const handleChangeCategories = (value: string[]): void => setSelectedCategories(value);
     const [showCategories, setShowCategories] = React.useState(false)
+
 
     //SearchInput
     const [searchValue, setSearchValue] = React.useState('');
@@ -26,20 +36,40 @@ export default function RecipeFilterBar() {
     const [isMyRecipes, setIsMyRecipes] = React.useState<boolean>(false)
     const isMyRecipeToggle = (condition: boolean): void => setIsMyRecipes(condition);
 
+    const urlForFiltredFetch = React.useMemo(() => {
+        const params = new URLSearchParams();
+        if(searchValue) {
+            params.set('search', searchValue);
+        };
+        if(selectedCategories.length) {
+            params.set('categories', selectedCategories.join(','));
+        };
+        const qryStr = params.toString()
+        const url = `/api/recipes${qryStr ? '?'+qryStr : null}`;
+        return url
+        
+    }, [selectedCategories, searchValue]);
+
+    const fetchFiltredRecipes = React.useCallback(() => {
+        dispatch(fetchRecipes(urlForFiltredFetch))
+    }, [urlForFiltredFetch])
+
     React.useEffect(() => {
-        console.log(`
-            Categories: ${categories};
-            SearchValue: ${searchValue};
-            IsMyRecipes: ${isMyRecipes};`)
-    })
+        fetchFiltredRecipes();
+    }, [selectedCategories, searchValue]);
+
+    React.useEffect(() =>{
+        console.log(recipes)
+    }, [recipes])
+    
 
     return (
-        <form action="/recipes" method="GET" aria-label="фидьтры рецептов" className={styles.filterBar}>
+        <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={styles.filterBar}>
 
             <fieldset onClick={() => setShowCategories(!showCategories)} className={`${styles.categories}`}>
                 <span>категория</span>
                 <AngleDown   width="12"  height="12"/>
-                <SelectCategory checkList={categories} options={options} setValue={handleChangeCategories} display={showCategories} className={`${styles.categoriesSelect}`}/>
+                <SelectCategory checkList={selectedCategories} options={categories} setValue={handleChangeCategories} display={showCategories} className={`${styles.categoriesSelect}`}/>
             </fieldset>
             
 
