@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models'); 
 
+const { Op } = db.Sequelize; // операции Sequelize
+
 // Вспомогательная функция нормализации входа
 function normalizeInput(input) {
   if (Array.isArray(input) && input.length === 3) {
@@ -90,20 +92,44 @@ router.post('/recipes', async (req, res) => {
 
 router.get('/recipes', async (req, res) => {
   try {
+    // новые query-параметры
+    const { search, categories } = req.query;
+
+    // формируем условия WHERE для модели Recipe
+    const where = {};
+
+    // Фильтр по имени (title)
+    if (search) {
+      where.title = { [Op.like]: `%${search}%` };
+    }
+
+    // Фильтр по категориям (categoryId)
+    if (categories) {
+      const ids = Array.isArray(categories)
+        ? categories.map(Number)
+        : String(categories).split(',').map(v => Number(v));
+
+      const cleaned = ids.filter(n => !Number.isNaN(n));
+      if (cleaned.length) {
+        where.categoryId = { [Op.in]: cleaned };
+      }
+    }
+
+    // сам запрос
     const recipes = await db.recipe.findAll({
+      where,
       include: [
-        { model: db.recipeIngredient, as: 'ingredients' }, // ингредиенты
-        { model: db.recipeStep, as: 'steps' },               // шаги
-        { model: db.category, as: 'categories', attributes: ['id', 'title'] } // категория
+        { model: db.recipeIngredient, as: 'ingredients' },
+        { model: db.recipeStep, as: 'steps' },
+        { model: db.category, as: 'category', attributes: ['id', 'title'] } // исправлено: 'category'
       ],
       order: [
-        [ 'id', 'ASC' ]
+        ['id', 'ASC']
       ]
     });
 
     const out = recipes.map(r => {
-      // определить категорию из разных возможных имен
-      const category = r.categories || r.category;
+      const category = r.category;
 
       return {
         id: r.id,
@@ -133,7 +159,7 @@ router.get('/recipes/:id', async (req, res) => {
       include: [
         { model: db.recipeIngredient, as: 'ingredients' }, 
         { model: db.recipeStep, as: 'steps' },               
-        { model: db.category, as: 'categories', attributes: ['id','title'] } 
+        { model: db.category, as: 'category', attributes: ['id','title'] } 
       ]
     });
 
