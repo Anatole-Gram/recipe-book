@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { Categories } from '@/store/store.types';
+import type { Categories, DBRecipes } from '@/store/store.types';
 import type { RootState } from '@/store/store';
 
 
@@ -21,7 +21,7 @@ void,
 );
 
 export const fetchRecipes = createAsyncThunk<
-any[],
+DBRecipes,
 string,
 { state: RootState; rejectValue: string }
     >(

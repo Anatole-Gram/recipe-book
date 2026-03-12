@@ -62,3 +62,38 @@ export type recipeDataToSubmit = {summary: RecipeSummary, ingredients: RecipeIng
 //
 export type RequestProperty = { status: string; error: string | null };
 
+
+interface DBRecord {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+interface RecipeChildren {
+    recipeId: number;
+    extras: null | string;
+}
+
+interface DBIngredient extends DBRecord, RecipeChildren {
+    count: string;
+    title: string;
+    unit: string;
+}
+
+interface DBStep extends DBRecord, RecipeChildren {
+    description: string;
+    img: string;
+}
+
+
+export type DBRecipe = {
+    categoryId: number;
+    description: string;
+    img: string;
+    title: string;
+    category: {id: number, title: string};
+    ingrdients: DBIngredient[];
+    steps: DBStep[];
+};
+
+export type DBRecipes = DBRecipe[];

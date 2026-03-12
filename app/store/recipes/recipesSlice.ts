@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Categories, RequestProperty } from "../store.types";
+import { Categories, RequestProperty, DBRecipes } from "../store.types";
 import { fetchCategories, fetchRecipes }from "./recipesThunks";
 
 type RecipesState = {
     categories: Categories;
-    recipes: any[];
+    recipes: DBRecipes;
     requests: {categories: RequestProperty, recipes: RequestProperty}
 };
 
@@ -51,7 +51,7 @@ const recipesSlice = createSlice({
             state.requests.recipes.status = 'loading recipes';
             state.requests.recipes.error = null;
         })
-        .addCase(fetchRecipes.fulfilled, (state, action: PayloadAction<any[]>) => {
+        .addCase(fetchRecipes.fulfilled, (state, action: PayloadAction<DBRecipes>) => {
             state.requests.recipes.status = 'succeeded';
             state.recipes = action.payload;
         })
