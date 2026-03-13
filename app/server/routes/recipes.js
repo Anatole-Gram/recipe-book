@@ -100,7 +100,7 @@ router.get('/recipes', async (req, res) => {
 
     // Фильтр по имени (title)
     if (search) {
-      where.title = { [Op.like]: `%${search}%` };
+      where.title = { [Op.like]: `%${search.trim().split(/\s+/)}%` };
     }
 
     // Фильтр по категориям (categoryId)

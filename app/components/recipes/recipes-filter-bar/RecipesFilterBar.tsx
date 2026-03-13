@@ -6,19 +6,21 @@ import AngleDown from "@/assets/svg/angle-down.svg";
 import SearchInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-// import type { Categories } from "@/store/store.types";
 import { fetchRecipes } from "@/store/recipes/recipesThunks";
 import { AppDispatch } from "@/store/store";
 
 
+type RecipeFilterBarProps = {
+    className?: string;
+}
+export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
-export default function RecipeFilterBar() {
-
-    const dispatch = useDispatch<AppDispatch>()
+    const {className} = props;
+    const dispatch = useDispatch<AppDispatch>();
 
 
     //SelectCategory
-    const {categories, recipes} = useSelector((state: RootState) => state.recipes)
+    const {categories, list} = useSelector((state: RootState) => state.recipes)
 
     const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
     const handleChangeCategories = (value: string[]): void => setSelectedCategories(value);
@@ -45,7 +47,7 @@ export default function RecipeFilterBar() {
             params.set('categories', selectedCategories.join(','));
         };
         const qryStr = params.toString()
-        const url = `/api/recipes${qryStr ? '?'+qryStr : null}`;
+        const url = `/api/recipes${qryStr ? '?'+qryStr : ''}`;
         return url
         
     }, [selectedCategories, searchValue]);
@@ -58,13 +60,8 @@ export default function RecipeFilterBar() {
         fetchFiltredRecipes();
     }, [selectedCategories, searchValue]);
 
-    React.useEffect(() =>{
-        console.log(recipes)
-    }, [recipes])
-    
-
     return (
-        <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={styles.filterBar}>
+        <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={`${styles.filterBar} ${className ?? ''}`}>
 
             <fieldset onClick={() => setShowCategories(!showCategories)} className={`${styles.categories}`}>
                 <span>категория</span>

@@ -86,7 +86,7 @@ interface DBStep extends DBRecord, RecipeChildren {
 }
 
 
-export type DBRecipe = {
+export interface DBRecipe extends DBRecord {
     categoryId: number;
     description: string;
     img: string;

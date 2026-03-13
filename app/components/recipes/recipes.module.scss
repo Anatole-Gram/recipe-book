@@ -5,5 +5,19 @@
     text-align: center;
 }
 
+.recipes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var.$main-gap;
+}
+
+.hide {
+    display: none;
+}
+
+
+
+
 
 

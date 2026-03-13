@@ -84,11 +84,6 @@ export default function RecipeForm() {
 
     const stepsRecord = recipeForm.recipe[2];
 
-
-    React.useEffect(()=> {
-        console.log(recipeForm.recipe)
-    }, [recipeForm.recipe])
-
     const componentsProps: RecipeFormProps[] = [
         {setDataItem: handleChangeSummary, data: summary},
         {setDataItem: handleChangeIngredient, setDataList: addIngredient, data: {list: ingredientsRecord, item: ingredient, canSave: validIngredient},},

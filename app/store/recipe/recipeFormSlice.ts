@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "@/store/store";
 import type { RecipeFormState, RecipeSummary, RecipeIngredient, RecipeStep, RecipeTuple, ValidTemplate } from "@/store/store.types";
 import { submitRecipe } from "./recipeFormThunks";
 
@@ -12,8 +11,7 @@ const initialState: RecipeFormState = {
     summaryTemplate: {title: '', categoryId: '0', img: '', description: ''},
     ingredientTemplate: {title: '', count: 0, unit: ''},
     stepTemplate: {description: '', img: ''},
-    // recipe: [{}, {}, {}],
-    recipe: [{title: 'суп', categoryId: '1', img: '', description: 'суп куриный за 30 минут'}, {'id123':{title: 'вода', count: 1, unit: 'л'}}, {'id:321': {description: 'вскипятить воду', img: ''}} ],
+    recipe: [{}, {}, {}],
     submitting: false,
     submitError: null,
     submittedId: null,

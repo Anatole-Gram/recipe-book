@@ -4,13 +4,13 @@ import { fetchCategories, fetchRecipes }from "./recipesThunks";
 
 type RecipesState = {
     categories: Categories;
-    recipes: DBRecipes;
+    list: DBRecipes;
     requests: {categories: RequestProperty, recipes: RequestProperty}
 };
 
 const initialState: RecipesState = {
     categories: [],
-    recipes: [],
+    list: [],
     requests: {
         categories: {
             status: '',
@@ -53,7 +53,7 @@ const recipesSlice = createSlice({
         })
         .addCase(fetchRecipes.fulfilled, (state, action: PayloadAction<DBRecipes>) => {
             state.requests.recipes.status = 'succeeded';
-            state.recipes = action.payload;
+            state.list = action.payload;
         })
         .addCase(fetchRecipes.rejected, (state, action) => {
             state.requests.recipes.status = 'failed';

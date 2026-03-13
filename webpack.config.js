@@ -50,10 +50,23 @@ module.exports = {
                     'sass-loader'
                 ],
             },
-            {
-                test: /\.svg$/,
-                use: ['@svgr/webpack'],
+            // {
+            //     test: /\.svg$/,
+            //     use: ['@svgr/webpack'],
+            // },
+             { test: /.svg/i, oneOf: [ { resourceQuery: /url/, 
+                type: 'asset/resource',
+                generator: { 
+                    filename: 'static/media/[name].[contenthash][ext]' 
+                } 
+            }, 
+            
+            { issuer: /\.[jt]sx?/, use: ['@svgr/webpack'] } ] }, 
+            { test: /.(png|jpe?g|gif|webp)$/i, 
+                type: 'asset/resource', 
+                generator: { filename: 'static/media/[name].[contenthash][ext]' } 
             },
+
         ],
     },
 

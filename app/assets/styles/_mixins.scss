@@ -15,10 +15,28 @@
     -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
     box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
 };
+
+
+
 @mixin grayGradientBg() {
     background: -webkit-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
     background: -moz-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
     background: linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);}
+    
+//Recipes
+@mixin recipesGrayBox() {
+    color: var.$main-text-color;
+    border: thin outset #e3e4ef;
+    border-radius: 4px;
+
+    @include grayGradientBg;
+    -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+    -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+    box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+}
+
+
+
 @mixin arch() {
     clip-path: polygon(0 0, 100% 0, 100% 100%);
 };
