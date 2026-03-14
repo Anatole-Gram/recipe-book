@@ -1,0 +1,31 @@
+@use "@/assets/styles/variables" as var;
+
+.steps {
+
+    // stepsTitle
+    &Title {
+        margin-bottom: var.$main-gap;
+    }
+
+}
+
+.step {
+    height: 150px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 120px 1fr;
+    grid-template-areas: 
+        'img description';
+
+
+    // stepImg
+    &Img {
+        grid-area: img;
+        align-self: center;
+    }
+    // stepDescription
+    &Description {
+        grid-area: description;
+        font-size: 0.8rem;
+    }
+}
