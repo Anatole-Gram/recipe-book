@@ -1,6 +1,10 @@
 import React from "react";
 import styles from "./recipe-card.module.scss";
 import type { DBRecipe } from "@/store/store.types";
+import Summary from "@/components/recipes/recipe-card/recipe-card-summary/RecipeCardSummary";
+import Ingredients from "@/components/recipes/recipe-card/recipe-ingredients/RecipeIngredients";
+import Steps from "@/components/recipes/recipe-card/recipe-steps/RecipeSteps";
+
 
 type RecipeCardProps = {
     recipe: DBRecipe;
@@ -8,11 +12,19 @@ type RecipeCardProps = {
 }
 
 export default function RecipeCard(props: RecipeCardProps) {
-    const {recipe, className} = props
+
+    const {id, title, img, description, ingredients, steps} = props.recipe
+    const {recipe,  className} = props
+
+    React.useEffect( () => {
+        console.log( '' )
+    } )
 
     return (
         <div className={`${styles.card} ${className ?? ''}`}>
-            <span>{recipe.title }</span>
+            <Summary id={id} title={title} img={img} description={description} />
+            <Ingredients list={ingredients}/>
+            <Steps list={steps}/>
         </div>
     )
 } 

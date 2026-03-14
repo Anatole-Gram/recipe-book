@@ -79,12 +79,14 @@ interface DBIngredient extends DBRecord, RecipeChildren {
     title: string;
     unit: string;
 }
+export type DBIngredients = DBIngredient[]
 
 interface DBStep extends DBRecord, RecipeChildren {
     description: string;
     img: string;
 }
 
+export type DBSteps = DBStep[] 
 
 export interface DBRecipe extends DBRecord {
     categoryId: number;
@@ -92,7 +94,7 @@ export interface DBRecipe extends DBRecord {
     img: string;
     title: string;
     category: {id: number, title: string};
-    ingrdients: DBIngredient[];
+    ingredients: DBIngredients;
     steps: DBStep[];
 };
 

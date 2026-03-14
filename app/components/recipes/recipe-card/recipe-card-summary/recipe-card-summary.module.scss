@@ -11,22 +11,10 @@
         'img title'
         'img description';
     gap: var.$second-gap;
-    padding: var.$second-gap;
-    box-sizing: border-box;
-    margin-bottom: var.$main-gap;
-
-
-    border: thin outset #e3e4ef;
-    border-radius: 5px;
-
-    -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
-    -moz-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
-    box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
 }
 
 .title {
     grid-area: title;
-    // text-align: center;
     font-size: 0.8rem;
 }
 .img {

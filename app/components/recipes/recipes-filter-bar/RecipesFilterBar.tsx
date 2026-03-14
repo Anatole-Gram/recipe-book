@@ -61,7 +61,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
     }, [selectedCategories, searchValue]);
 
     return (
-        <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={`${styles.filterBar} ${className ?? ''}`}>
+        <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={`${className} ${styles.filterBar}`}>
 
             <fieldset onClick={() => setShowCategories(!showCategories)} className={`${styles.categories}`}>
                 <span>категория</span>

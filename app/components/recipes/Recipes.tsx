@@ -25,9 +25,10 @@ export default function Recipes(props: any) {
 
         <>
                 {showRecipe && <Recipe  recipe={currentRecipe as DBRecipe}/>}
-                <h4 className={styles.title}>Рецепты</h4>
-                <FilterBar className={showRecipe ? styles.hide : ''}/> 
 
+
+                <h4 className={`${styles.title} ${showRecipe ? styles.hide : ''}`}>Рецепты</h4>
+                <FilterBar className={showRecipe ? styles.hide : ''}/> 
                 <RecipesList recipes={recipesList} selectRecipe={setCurrentRecipe} className={`${styles.recipes} ${showRecipe ? styles.hide : ''}`}/>
 
         </>

@@ -8,13 +8,13 @@ type RecipeCardSummaryProps = {
     title: string;
     img: string;
     description: string;
-    showRecipe: () => void;
+    showRecipe?: () => void;
     className?: string;
 }
 export default function RecipeCardSummary(props: RecipeCardSummaryProps) {
     const {id, title, img, description, showRecipe, className} = props;
     return(
-        <div onClick={showRecipe} className={`${styles.card} ${className ?? ''}`}>
+        <div onClick={showRecipe} className={`${styles.card} ${className ?? ''} recipeCard`}>
             <span className={styles.title}>{title}</span>
             <img src={!img ? imgStub : img} alt="product image" width={100} height={100} className={styles.img}/>
             <p className={styles.description}>{description}</p>
