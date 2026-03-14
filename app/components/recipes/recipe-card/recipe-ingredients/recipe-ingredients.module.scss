@@ -1,0 +1,22 @@
+@use "@/assets/styles/variables" as var;
+
+// ingredient
+.ingredient {
+    margin-top: var.$second-gap;
+    padding: 3px;
+    border: thin #8f8f8f inset;
+    border-radius: 3px;
+
+    // ingredientTitle
+    &Title{
+        font-size: 0.8rem;
+    }
+    // ingredientCount
+    &Count{
+        display: inline-block;
+        width: 100%;
+        font-size: 0.75rem;
+        text-align: right;
+        background-color: #9f9f9f;
+    }
+}
