@@ -14,11 +14,7 @@ type RecipeCardProps = {
 export default function RecipeCard(props: RecipeCardProps) {
 
     const {id, title, img, description, ingredients, steps} = props.recipe
-    const {recipe,  className} = props
-
-    React.useEffect( () => {
-        console.log( '' )
-    } )
+    const { className } = props
 
     return (
         <div className={`${styles.card} ${className ?? ''}`}>

@@ -6,6 +6,7 @@ type RecipesState = {
     categories: Categories;
     list: DBRecipes;
     requests: {categories: RequestProperty, recipes: RequestProperty}
+    recipeIsVisible: boolean;
 };
 
 const initialState: RecipesState = {
@@ -21,6 +22,7 @@ const initialState: RecipesState = {
             error: null
         }
     },
+    recipeIsVisible: false,
 };
 
 
@@ -28,7 +30,9 @@ const recipesSlice = createSlice({
     name: 'recipes-sclice',
     initialState,
     reducers: {
-
+        setRecipeIsVisible: (state, action: PayloadAction<boolean>) => {
+            state.recipeIsVisible = action.payload;
+        }
     },
 
     extraReducers: (builder) => {
@@ -62,5 +66,5 @@ const recipesSlice = createSlice({
     }
 });
 
-
+export const { setRecipeIsVisible } = recipesSlice.actions;
 export default recipesSlice.reducer;

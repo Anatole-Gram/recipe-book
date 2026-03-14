@@ -1,7 +1,5 @@
 import React from "react";
-import styles from "./recipe-form-menu.module.scss";
-import ArrowBtn from "@/components/buttons/ArrowBtn";
-import CrossBtn from "@/components/buttons/CrossBtn";
+import MenuPanel from "@/components/footer/footer-menu/FooterMenu";
 import { RootState, AppDispatch} from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setSummary, setIngredients,  setRecipeStep, stepForward, stepBack, setStepEditor} from "@/store/recipe/recipeFormSlice";
@@ -89,14 +87,11 @@ export default function RecipeFormMenu(props: any) {
     const cross = actionRecord.cross[index]
 
     return(
-        <div className={styles.menu}>
-            <ArrowBtn action={back.action} disabled={back.permission} direction={0} className={styles.btn }/>
 
-
-            <CrossBtn action={cross.action} isPlus={crossBtnState} className={`${styles.cross} ${styles.btn}`} />
-
-
-            <ArrowBtn action={next.action} disabled={next.permission} direction={1} className={styles.btn }/>
-        </div>
+        <MenuPanel 
+            back={{ action: back.action, permission: back.permission }}
+            cross={{ action: cross.action, state: crossBtnState }}
+            next={{ action: next.action, permission: next.permission }}
+        />
     )
 }
