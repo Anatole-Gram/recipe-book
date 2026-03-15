@@ -1,5 +1,5 @@
 import React from "react";
-import MenuPanel from "@/components/footer/footer-menu/FooterMenu";
+import MenuPanel from "@/components/footer/footer-menu/FooterMenu"; 
 import { RootState, AppDispatch} from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setSummary, setIngredients,  setRecipeStep, stepForward, stepBack, setStepEditor} from "@/store/recipe/recipeFormSlice";
@@ -8,11 +8,10 @@ import { minMax } from "@/utils/base";
 
 
 
-export default function RecipeFormMenu(props: any) {
+export default function RecipeFormMenu() {
     const dispatch = useDispatch<AppDispatch>();
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
     const {step, valid, recipe, stepEditor}  = recipeForm;
-    const {submitting, submitError, submittedId, } = recipeForm;
     const ingredientsPermission: boolean =  Boolean(Object.keys(recipe[1]).length);
 
 

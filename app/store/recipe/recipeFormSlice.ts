@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-import type { RecipeFormState, RecipeSummary, RecipeIngredient, RecipeStep, RecipeTuple, ValidTemplate } from "@/store/store.types";
+import type { RecipeFormState, RecipeSummary, RecipeIngredient, RecipeStep, ValidTemplate } from "@/store/store.types";
 import { submitRecipe } from "./recipeFormThunks";
 
 
 const initialState: RecipeFormState = {
     step: 0,
+    formIsActive: false,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', categoryId: '0', img: '', description: ''},
@@ -45,6 +46,9 @@ const recipeFormSlice = createSlice({
     name: "recipe-form",
     initialState,
     reducers: {
+
+        setFormIsActive: (state, action: PayloadAction<boolean>) => { state.formIsActive = action.payload; },
+
         setValid: (state, action: PayloadAction<Partial<ValidTemplate>>): void => {
             Object.assign(state.valid, action.payload)
         },
@@ -54,7 +58,7 @@ const recipeFormSlice = createSlice({
             Object.assign(state.summaryTemplate, action.payload);
         },
         setSummary: (state) => {
-            state.valid.summary && Object.assign(state.recipe[0], state.summaryTemplate);
+            if(state.valid.summary) { Object.assign(state.recipe[0], state.summaryTemplate) };
             increment(state);
         },
 
@@ -128,7 +132,7 @@ const recipeFormSlice = createSlice({
         }
         },
         setStepEditor: (state, action: PayloadAction<boolean>) => {
-            (state.stepEditor !== action.payload) && (state.stepEditor = action.payload);
+            if((state.stepEditor !== action.payload) ) { state.stepEditor = action.payload };
         },
         // Menu 
         stepForward: (state): void => {
@@ -155,5 +159,5 @@ const recipeFormSlice = createSlice({
   }
 });
 
-export const { stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, setStepEditor, resetStepTemplate, setRecipeStep, removeStep} = recipeFormSlice.actions;
+export const { setFormIsActive, stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, setStepEditor, resetStepTemplate, setRecipeStep, removeStep} = recipeFormSlice.actions;
 export default recipeFormSlice.reducer

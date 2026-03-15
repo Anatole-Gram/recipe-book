@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./recipe-card-summary.module.scss";
 import imgStub from "@/assets/images/recipe-img-stub.png";
 
-
 type RecipeCardSummaryProps = {
     id: number | string;
     title: string;
@@ -12,7 +11,10 @@ type RecipeCardSummaryProps = {
     className?: string;
 }
 export default function RecipeCardSummary(props: RecipeCardSummaryProps) {
+
+
     const {id, title, img, description, showRecipe, className} = props;
+
     return(
         <div onClick={showRecipe} className={`${styles.card} ${className ?? ''} recipeCard`}>
             <span className={styles.title}>{title}</span>

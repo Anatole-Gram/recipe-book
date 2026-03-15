@@ -1,15 +1,18 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Categories, RequestProperty, DBRecipes } from "../store.types";
 import { fetchCategories, fetchRecipes }from "./recipesThunks";
 
 type RecipesState = {
+    recipeIsActive: boolean;
+    recipeSectionId: string [];
     categories: Categories;
     list: DBRecipes;
     requests: {categories: RequestProperty, recipes: RequestProperty}
-    recipeIsVisible: boolean;
 };
 
 const initialState: RecipesState = {
+    recipeIsActive: false,
+    recipeSectionId: [],
     categories: [],
     list: [],
     requests: {
@@ -21,8 +24,7 @@ const initialState: RecipesState = {
             status: '',
             error: null
         }
-    },
-    recipeIsVisible: false,
+    }
 };
 
 
@@ -30,9 +32,12 @@ const recipesSlice = createSlice({
     name: 'recipes-sclice',
     initialState,
     reducers: {
-        setRecipeIsVisible: (state, action: PayloadAction<boolean>) => {
-            state.recipeIsVisible = action.payload;
-        }
+        setRecipeIsActive: (state, action: PayloadAction<boolean>) => {
+            state.recipeIsActive = action.payload;
+        },
+        setrecipeSectionId: (state, action: PayloadAction<string[]>) => { 
+            state.recipeSectionId = action.payload; 
+        },
     },
 
     extraReducers: (builder) => {
@@ -66,5 +71,5 @@ const recipesSlice = createSlice({
     }
 });
 
-export const { setRecipeIsVisible } = recipesSlice.actions;
+export const { setRecipeIsActive, setrecipeSectionId } = recipesSlice.actions;
 export default recipesSlice.reducer;

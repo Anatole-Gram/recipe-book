@@ -5,7 +5,7 @@ import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredien
 import RecipeFormSteps from "./recipe-steps/RecipeFormSteps";
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate} from "@/store/recipe/recipeFormSlice";
+import { setFormIsActive, setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate } from "@/store/recipe/recipeFormSlice";
 import { RecipeFormComponent, RecipeFormProps } from "./RecipeForm.types";
 import { validateSummary, validateIngredient, validateStep} from "@/utils/validation/RecipeFormValidators";
 import { minMax } from "@/utils/base";
@@ -18,6 +18,17 @@ const COMPONENTS: RecipeFormComponent[] = [
 ];
 
 export default function RecipeForm() {
+
+    React.useEffect(() => {
+        dispatch(setFormIsActive(true));
+    }, [])
+
+    React.useEffect(() => () => {
+        dispatch(setFormIsActive(false));
+    }, [])
+
+
+
 
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
     const dispatch = useDispatch()
@@ -75,7 +86,7 @@ export default function RecipeForm() {
     }, [step])
 
     const handleChangeStep =  React.useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
-        const {name, value, id} = e.target;
+        const { name, value } = e.target;
         dispatch(setStepTemplate({[name]: value}));
     }, [])
 

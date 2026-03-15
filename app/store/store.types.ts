@@ -41,6 +41,7 @@ export interface ValidTemplate {
 //RecipeForm State
 export interface RecipeFormState {
     step: number;
+    formIsActive: boolean;
     stepEditor: boolean;
     valid: ValidTemplate;
     summaryTemplate: RecipeSummary;

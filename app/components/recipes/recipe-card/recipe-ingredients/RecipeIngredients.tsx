@@ -11,9 +11,6 @@ type RecipeIngredientsProps = {
 export default function RecipeIngredients(props: RecipeIngredientsProps) {
     const { list, className} = props;
 
-    React.useEffect(() => {
-        console.log(list)
-    })
 
     return (
         <ul className={`${className} recipeCard`}>
@@ -21,11 +18,11 @@ export default function RecipeIngredients(props: RecipeIngredientsProps) {
             <h5> список ингредиентов </h5>
 
             {list.map(item => {
-                const {id, title, count, unit} = item;
-
+                const { title, count, unit}  = item;
+                const id = `ingredient-${item.id}`;
                 return (
                     
-                        <li key={ id } className={styles.ingredient}> 
+                        <li key={ id } id={id} className={styles.ingredient}> 
                             <p className={ styles.ingredientTitle }>{ title} </p>
                             <span className={ styles.ingredientCount }>{ `${ count } ${ unit }` }</span>
                         </li>
