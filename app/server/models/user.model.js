@@ -10,10 +10,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        secondName: {
+        img: {
             type: DataTypes.STRING,
-            allowNull: false,
-        },
+        }
     });
     return User
 }

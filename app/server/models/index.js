@@ -13,10 +13,13 @@ db.sequelize = sequelize;
 db.user = require("./user.model.js")(sequelize, Sequelize);
 db.auth = require("./auth.model.js")(sequelize, Sequelize);
 
+db.category = require("./user.model.js")(sequelize, Sequelize);
 db.category = require("./recipe-category.model.js")(sequelize, Sequelize);
 db.recipe = require("./recipe-summary.model.js")(sequelize, Sequelize);
 db.recipeIngredient = require("./recipe-ingredient.model.js")(sequelize, Sequelize);
 db.recipeStep = require("./recipe-step.model.js")(sequelize, Sequelize);
+
+
 
 db.category.hasMany(db.recipe, { as: 'recipes', foreignKey: 'categoryId', onDelete: 'CASCADE' });
 db.recipe.belongsTo(db.category, { as: 'category', foreignKey: 'categoryId' });
