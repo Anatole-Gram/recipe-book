@@ -100,3 +100,11 @@ export interface DBRecipe extends DBRecord {
 };
 
 export type DBRecipes = DBRecipe[];
+
+//user 
+export type User =  {
+    id: number;
+    name: string;
+    img: string;
+    log: string;
+  }

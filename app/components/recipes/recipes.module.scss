@@ -1,10 +1,5 @@
 @use "@/assets/styles/variables" as var;
 
-.title {
-    margin: var.$second-gap 0 var.$main-gap 0;
-    text-align: center;
-}
-
 .recipes {
     display: flex;
     flex-direction: column;

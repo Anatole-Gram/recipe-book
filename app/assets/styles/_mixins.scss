@@ -10,7 +10,6 @@
 
 @mixin whiteInputBox() {
     border-radius: var.$secondBR;
-    padding: var.$second-gap;
     -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
     -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
     box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6) inset;
@@ -22,6 +21,13 @@
     background: -webkit-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
     background: -moz-linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);
     background: linear-gradient(180deg, rgb(236, 236, 236), rgb(201, 201, 201) 93%);}
+
+//content
+@mixin contentShadow() {
+    -webkit-box-shadow: 0px -1px 10px 4px rgba(34, 60, 80, 0.07) inset;
+    -moz-box-shadow: 0px -1px 10px 4px rgba(34, 60, 80, 0.07) inset;
+    box-shadow: 0px -1px 10px 4px rgba(34, 60, 80, 0.07) inset;
+}
     
 //Recipes
 @mixin recipesGrayBox() {

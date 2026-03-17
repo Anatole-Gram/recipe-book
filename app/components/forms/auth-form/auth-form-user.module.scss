@@ -1,0 +1,27 @@
+@use "@/assets/styles/variables" as var;
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    margin: 0 auto;
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 50px;
+
+    a {
+        margin-top: 32px;
+        text-align: center;
+        color: gray;
+    }
+}
+
+.inputField {
+    margin-bottom: 36px;
+    font-size: 0.6rem;
+
+    & input {
+        height: var.$inputHS;
+        padding: var.$input-padding;
+    }
+}

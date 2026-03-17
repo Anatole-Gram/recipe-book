@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
 
-    & h2 {
+    & h3 {
         color: var.$text-on-black;
         font-family: "Hachi Maru Pop";
         margin-bottom: 8px;
@@ -19,7 +19,7 @@
     }
     & a {
         font: {
-            size: 0.8rem;
+            size: 0.85rem;
             family: "Rubik";
         }
     }

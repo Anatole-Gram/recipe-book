@@ -24,8 +24,6 @@ export default function Recipes() {
         <>
                 {currentRecipe && <Recipe  recipe={currentRecipe as DBRecipe} />}
 
-                <h4 className={`${styles.title} ${currentRecipe ? styles.hide : ''}`}>Рецепты</h4>
-
                 <FilterBar className={currentRecipe ? styles.hide : ''}/> 
                 
                 <RecipesList recipes={ list } selectRecipe={setCurrentRecipe} className={`${styles.recipes} ${currentRecipe ? styles.hide : ''}`}/>

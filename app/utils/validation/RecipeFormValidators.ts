@@ -1,5 +1,6 @@
 import { RecipeSummary, RecipeIngredient, RecipeStep } from "../../store/recipe/recipeFormSlice.types";
 import {CYRILLIC_1_PLUS, CYRILLIC_3_PLUS, CYRILLIC_10_PLUS, NON_ZERO_NUMBER, IMG_URL_REGEX} from "../../constans/regex";
+import { auth } from "@/server/models";
 
 
 // Общий тип правила валидации: возвращает сообщение об ошибке или undefined 
@@ -51,4 +52,5 @@ const stepSchema: ValidationSchema<RecipeStep> = {
 };
 
 export const validateStep = (data: RecipeStep) => validateWithSchema(data, stepSchema);
+
 

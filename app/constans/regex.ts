@@ -3,3 +3,5 @@ export const CYRILLIC_3_PLUS = (v: string): boolean => (v.match(/\p{Script=Cyril
 export const CYRILLIC_10_PLUS = (v: string): boolean => (v.match(/\p{Script=Cyrillic}/gu) || []).length >= 10
 export const NON_ZERO_NUMBER = /^-?\d+(.\d+)?$/;
 export const IMG_URL_REGEX = /^https?:\/\/.+\.(?:png|jpe?g|gif|webp|svg)(?:\?.*)?$/i;
+export const LOG_REGEX = /^(?=.{3,20})[A−Za−z0−9.−]+/ //(3–20 символов, только латиница, цифры, . _ -)
+export const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; //Минимум 8 символов, хотя бы одна строчная, одна заглавная и цифра

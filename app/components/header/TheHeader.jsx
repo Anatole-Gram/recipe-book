@@ -6,7 +6,7 @@ export default function TheHeader () {
 
     return (
         <div className={styles.header}>
-            <h2>Recipe Book</h2>
+            <h3>Recipe Book</h3>
             <Navigation />
         </div>
     );

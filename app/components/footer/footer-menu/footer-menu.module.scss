@@ -1,14 +1,14 @@
 @use "@/assets/styles/_variables.scss" as var;
 
 .btn { 
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
     color: var.$text-on-black;
 }
 .menu {
     display: flex;
-    width: calc(100% + var.$main-gap * 2);
-    justify-content: space-between;
+    flex: 1 1 auto;
+    justify-content: space-around;
     align-items: center;
     background-color: var.$main-color;
     
@@ -21,9 +21,7 @@
         };
         //menuBtnClose
         &Close {
-            &:hoover {
-                background-color: red;
-            }
+
         };
         //menu_btn--active
         &Active {

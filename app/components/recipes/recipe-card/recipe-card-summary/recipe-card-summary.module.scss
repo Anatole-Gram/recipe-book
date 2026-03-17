@@ -20,8 +20,8 @@
 .img {
     grid-area: img;
     align-self: center;
-    border-radius: 3px;
-            // border: thin solid #8c8c8c;
+    border-radius: var.$main-box-radius;
+    border: thin groove #8c8c8c80;
 }
 .description {
     grid-area: description;

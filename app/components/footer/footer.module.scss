@@ -5,6 +5,7 @@
     grid-area: footer;
     z-index: 1;
     display: flex;
-    height: var.$footer-height;
+    justify-content: space-around;
+    height: 100%;
     background-color: var.$main-color;
  };
