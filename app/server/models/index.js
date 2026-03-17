@@ -20,14 +20,50 @@ db.recipeIngredient = require("./recipe-ingredient.model.js")(sequelize, Sequeli
 db.recipeStep = require("./recipe-step.model.js")(sequelize, Sequelize);
 
 
+db.user.hasOne(db.auth, { 
+  as: 'auth', 
+  foreignKey: 'userId', 
+  onDelete: 'CASCADE' 
+});
+db.auth.belongsTo(db.user, { 
+  as: 'user', 
+  foreignKey: 'userId' 
+});
 
-db.category.hasMany(db.recipe, { as: 'recipes', foreignKey: 'categoryId', onDelete: 'CASCADE' });
-db.recipe.belongsTo(db.category, { as: 'category', foreignKey: 'categoryId' });
+db.category.hasMany(db.recipe, 
+  { 
+    as: 'recipes', 
+    foreignKey: 'categoryId', 
+    onDelete: 'CASCADE' 
+  });
+db.recipe.belongsTo(db.category, 
+  { 
+    as: 'category', 
+    foreignKey: 'categoryId' 
+  });
 
-db.recipe.hasMany(db.recipeIngredient, { as: 'ingredients', foreignKey: 'recipeId', onDelete: 'CASCADE' });
-db.recipeIngredient.belongsTo(db.recipe, { as: 'recipe', foreignKey: 'recipeId' });
+db.recipe.hasMany(db.recipeIngredient, 
+  { 
+    as: 'ingredients', 
+    foreignKey: 'recipeId', 
+    onDelete: 'CASCADE' 
+  });
+db.recipeIngredient.belongsTo(db.recipe, 
+  { 
+    as: 'recipe', 
+    foreignKey: 'recipeId' 
+  });
 
-db.recipe.hasMany(db.recipeStep, { as: 'steps', foreignKey: 'recipeId', onDelete: 'CASCADE' });
-db.recipeStep.belongsTo(db.recipe, { as: 'recipe', foreignKey: 'recipeId' });
+db.recipe.hasMany(db.recipeStep, 
+  { 
+    as: 'steps', 
+    foreignKey: 'recipeId', 
+    onDelete: 'CASCADE' 
+  });
+db.recipeStep.belongsTo(db.recipe, 
+  { 
+    as: 'recipe', 
+    foreignKey: 'recipeId' 
+  });
 
 module.exports = db;
