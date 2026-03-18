@@ -6,15 +6,20 @@ import { LOG_REGEX, PASS_REGEX } from "@/constans/regex";
 import { submitUser } from "@/store/user/userThunks";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
+import { useNavigate } from "react-router-dom";
 
 
 export default function RegistrationForm() {
 
     const dispatch = useDispatch<AppDispatch>()
-    const user = useSelector((state: RootState) => state.user.data)
+   
+    const navigate = useNavigate()
+    const isAuth = useSelector((state: RootState) => state.user);
     React.useEffect(() => {
-        console.log(user)
-    }, [user])
+        if(isAuth) {
+            navigate('/main', {replace: true})
+        }
+    }, [isAuth])
 
 
     const [name, setName] = React.useState<string>('')

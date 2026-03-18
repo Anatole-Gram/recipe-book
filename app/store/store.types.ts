@@ -105,6 +105,23 @@ export type DBRecipes = DBRecipe[];
 export type User =  {
     id: number;
     name: string;
-    img: string;
+    img: string | null;
     log: string;
   }
+
+
+interface UserAuth {
+
+    auth: {
+        id: number;
+        log: string;
+        userId: number;
+    }
+}
+export interface DBUser  extends User, UserAuth, DBRecord {}
+
+interface UserLogged extends User, DBRecord {}
+export interface DBUserLogged {
+    message: string;
+    user: UserLogged;
+}
