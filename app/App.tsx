@@ -17,7 +17,6 @@ export default function App() {
 
     const {authInitialized} = useSelector((state: RootState) => state.user)
 
-
     React.useEffect(() => {
         const init = async () => {
             const token = getToken();
@@ -27,7 +26,9 @@ export default function App() {
                 promises.push(dispatch(setUserData(+token)).unwrap());
             }
 
-            await Promise.all(promises);
+            await Promise.all(promises)
+                .then(data => {console.log(data)})
+                .catch(err => {console.log(err)})
             dispatch(setAuthInitialized(true))
         }
         init()

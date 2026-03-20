@@ -1,36 +1,45 @@
 import React from "react";
-
+import type { ClassNamesShortInput } from "./classNames";
 
 type SchortTextInputProps = {
     name: string;
     value: string;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    textArea?: boolean;
     label?: string;
     placeholder?: string; 
-    className?: string;
+    classNames?: ClassNamesShortInput;
 }
 
 
 export default function ShortTextInput(props: SchortTextInputProps) {
     
-    const {name, value, handleChange, label, className, placeholder} = props
+    const {name, value, handleChange, label, placeholder, textArea} = props;
+    const classFor = props.classNames
+
+    const commonProps = {
+        placeholder: placeholder ? placeholder : "",
+        name: name,
+        value: value,
+        onChange: handleChange,
+        id: name,
+        className: classFor?.input
+    } 
+
 
     return(
-        <div className={className}>
+        <div className={classFor?.wrapper}>
 
-                <input 
-                    placeholder={placeholder ? placeholder : ""}
-                    name={name}
-                    value={value}
-                    onChange={handleChange}
-                    id={name}/>
+            {textArea ? <textarea {...commonProps} /> : <input {...commonProps} />}
 
-{               label ? (<label htmlFor={name}
-                    aria-label={label} >
+            { label ? (<label htmlFor={name}
+                        aria-label={label} 
+                        className={classFor?.label}>
 
                         {label}
 
-                </label>) : null}
+                    </label>) : null 
+            }
         </div>
     )
 }

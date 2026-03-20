@@ -10,7 +10,7 @@ import AddStepBtn from "@/components/buttons/BigBlackBtn";
 import RecipeStepEditor from "@/components/forms/recipe-form/recipe-steps/recipe-step/RecipeStep";
 
 
-export default function(props: RecipeFormStepsProps | any) {
+export default function RecipeFormStep (props: RecipeFormStepsProps | any) {
 
     const { list, item, canSave } = props.data;
     const { setDataList, setDataItem } = props;

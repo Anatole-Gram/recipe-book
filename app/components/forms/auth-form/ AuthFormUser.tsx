@@ -5,6 +5,7 @@ import { loginUser } from "@/store/user/userThunks";
 import { RootState, AppDispatch } from "@/store/store";
 import { Link } from "react-router-dom";
 import ShortInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
+import { dynamicLabel } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для ShortInput.
 import SubmitBtn from "@/components/buttons/BigBlackBtn";
 import { LOG_REGEX, PASS_REGEX } from "@/constans/regex"
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -26,7 +27,9 @@ export default function AuthUser() {
         setValidPass(PASS_REGEX.test(pass));
     }, [pass])
 
-    const handleChange = (setter: (str: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => { setter(e.target.value) };
+    const handleChange = (setter: (str: string) => void) => (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => { setter(e.target.value) };
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -45,8 +48,8 @@ export default function AuthUser() {
     return (
         <form action="/users/login" method="POST" aria-label="авторизация пользователя" className={styles.authForm}>
 
-            <ShortInput name="log" value={log} handleChange={handleChange(setLog)} label="Логин" className={`${styles.inputField} recipeFormInputWraper`}/>
-            <ShortInput name="pass" value={pass} handleChange={handleChange(setPass)} label="Пароль" className={`${styles.inputField} recipeFormInputWraper`}/>
+            <ShortInput name="log" value={log} handleChange={handleChange(setLog)} label="Логин" classNames={ dynamicLabel }/>
+            <ShortInput name="pass" value={pass} handleChange={handleChange(setPass)} label="Пароль" classNames={ dynamicLabel }/>
             <SubmitBtn disabled={validLog && validPass} btnText="войти" action={login}/>
              <Link to={`/registration`}>зарегестрироваться</Link>
 

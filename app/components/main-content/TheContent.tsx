@@ -13,8 +13,10 @@ export default function TheContent () {
         <section className={styles.content}> 
             <Routes>
 
-                <Route path={`/login`} element={ <AuthUser /> } />
+                <Route path={`/login`} element={ <AuthUser /> } /> 
+
                 <Route path={`/registration`} element={ <RegistrationForm /> } />
+                
                 <Route path={`/recipes`} element={ <Recipes /> } />
 
                 <Route element={<ProtectedRoute />} > 
@@ -23,6 +25,7 @@ export default function TheContent () {
                 </Route>
 
                 <Route path={`/`} element={<Recipes />}/>
+
 
             </Routes>
         </section>

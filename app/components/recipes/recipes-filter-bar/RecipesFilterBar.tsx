@@ -4,6 +4,7 @@ import ToggleBtn from "@/components/buttons/ToggleBtn";
 import SelectCategory from "@/components/forms/form-items/select/Select";
 import AngleDown from "@/assets/svg/angle-down.svg";
 import SearchInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
+import { simpleInput } from "@/components/forms/form-items/short-text-input/classNames" // classNames для SearchInput.
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import { fetchRecipes } from "@/store/recipes/recipesThunks";
@@ -29,7 +30,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
     //SearchInput
     const [searchValue, setSearchValue] = React.useState('');
-    const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const value = e.target.value;
         setSearchValue(value);
     };
@@ -71,7 +72,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
             
 
             <fieldset>
-                <SearchInput name="search" placeholder="поиск" value={searchValue} handleChange={handleChangeSearch} className={styles.serchRecipes}/>
+                <SearchInput name="search" placeholder="поиск" value={searchValue} handleChange={handleChangeSearch} classNames={simpleInput}/>
             </fieldset>
 
             <fieldset className={styles.ownRecipes}>

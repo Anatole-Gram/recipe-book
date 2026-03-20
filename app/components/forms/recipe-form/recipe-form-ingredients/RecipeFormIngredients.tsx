@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./recipe-form-ingredients.module.scss"
-import ShortTextInput from "../../form-items/short-text-input/ShortTextInput";
+import Ingredient from "../../form-items/short-text-input/ShortTextInput";
+import { dynamicLabel } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для Ingredien.
 import AddButton from "@/components/buttons/BigBlackBtn";
 import {  RecipeIngredientsProps } from "../RecipeForm.types";
 import { useDispatch } from "react-redux";
@@ -37,12 +38,12 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
         <fieldset className={styles.ingrredientsForm}>
             <div className={styles.inputWraper}>
                 
-                <ShortTextInput 
+                <Ingredient 
                     label="название" 
                     name="title"
                     value={item.title} 
                     handleChange={changeItem}
-                    className={`recipeFormInputWraper recipeFormShortInput ${styles.inputTitle}`}/>
+                    classNames={ dynamicLabel }/>
                 
                 <div className={`recipeFormInputWraper recipeFormShortInput ${styles.inputCount}`}>
 

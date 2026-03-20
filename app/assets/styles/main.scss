@@ -60,68 +60,55 @@ body {
 
 
 
-// RecipeForm
-.recipeForm {
 
-    // RecipeFormInputWraper
-    &InputWraper{
+// main-input
+.main-input {
+    height: 24px;
+    flex: 1 1 auto;
+    box-sizing: border-box;
+    padding: var.$input-padding;
+    @include mixins.font-rules(0.8rem, 'Rubik');
+    background-color: var.$whiteColor;
+    border-radius: var.$input-radius;
+    @include mixins.input-shadow;
+
+    // main-input-wraper
+    &-wraper {
         position: relative;
-        width: 100%;
+        // width: 100%;
         display: flex;
-        flex-direction: column;
+        // flex-direction: column;
 
-        & input, textarea{
-            box-sizing: border-box;
-            flex: 1 1 auto;
-            border-radius: var.$secondBR;
-            @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
-            @include mixins.whiteInputBox;
+        // main-input-wraper--dynamic-label
+        &--dynamic-label {
+
+            & input:focus + label, input:not(:placeholder-shown) + label, textarea:focus + label, textarea:not(:placeholder-shown) + label{
+                top: 0; 
+                transform: translateY(-100%); 
+                color: #555; 
+                // padding: 0 2px; 
+            }
         }
+    }
 
-        & label {
+    // main-input-label
+    &-label {
+        @include mixins.font-rules(0.9rem, 'Rubik');
+        color: #888; 
+
+        // main-input-label--dynamic
+        &--dynamic {
             position: absolute; 
             left: 3px;
-            transform: translateY(calc(var.$inputHS / 2 - var.$input-padding*2)); 
-            color: #888; 
-            font-size: 16px; 
+            top: var.$input-padding;
             pointer-events: none; 
             transition: all 0.2s ease; 
             background: transparent; 
-            padding: 0 3px; 
-            border-radius: 4px; 
             z-index: 1; 
-            @include mixins.font-rules(var.$inppuFieldFS, var.$inputFieldFF);
-        }
-
-        & input:focus + label, input:not(:placeholder-shown) + label, textarea:focus + label, textarea:not(:placeholder-shown) + label{
-            top: 0; 
-            transform: translateY(-100%); 
-            color: #555; 
-            padding: 0 2px; 
-        }
-    }
-
-    // recipeFormShortInput
-    &ShortInput {
-
-        & input {
-            height: var.$inputHS;
-        }
-        & label {
-            top: 50%;
-        }
-    }
-
-    //recipeFormLongInput
-    &LongInput {
-        
-        height: 200px;
-
-        & label {
-            top: 10%;
         }
     }
 }
+
 
 
 //recipe
@@ -140,5 +127,57 @@ body {
         -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
         -moz-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
         box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
+    }
+}
+
+
+
+//recipe-form
+
+// description
+.description {
+    height: 200px;
+}
+
+//
+.photo {
+    
+    // photo-wrapper
+    &-wrapper {
+        align-self: flex-start;
+        display: flex;
+        width: 150px;
+        flex-direction: column-reverse;
+
+    }
+    // photo-image
+    &-image {
+        border-radius: 10px;
+        margin-top: 20px;
+        align-self: center;
+
+
+    }
+    // photo-label
+    &-label {
+        height: 24px;
+        box-sizing: border-box;
+        padding: var.$input-padding;
+        @include mixins.font-rules(0.8rem, 'Rubik');
+        background-color: var.$whiteColor;
+        border-radius: var.$input-radius;
+        @include mixins.input-shadow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    // photo-title
+    &-title {
+        margin-bottom: 3px;
+        text-align: end;
+        @include mixins.font-rules(0.9rem, 'Rubik');
+        color: #888; 
     }
 }

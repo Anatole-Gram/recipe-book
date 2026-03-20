@@ -2,8 +2,10 @@ import React from "react";
 
 export type BtnProps = {
     action: (param?:any) => void;
+    id?: string;
     className?: string;
     btnText?: string;
+    chilgren?: any; 
 }
 
 type BntConditional = {

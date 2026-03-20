@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./registration-form.module.scss"
 import ShortInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
+import { dynamicLabel } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для RecipeName.
 import SubmitBtn from "@/components/buttons/BigBlackBtn";
 import { LOG_REGEX, PASS_REGEX } from "@/constans/regex";
 import { submitUser } from "@/store/user/userThunks";
@@ -14,7 +15,7 @@ export default function RegistrationForm() {
     const dispatch = useDispatch<AppDispatch>()
    
     const navigate = useNavigate()
-    const isAuth = useSelector((state: RootState) => state.user);
+    const isAuth = useSelector((state: RootState) => state.user.isAuth);
     React.useEffect(() => {
         if(isAuth) {
             navigate('/main', {replace: true})
@@ -51,15 +52,16 @@ export default function RegistrationForm() {
         dispatch(submitUser(body))
     }
 
-    const handleChange = (setter: (str: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => { setter(e.target.value) };
+    const handleChange = (setter: (str: string) => void) => (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => { setter(e.target.value) };
 
     return (
         <form action="/users" method="POST" aria-label="форма регистрации нового пользователя" className={styles.regForm}>
-            <ShortInput name="name" value={name} handleChange={handleChange(setName)} label="Имя" className={`${styles.inputField} recipeFormInputWraper`}/>
-            <ShortInput name="log" value={log} handleChange={handleChange(setLog)} label="Логин" className={`${styles.inputField} recipeFormInputWraper`}/>
-            <ShortInput name="pass" value={pass} handleChange={handleChange(setPass)} label="Пароль" className={`${styles.inputField} recipeFormInputWraper`}/>
+            <ShortInput name="name" value={name} handleChange={handleChange(setName)} label="Имя" classNames={ dynamicLabel }/>
+            <ShortInput name="log" value={log} handleChange={handleChange(setLog)} label="Логин" classNames={ dynamicLabel }/>
+            <ShortInput name="pass" value={pass} handleChange={handleChange(setPass)} label="Пароль" classNames={ dynamicLabel }/>
             <SubmitBtn disabled={validLog && validPass && validName} btnText="Зарегистроваться" action={submitData}/>
-            
         </form>
     )
 }
