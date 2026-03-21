@@ -6,6 +6,7 @@ type SchortTextInputProps = {
     value: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     textArea?: boolean;
+    type?: string;
     label?: string;
     placeholder?: string; 
     classNames?: ClassNamesShortInput;
@@ -14,11 +15,12 @@ type SchortTextInputProps = {
 
 export default function ShortTextInput(props: SchortTextInputProps) {
     
-    const {name, value, handleChange, label, placeholder, textArea} = props;
+    const {name, value, handleChange, label, placeholder, textArea, type} = props;
     const classFor = props.classNames
 
     const commonProps = {
         placeholder: placeholder ? placeholder : "",
+        type: type ? `${type}` : 'text',
         name: name,
         value: value,
         onChange: handleChange,
