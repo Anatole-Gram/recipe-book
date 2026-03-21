@@ -5,12 +5,18 @@ import { dynamicLabel, ClassNamesShortInput } from "@/components/forms/form-item
 import RecipePhoto from "@/components/forms/form-items/photo-input/PhotoInput";
 import { smallColumn } from "@/components/forms/form-items/photo-input/classNames"; ////classNames для RecipePhoto
 import Categories from "@/components/forms/recipe-form/recipe-categories/RecipeCategories";
-import { RecipeFormSummaryProps } from "../RecipeForm.types";
+import type { RecipeSummary } from "@/store/store.types"
 import classNamesExpander from "@/utils/classNames/expander";
 
 
+export type  RecipeFormSummaryProps = {
+    setDataItem: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    summary: RecipeSummary;
+};
+
+
 export default function RecipeFormSummary(props: RecipeFormSummaryProps | any) {
-    const item =props.data 
+    const { title, img, description } = props.summary;
     const changeItem = props.setDataItem
 
     return(
@@ -19,7 +25,7 @@ export default function RecipeFormSummary(props: RecipeFormSummaryProps | any) {
             <InputComponent 
                 label="название" 
                 name="title" 
-                value={item.title} 
+                value={title} 
                 handleChange={changeItem} 
                 classNames={ dynamicLabel }
             />
@@ -32,18 +38,16 @@ export default function RecipeFormSummary(props: RecipeFormSummaryProps | any) {
                     label="Загрузить" 
                     title="изображение блюда"
                     name="img" 
-                    value={item.img} 
+                    value={img} 
                     handleChange={changeItem} 
                     classNames={smallColumn} />
 
             </div>
 
-
-                
             <InputComponent 
                 label="описание" 
                 name="description" 
-                value={item.description} 
+                value={description} 
                 handleChange={changeItem} 
                 textArea={true} 
                 classNames={classNamesExpander<ClassNamesShortInput>('input', 'description', dynamicLabel)} />

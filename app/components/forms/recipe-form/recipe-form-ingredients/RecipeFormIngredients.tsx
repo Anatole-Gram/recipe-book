@@ -1,29 +1,31 @@
 import React from "react";
 import styles from "./recipe-form-ingredients.module.scss"
-import Ingredient from "../../form-items/short-text-input/ShortTextInput";
-import { dynamicLabel } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для Ingredien.
+import Input from "../../form-items/short-text-input/ShortTextInput";
+import { dynamicLabel, ClassNamesShortInput } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для Ingredien.
+import ClassNameExpander from "@/utils/classNames/expander"
 import AddButton from "@/components/buttons/BigBlackBtn";
-import {  RecipeIngredientsProps } from "../RecipeForm.types";
 import { useDispatch } from "react-redux";
 import { setIngredientTemplate, removeIngredient } from "@/store/recipe/recipeFormSlice";
-import { RecipeIngredient } from "@/store/recipe/recipeFormSlice.types";
 import IngredientList from "@/components/forms/form-items/interactive-list/InteractiveList";
+import type { RecipeIngredients, RecipeIngredient } from "@/store/store.types";
 
- 
+export type RecipeIngredientsProps = {
+    ingredients: RecipeIngredients;
+    ingredient: RecipeIngredient;
+    canSave: boolean;
+    setIngredient: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+    setIngredients: () => void;
+ }
 
 export default function RecipeFormIngredients(props: RecipeIngredientsProps | any) {
 
-    const {list, canSave} = props.data
-    const item = props.data.item
-    const changeItem = props.setDataItem
-    const setList = props.setDataList
+    const {ingredients, ingredient, canSave, setIngredient, setIngredients} = props;
 
     const dispatch = useDispatch()
 
-    //for list item
-    const content = (item: any) => {
+    const content = (item: RecipeIngredient): string => {
         return (
-            `${item.title}`
+            `${item.title.slice(0, 30)}...`
         )
     };
     const remove = (id: string): void => {
@@ -36,58 +38,39 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps | an
 
     return (
         <fieldset className={styles.ingrredientsForm}>
+
             <div className={styles.inputWraper}>
                 
-                <Ingredient 
+                <Input 
                     label="название" 
                     name="title"
-                    value={item.title} 
-                    handleChange={changeItem}
-                    classNames={ dynamicLabel }/>
+                    value={ingredient.title} 
+                    handleChange={setIngredient}
+                    classNames={ ClassNameExpander<ClassNamesShortInput>('wrapper', 'ingredients_input-name', dynamicLabel) }/>
                 
-                <div className={`recipeFormInputWraper recipeFormShortInput ${styles.inputCount}`}>
+                <Input 
+                    type="number"
+                    label="количество"
+                    name="count"
+                    value={ingredient.count}
+                    handleChange={setIngredient}
+                    classNames={ClassNameExpander<ClassNamesShortInput>('wrapper', 'ingredients_input-count', dynamicLabel) }/>
 
-                    <input 
-                        type="number" 
-                        aria-label="count"
-                        placeholder=""
-                        name="count"
-                        value={item.count} 
-                        onChange={changeItem}
-                        id="count"/>
-
-                    <label  
-                        htmlFor="count"
-                        className={styles.labe}>
-                            кол-во
-                    </label>
-
-                </div>
-
-                <div className={`recipeFormInputWraper recipeFormShortInput ${styles.inputUnit}`}>
-
-                    <input 
-                        type="text"
-                        aria-placeholder="unit"
-                        placeholder=""
-                        name="unit"
-                        value={item.unit} onChange={changeItem}
-                        id="unit"
-                        className={styles.input}/>
-
-                    <label htmlFor="unit"
-                        className={styles.label}>
-                        ед. измерения
-                    </label>
-
-                </div>
-
-                <AddButton btnText='добавить' action={setList} disabled={!canSave}
-                    className={styles.inputBtn}
-                    />
+                <Input 
+                    label="ед. измерения"
+                    name="unit"
+                    value={ingredient.unit} 
+                    handleChange={setIngredient}
+                    classNames={ClassNameExpander<ClassNamesShortInput>('wrapper', 'ingredients_input-unit', dynamicLabel) }/>
+                    
+                <AddButton 
+                    btnText='добавить' 
+                    action={setIngredients} 
+                    disabled={!canSave}
+                    className={styles.inputBtn} />
             </div>
 
-            <IngredientList<RecipeIngredient> list={Object.entries(list)} contentFn={content} remove={remove} edite={edite}/>
+            <IngredientList<RecipeIngredient> list={Object.entries(ingredients)} contentFn={content} remove={remove} edite={edite}/>
 
         </fieldset>
     )

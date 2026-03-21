@@ -7,7 +7,7 @@ import {IMG_URL_REGEX} from "@/constans/regex";
 type PhotoInputProps = {
     name: string;
     value: string;
-    handleChange: () => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     label?: string; 
     title?: string; 
     classNames?: ClassNamesPhotoInput;

@@ -3,7 +3,15 @@ import styles from "./interactive-list-item.module.scss";
 import ItemMenu from "./intrractive-list-item-menu/InteractiveListItemMenu";
 
 
-export default function InteractiveListItem(props: any) {
+type InteractiveListItemProps = {
+    id: string;
+    index: number;
+    content: string;
+    remove: (id: string) => void;
+    edite: (id: string) => void;
+}
+
+export default function InteractiveListItem(props: InteractiveListItemProps) {
     const {id, index, content, remove, edite} = props;
 
         //menu

@@ -11,9 +11,3 @@ export const dynamicLabel: ClassNamesShortInput = {
     input: 'main-input', 
     label: 'main-input-label main-input-label--dynamic'
 };
-
-// export const extendClassName = (name: 'wrapper' | 'input' | 'label', value: string, classNames: ClassNamesShortInput) => {
-//     const clone = {...classNames};
-//     clone[name] += ` ${value}`;
-//     return clone;
-// }

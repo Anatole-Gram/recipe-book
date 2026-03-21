@@ -5,9 +5,9 @@ import { submitRecipe } from "./recipeFormThunks";
 
 
 const initialState: RecipeFormState = {
-    step: 0,
+    step: 2,
     formIsActive: false,
-    stepEditor: false,
+    stepEditor: true,
     valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', categoryId: '0', img: '', description: ''},
     ingredientTemplate: {title: '', count: 0, unit: ''},

@@ -141,7 +141,8 @@ body {
 
 //
 .photo {
-    
+
+//SmallColumn wrapper(revers) 
     // photo-wrapper
     &-wrapper {
         align-self: flex-start;
@@ -155,8 +156,6 @@ body {
         border-radius: 10px;
         margin-top: 20px;
         align-self: center;
-
-
     }
     // photo-label
     &-label {
@@ -179,5 +178,67 @@ body {
         text-align: end;
         @include mixins.font-rules(0.9rem, 'Rubik');
         color: #888; 
+    }
+//RegularColumn wrapper
+    // photo-wraper-regular
+    &-wrapper--reg {
+        justify-content: start;
+        display: flex;
+        height: 300px;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    // photo-title--reg
+    &-title--reg {
+        margin-bottom: 3px;
+        text-align: center;
+        @include mixins.font-rules(0.9rem, 'Rubik');
+        color: #888; 
+    }
+    &-label--reg {
+        width: 150px;
+        height: 24px;
+        box-sizing: border-box;
+        padding: var.$input-padding;
+        @include mixins.font-rules(0.8rem, 'Rubik');
+        background-color: var.$whiteColor;
+        border-radius: var.$input-radius;
+        @include mixins.input-shadow;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    // photo-image--reg
+    &-image--reg {
+        border-radius: 10px;
+        margin-top: 20px;
+        align-self: center;
+    }
+    
+}
+
+.ingredients {
+
+    // ingredients_input
+    &_input {
+        
+        // ingredients_input-name
+        &-name {
+            grid-area: title;
+        }
+        
+        // ingredients_input-count
+        &-count {
+            grid-area: count;
+
+            & input {
+                width: 100%;
+            }
+        }
+        // ingredients_input-unit
+        &-unit {
+            grid-area: unit;
+        }
     }
 }

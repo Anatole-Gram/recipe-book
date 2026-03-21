@@ -1,6 +1,5 @@
 import React from "react";
-import { RecipeFormStepsProps } from "@/components/forms/recipe-form/RecipeForm.types"
-import { RecipeStep } from "@/store/recipe/recipeFormSlice.types";
+import type { RecipeStep, RecipeSteps } from "@/store/recipe/recipeFormSlice.types";
 import styles from "./recipe-steps.module.scss";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,16 +9,21 @@ import AddStepBtn from "@/components/buttons/BigBlackBtn";
 import RecipeStepEditor from "@/components/forms/recipe-form/recipe-steps/recipe-step/RecipeStep";
 
 
+export type RecipeFormStepsProps = {
+    steps: RecipeSteps;
+    step: RecipeStep;
+    setStep: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 export default function RecipeFormStep (props: RecipeFormStepsProps | any) {
 
-    const { list, item, canSave } = props.data;
-    const { setDataList, setDataItem } = props;
+    const { steps, step, setStep } = props;
 
     const dispatch = useDispatch();
 
     //for list item
-    const content = (item: any) => {
-        return `${item.description}`;
+    const content = (item: RecipeStep) => {
+        return `${item.description.slice(0, 30)}...`;
     };
 
     const remove = (id: string): void => {
@@ -33,7 +37,7 @@ export default function RecipeFormStep (props: RecipeFormStepsProps | any) {
 
     //for step ediror
     const editor = useSelector((state: RootState) => state.recipeForm.stepEditor);
-    const addStep = () => {
+    const addStep = (): void => {
         dispatch(resetStepTemplate());
         dispatch(setStepEditor(true));
     }
@@ -41,10 +45,10 @@ export default function RecipeFormStep (props: RecipeFormStepsProps | any) {
     return(
         <fieldset className={styles.stepsWraper}>
             
-            { editor ? <RecipeStepEditor template={item} templateHandle={setDataItem} /> :
+            { editor ? <RecipeStepEditor step={step} handleChange={setStep} /> :
                 <>
                     <AddStepBtn btnText="новый шаг" action={addStep}/>
-                    <InteractiveList<RecipeStep> list={Object.entries(list)} contentFn={content} remove={remove} edite={edite}/>
+                    <InteractiveList<RecipeStep> list={Object.entries(steps)} contentFn={content} remove={remove} edite={edite}/>
                 </>
             }
 

@@ -8,12 +8,13 @@
 .inputWraper {
     display:  grid;
     grid-template-rows: 36px 36px 36px;
-    grid-template-columns: 100px 230px;
+    grid-template-columns: 150px 1fr;
     grid-template-areas: 
         'title title'
         'count unit'
         'btn btn';
-        gap: 20px 14px;
+    gap: 20px 14px;
+    box-sizing: border-box
  };
  .input {
 

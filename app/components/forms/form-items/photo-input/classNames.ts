@@ -12,3 +12,10 @@ export const smallColumn = {
     label: 'photo-label',
     title: 'photo-title'
 }
+
+export const regularColumn = {
+    wrapper: 'photo-wrapper--reg',
+    img: 'photo-image--reg',
+    label: 'photo-label--reg',
+    title: 'photo-title--reg'
+}

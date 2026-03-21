@@ -1,15 +1,21 @@
 import React from "react"; 
 import styles from "./recipe-form.module.scss";
-import RecipeFormSummary from "./recipe-form-summary/RecipeFormSummary";
+import RecipeFormSummary from "@/components/forms/recipe-form/recipe-form-summary/RecipeFormSummary";
+import type { RecipeFormSummaryProps } from "@/components/forms/recipe-form/recipe-form-summary/RecipeFormSummary";
 import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredients";
-import RecipeFormSteps from "./recipe-steps/RecipeFormSteps";
+import type { RecipeIngredientsProps } from "@/components/forms/recipe-form/recipe-form-ingredients/RecipeFormIngredients";
+import RecipeFormSteps from "@/components/forms/recipe-form/recipe-steps/RecipeFormSteps";
+import { RecipeFormStepsProps } from "@/components/forms/recipe-form/recipe-steps/RecipeFormSteps";
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setFormIsActive, setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate } from "@/store/recipe/recipeFormSlice";
-import { RecipeFormComponent, RecipeFormProps } from "./RecipeForm.types";
+
 import { validateSummary, validateIngredient, validateStep} from "@/utils/validation/RecipeFormValidators";
 import { minMax } from "@/utils/base";
 
+
+export type RecipeFormProps = RecipeFormSummaryProps | RecipeIngredientsProps | RecipeFormStepsProps;
+type RecipeFormComponent = React.ComponentType<RecipeFormSummaryProps | RecipeIngredientsProps | RecipeFormStepsProps>;
 
 const COMPONENTS: RecipeFormComponent[] = [
   RecipeFormSummary, 
@@ -96,9 +102,9 @@ export default function RecipeForm() {
     const stepsRecord = recipeForm.recipe[2];
 
     const componentsProps: RecipeFormProps[] = [
-        {setDataItem: handleChangeSummary, data: summary},
-        {setDataItem: handleChangeIngredient, setDataList: addIngredient, data: {list: ingredientsRecord, item: ingredient, canSave: validIngredient},},
-        {setDataItem: handleChangeStep, setDataList: addIngredient, data: {list: stepsRecord, item: recipeStep, canSave: validStep}}
+        {setDataItem: handleChangeSummary, summary: summary},
+        {setIngredient: handleChangeIngredient, setIngredients: addIngredient, ingredients: ingredientsRecord, ingredient: ingredient, canSave: validIngredient},
+        {setStep: handleChangeStep, steps: stepsRecord, step: recipeStep}
     ];
 
  

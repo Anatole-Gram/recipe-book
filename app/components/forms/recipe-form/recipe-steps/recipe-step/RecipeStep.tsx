@@ -1,25 +1,38 @@
 import React from "react";
-import styles from "./recipe-step.module.scss";
 import StepPhoto from "@/components/forms/form-items/photo-input/PhotoInput";
-import { smallColumn } from "@/components/forms/form-items/photo-input/classNames";
-import Description from "@/components/forms/form-items/long-text-input/LongTextInput";
+import { regularColumn } from "@/components/forms/form-items/photo-input/classNames";
+import  Input from "@/components/forms/form-items/short-text-input/ShortTextInput";
+import { dynamicLabel, ClassNamesShortInput } from "@/components/forms/form-items/short-text-input/classNames";
+import classNamesExpander from "@/utils/classNames/expander";
+import type { RecipeStep } from "@/store/recipe/recipeFormSlice.types";
 
-export default function RecipeStep(props: any) {
+type RecipeStepProps = {
+    step:  RecipeStep;
+    handleChange: () => void;
+};
 
-    const {template, templateHandle} = props;
+export default function RecipeStep(props: RecipeStepProps) {
+
+    const {step, handleChange} = props;
         
     return (
 
         <>
             <StepPhoto 
-                label="изображение" 
+                title="Изображение"
+                label="загрузить" 
                 name="img" 
-                value={template.img} 
+                value={step.img} 
                 handleChange={()=> {}} 
-                classNames={smallColumn} />
+                classNames={regularColumn} />
 
-            <Description label="описание" name="description" value={template.description} handleChange={templateHandle} className={`recipeFormInputWraper recipeFormLongInput ${styles.formStepDescription}`}/>
+            <Input 
+                label="описание"
+                name="description"
+                value={step.description}
+                textArea={true}
+                handleChange={handleChange}
+                classNames={classNamesExpander<ClassNamesShortInput>('input', 'description', dynamicLabel)}/>
         </>
-
     )
 }
