@@ -5,9 +5,9 @@ import { submitRecipe } from "./recipeFormThunks";
 
 
 const initialState: RecipeFormState = {
-    step: 2,
+    step: 0,
     formIsActive: false,
-    stepEditor: true,
+    stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
     summaryTemplate: {title: '', categoryId: '0', img: '', description: ''},
     ingredientTemplate: {title: '', count: 0, unit: ''},
@@ -28,7 +28,7 @@ const decrement = (state: RecipeFormState): void => {
     state.step -= 1;
 };
 const newIngredient = (state: RecipeFormState): void =>  {
-    state.ingredientTemplate = {title: '', count: '', unit: ''};
+    state.ingredientTemplate = {title: '', count: 0, unit: ''};
 };
 const newStep = (state: RecipeFormState): void => {
     state.stepTemplate = {description: '', img: ''};

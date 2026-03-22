@@ -9,15 +9,15 @@ import { setIngredientTemplate, removeIngredient } from "@/store/recipe/recipeFo
 import IngredientList from "@/components/forms/form-items/interactive-list/InteractiveList";
 import type { RecipeIngredients, RecipeIngredient } from "@/store/store.types";
 
-export type RecipeIngredientsProps = {
+type RecipeIngredientsProps = {
     ingredients: RecipeIngredients;
     ingredient: RecipeIngredient;
     canSave: boolean;
-    setIngredient: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+    setIngredient: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; 
     setIngredients: () => void;
  }
 
-export default function RecipeFormIngredients(props: RecipeIngredientsProps | any) {
+export default function RecipeFormIngredients(props: RecipeIngredientsProps) {
 
     const {ingredients, ingredient, canSave, setIngredient, setIngredients} = props;
 

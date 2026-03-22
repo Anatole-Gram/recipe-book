@@ -9,13 +9,13 @@ import type { RecipeSummary } from "@/store/store.types"
 import classNamesExpander from "@/utils/classNames/expander";
 
 
-export type  RecipeFormSummaryProps = {
+type  RecipeFormSummaryProps = {
     setDataItem: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     summary: RecipeSummary;
 };
 
 
-export default function RecipeFormSummary(props: RecipeFormSummaryProps | any) {
+export default function RecipeFormSummary(props: RecipeFormSummaryProps) {
     const { title, img, description } = props.summary;
     const changeItem = props.setDataItem
 

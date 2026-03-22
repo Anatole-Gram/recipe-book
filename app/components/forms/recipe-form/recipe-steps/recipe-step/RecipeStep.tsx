@@ -8,7 +8,7 @@ import type { RecipeStep } from "@/store/recipe/recipeFormSlice.types";
 
 type RecipeStepProps = {
     step:  RecipeStep;
-    handleChange: () => void;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 export default function RecipeStep(props: RecipeStepProps) {
@@ -23,7 +23,7 @@ export default function RecipeStep(props: RecipeStepProps) {
                 label="загрузить" 
                 name="img" 
                 value={step.img} 
-                handleChange={()=> {}} 
+                handleChange={handleChange} 
                 classNames={regularColumn} />
 
             <Input 

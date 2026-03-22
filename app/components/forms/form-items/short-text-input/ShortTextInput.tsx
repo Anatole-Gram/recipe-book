@@ -3,7 +3,7 @@ import type { ClassNamesShortInput } from "./classNames";
 
 type SchortTextInputProps = {
     name: string;
-    value: string;
+    value: string | number;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     textArea?: boolean;
     type?: string;

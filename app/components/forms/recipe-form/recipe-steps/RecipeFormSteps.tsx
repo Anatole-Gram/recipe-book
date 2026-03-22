@@ -9,13 +9,13 @@ import AddStepBtn from "@/components/buttons/BigBlackBtn";
 import RecipeStepEditor from "@/components/forms/recipe-form/recipe-steps/recipe-step/RecipeStep";
 
 
-export type RecipeFormStepsProps = {
+type RecipeFormStepsProps = {
     steps: RecipeSteps;
     step: RecipeStep;
-    setStep: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    setStep: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export default function RecipeFormStep (props: RecipeFormStepsProps | any) {
+export default function RecipeFormStep (props: RecipeFormStepsProps ) {
 
     const { steps, step, setStep } = props;
 

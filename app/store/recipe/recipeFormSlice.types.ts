@@ -8,7 +8,7 @@ export interface RecipeSummary {
 export interface RecipeIngredient {
     id?: string;
     title: string;
-    count: number|string;
+    count: number;
     unit: string;
 };
 export interface ValidTemplate {
