@@ -132,6 +132,15 @@ body {
 
 
 
+//FilterBar
+.filter-bar {
+
+    // filter-bar_serch-input
+    &_serch-input {
+        max-width: 128px;
+    }
+}
+
 //recipe-form
 
 // description

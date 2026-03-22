@@ -2,9 +2,11 @@ import React from "react";
 import styles from "./recipes-filter-bar.module.scss";
 import ToggleBtn from "@/components/buttons/ToggleBtn";
 import SelectCategory from "@/components/forms/form-items/select/Select";
+import CommonBtn from "@/components/buttons/ButtonTemplate";
 import AngleDown from "@/assets/svg/angle-down.svg";
 import SearchInput from "@/components/forms/form-items/common-input/CommonInput";
-import { simpleInput } from "@/components/forms/form-items/common-input/classNames" // classNames для SearchInput.
+import { simpleInput, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames" // classNames для SearchInput.
+import classNamesExpander from "@/utils/classNames/expander";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import { fetchRecipes } from "@/store/recipes/recipesThunks";
@@ -21,7 +23,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
 
     //SelectCategory
-    const {categories, list} = useSelector((state: RootState) => state.recipes)
+    const {categories} = useSelector((state: RootState) => state.recipes)
 
     const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
     const handleChangeCategories = (value: string[]): void => setSelectedCategories(value);
@@ -64,21 +66,53 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
     return (
         <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={`${className} ${styles.filterBar}`}>
 
-            <fieldset onClick={() => setShowCategories(!showCategories)} className={`${styles.categories}`}>
-                <span>категория</span>
-                <AngleDown   width="12"  height="12"/>
-                <SelectCategory checkList={selectedCategories} options={categories} setValue={handleChangeCategories} display={showCategories} className={`${styles.categoriesSelect}`}/>
+            <fieldset className={`${styles.categories}`}>
+
+                <CommonBtn 
+                    btnText="категории"
+                    action={() => setShowCategories(!showCategories)}
+                    className={styles.categoriesBtn}/>
+
+                <AngleDown  width="12"  height="12" fill="#1f1f1f"/>
+
+                <SelectCategory 
+                    checkList={selectedCategories} 
+                    options={categories} 
+                    setValue={handleChangeCategories} 
+                    display={showCategories} 
+                    className={`${styles.categoriesSelect}`}/>
+
             </fieldset>
             
 
             <fieldset>
-                <SearchInput name="search" placeholder="поиск" value={searchValue} handleChange={handleChangeSearch} classNames={simpleInput}/>
+
+                <SearchInput 
+                    name="search" 
+                    placeholder="поиск" 
+                    value={searchValue} 
+                    handleChange={handleChangeSearch} 
+                    classNames={classNamesExpander<ClassNamesCommonInput>('input', 'filter-bar_serch-input', simpleInput)}/>
+
             </fieldset>
 
             <fieldset className={styles.ownRecipes}>
-                <span className={styles.ownRecipesOwn}>мои</span>
-                <ToggleBtn  action={isMyRecipeToggle} disabled={isMyRecipes} className={styles.ownRecipesBtn}/>
-                <span>все</span>
+
+                <span 
+                    className={`${styles.ownRecipesOwn} ${!isMyRecipes ? styles.selected : styles.notSelected } ${styles.condition}`}>
+                        все
+                </span>
+
+                <ToggleBtn  
+                    action={isMyRecipeToggle} 
+                    disabled={isMyRecipes} 
+                    className={styles.ownRecipesBtn}/>
+
+                <span 
+                    className={`${isMyRecipes ? styles.selected :styles.notSelected } ${styles.condition}`}>
+                        мои
+                </span>
+
             </fieldset>
         </form>
     )

@@ -9,9 +9,7 @@
     justify-content: space-between;
     align-items: center;
     height: var.$firstHS;
-    font: {
-        size: 0.75rem;
-    }
+    @include mixins.font-rules(0.8rem, 'Rubik');
     @include mixins.recipesGrayBox;
 }
 
@@ -24,6 +22,12 @@
     max-width: 80px;
     flex: 1 1 80px;
     height: 24px;
+
+    // categoriesBtn
+    &Btn {
+        @include mixins.font-rules(0.8rem, 'Rubik');
+        color: #1f1f1f;
+    }
 
     //categoriesSelect 
     &Select {
@@ -52,27 +56,6 @@
     }
 }
 
-//serchRecipes
-.serchRecipes {
-
-    // flex: 1 1 auto;
-    // height: 24px;
-    // margin: 0 5px;
-
-    // & input { 
-    //     width: 150px;
-    //     height: 100%;
-    //     box-sizing: border-box;
-    //     border-radius: 3px;
-    //     padding: 0 3px;
-
-    //     background-color: var.$bg-color;
-    //     -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
-    //     -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
-    //     box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
-    // }
-
-}
 
 //ownRecipes
 .ownRecipes {
@@ -93,3 +76,13 @@
     height: 16px;
 }
 
+
+.condition {
+    transition: color 0.25s ease;
+}
+.selected {
+    color: #1f1f1f;
+}
+.notSelected {
+    color: #888
+}
