@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./form-summary.module.scss"
-import InputComponent from "@/components/forms/form-items/short-text-input/ShortTextInput";
-import { dynamicLabel, ClassNamesShortInput } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для InputComponent.
+import InputComponent from "@/components/forms/form-items/common-input/CommonInput";
+import { dynamicLabel, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames"; //classNames для InputComponent.
 import RecipePhoto from "@/components/forms/form-items/photo-input/PhotoInput";
 import { smallColumn } from "@/components/forms/form-items/photo-input/classNames"; ////classNames для RecipePhoto
 import Categories from "@/components/forms/recipe-form/recipe-categories/RecipeCategories";
@@ -50,7 +50,7 @@ export default function RecipeFormSummary(props: RecipeFormSummaryProps) {
                 value={description} 
                 handleChange={changeItem} 
                 textArea={true} 
-                classNames={classNamesExpander<ClassNamesShortInput>('input', 'description', dynamicLabel)} />
+                classNames={classNamesExpander<ClassNamesCommonInput>('input', 'description', dynamicLabel)} />
 
         </fieldset>
     )

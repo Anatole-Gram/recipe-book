@@ -3,8 +3,8 @@ import styles from "./recipes-filter-bar.module.scss";
 import ToggleBtn from "@/components/buttons/ToggleBtn";
 import SelectCategory from "@/components/forms/form-items/select/Select";
 import AngleDown from "@/assets/svg/angle-down.svg";
-import SearchInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
-import { simpleInput } from "@/components/forms/form-items/short-text-input/classNames" // classNames для SearchInput.
+import SearchInput from "@/components/forms/form-items/common-input/CommonInput";
+import { simpleInput } from "@/components/forms/form-items/common-input/classNames" // classNames для SearchInput.
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import { fetchRecipes } from "@/store/recipes/recipesThunks";

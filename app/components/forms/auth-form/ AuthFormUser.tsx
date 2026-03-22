@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./auth-form-user.module.scss";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser } from "@/store/user/userThunks";
-import { RootState, AppDispatch } from "@/store/store";
+import { AppDispatch } from "@/store/store";
 import { Link } from "react-router-dom";
-import ShortInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
-import { dynamicLabel } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для ShortInput.
+import Input from "@/components/forms/form-items/common-input/CommonInput";
+import { dynamicLabel } from "@/components/forms/form-items/common-input/classNames"; //classNames для Input.
 import SubmitBtn from "@/components/buttons/BigBlackBtn";
 import { LOG_REGEX, PASS_REGEX } from "@/constans/regex"
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -48,9 +48,26 @@ export default function AuthUser() {
     return (
         <form action="/users/login" method="POST" aria-label="авторизация пользователя" className={styles.authForm}>
 
-            <ShortInput name="log" value={log} handleChange={handleChange(setLog)} label="Логин" classNames={ dynamicLabel }/>
-            <ShortInput name="pass" value={pass} handleChange={handleChange(setPass)} label="Пароль" classNames={ dynamicLabel }/>
-            <SubmitBtn disabled={validLog && validPass} btnText="войти" action={login}/>
+            <Input 
+                name="log" 
+                value={log}
+                handleChange={handleChange(setLog)} 
+                label="Логин" 
+                classNames={ (dynamicLabel) }/>
+
+            <Input 
+                name="pass" 
+                value={pass}
+                type="password" 
+                handleChange={handleChange(setPass)} 
+                label="Пароль" 
+                classNames={ (dynamicLabel) }/>
+
+            <SubmitBtn 
+                disabled={validLog && validPass} 
+                btnText="войти" 
+                action={login}/>
+
              <Link to={`/registration`}>зарегестрироваться</Link>
 
         </form>

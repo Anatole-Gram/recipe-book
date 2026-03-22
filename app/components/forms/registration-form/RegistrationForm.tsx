@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./registration-form.module.scss"
-import ShortInput from "@/components/forms/form-items/short-text-input/ShortTextInput";
-import { dynamicLabel } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для RecipeName.
+import Input from "@/components/forms/form-items/common-input/CommonInput";
+import { dynamicLabel } from "@/components/forms/form-items/common-input/classNames"; //classNames для RecipeName.
 import SubmitBtn from "@/components/buttons/BigBlackBtn";
 import { LOG_REGEX, PASS_REGEX } from "@/constans/regex";
 import { submitUser } from "@/store/user/userThunks";
@@ -58,9 +58,25 @@ export default function RegistrationForm() {
 
     return (
         <form action="/users" method="POST" aria-label="форма регистрации нового пользователя" className={styles.regForm}>
-            <ShortInput name="name" value={name} handleChange={handleChange(setName)} label="Имя" classNames={ dynamicLabel }/>
-            <ShortInput name="log" value={log} handleChange={handleChange(setLog)} label="Логин" classNames={ dynamicLabel }/>
-            <ShortInput name="pass" value={pass} handleChange={handleChange(setPass)} label="Пароль" classNames={ dynamicLabel }/>
+            <Input 
+                name="name" 
+                value={name} 
+                handleChange={handleChange(setName)} 
+                label="Имя" 
+                classNames={ dynamicLabel }/>
+            <Input 
+                name="log" 
+                value={log} 
+                handleChange={handleChange(setLog)} 
+                label="Логин" 
+                classNames={ dynamicLabel }/>
+            <Input 
+                name="pass" 
+                value={pass} 
+                type="password"
+                handleChange={handleChange(setPass)} 
+                label="Пароль" 
+                classNames={ dynamicLabel }/>
             <SubmitBtn disabled={validLog && validPass && validName} btnText="Зарегистроваться" action={submitData}/>
         </form>
     )

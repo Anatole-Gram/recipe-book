@@ -1,5 +1,5 @@
 import React from "react";
-import type { ClassNamesShortInput } from "./classNames";
+import type { ClassNamesCommonInput } from "./classNames";
 
 type SchortTextInputProps = {
     name: string;
@@ -9,11 +9,11 @@ type SchortTextInputProps = {
     type?: string;
     label?: string;
     placeholder?: string; 
-    classNames?: ClassNamesShortInput;
+    classNames?: ClassNamesCommonInput;
 }
 
 
-export default function ShortTextInput(props: SchortTextInputProps) {
+export default function CommonInput(props: SchortTextInputProps) {
     
     const {name, value, handleChange, label, placeholder, textArea, type} = props;
     const classFor = props.classNames

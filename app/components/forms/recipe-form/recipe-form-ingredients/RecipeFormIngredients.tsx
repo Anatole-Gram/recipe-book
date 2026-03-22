@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./recipe-form-ingredients.module.scss"
-import Input from "../../form-items/short-text-input/ShortTextInput";
-import { dynamicLabel, ClassNamesShortInput } from "@/components/forms/form-items/short-text-input/classNames"; //classNames для Ingredien.
+import Input from "../../form-items/common-input/CommonInput";
+import { dynamicLabel, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames"; //classNames для Ingredien.
 import ClassNameExpander from "@/utils/classNames/expander"
 import AddButton from "@/components/buttons/BigBlackBtn";
 import { useDispatch } from "react-redux";
@@ -46,7 +46,7 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps) {
                     name="title"
                     value={ingredient.title} 
                     handleChange={setIngredient}
-                    classNames={ ClassNameExpander<ClassNamesShortInput>('wrapper', 'ingredients_input-name', dynamicLabel) }/>
+                    classNames={ ClassNameExpander<ClassNamesCommonInput>('wrapper', 'ingredients_input-name', dynamicLabel) }/>
                 
                 <Input 
                     type="number"
@@ -54,14 +54,14 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps) {
                     name="count"
                     value={ingredient.count}
                     handleChange={setIngredient}
-                    classNames={ClassNameExpander<ClassNamesShortInput>('wrapper', 'ingredients_input-count', dynamicLabel) }/>
+                    classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', 'ingredients_input-count', dynamicLabel) }/>
 
                 <Input 
                     label="ед. измерения"
                     name="unit"
                     value={ingredient.unit} 
                     handleChange={setIngredient}
-                    classNames={ClassNameExpander<ClassNamesShortInput>('wrapper', 'ingredients_input-unit', dynamicLabel) }/>
+                    classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', 'ingredients_input-unit', dynamicLabel) }/>
                     
                 <AddButton 
                     btnText='добавить' 
