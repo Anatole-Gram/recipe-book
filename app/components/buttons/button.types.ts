@@ -5,7 +5,7 @@ export type BtnProps = {
     id?: string;
     className?: string;
     btnText?: string;
-    chilgren?: any; 
+    children?: React.ReactNode; 
 }
 
 type BntConditional = {

@@ -6,6 +6,7 @@ import CommonBtn from "@/components/buttons/ButtonTemplate";
 import AngleDown from "@/assets/svg/angle-down.svg";
 import SearchInput from "@/components/forms/form-items/common-input/CommonInput";
 import { simpleInput, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames" // classNames для SearchInput.
+import { selectRegular, ClassNamesSelect } from "@/components/forms/form-items/select/classNames"; // classNames для SelectCategory
 import classNamesExpander from "@/utils/classNames/expander";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
@@ -27,7 +28,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
     const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
     const handleChangeCategories = (value: string[]): void => setSelectedCategories(value);
-    const [showCategories, setShowCategories] = React.useState(false)
+    const [showCategories, setShowCategories] = React.useState(true)
 
 
     //SearchInput
@@ -80,7 +81,8 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
                     options={categories} 
                     setValue={handleChangeCategories} 
                     display={showCategories} 
-                    className={`${styles.categoriesSelect}`}/>
+                    // className={`${styles.categoriesSelect}`}
+                    classNames={classNamesExpander<ClassNamesSelect>('wrapper', `${styles.categoriesSelect}`, selectRegular)}/>
 
             </fieldset>
             

@@ -1,24 +1,54 @@
 @use "@/assets/styles/variables" as var;
 @use "@/assets/styles/mixins";
 
-
-.select {
+// wrapper-regular
+.wrapper {
     display: flex;
     flex-direction: column;
 
-    //selectHide 
+    // wrapperHide-regular
     &Hide {
         display: none;
     }
-    & input {
-        display: none;
+
+    // wrapperMenu-regular
+    &Menu {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+};
+// title-regular
+.title {
+    @include mixins.font-rules(0.8rem, 'Rubik')
+}
+// label-regular
+.label {
+    color: #8c8c8c;
+
+    // labelSelected-regular
+    &Selected {
+        color: #1f1f1f;
     }
 }
 
-.label {
+// selectAll-regular
+.selectAll {
+    width: 12px;
+    height: 12px;
+    color: #1f1f1f;
+}
 
-    //labelChecked
-    &Checked {
-        color: red;
-    }
+// reset-regular
+.reset {
+    width: 12px;
+    height: 12px;
+    color: #1f1f1f;
+}
+
+
+
+
+.input {
+    display: none;
 }

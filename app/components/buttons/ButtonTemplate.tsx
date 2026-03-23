@@ -1,8 +1,10 @@
 import React from "react";
 import { BtnProps } from "./button.types";
 
+
+
 export default function ButtonTemplate(props: BtnProps) {
-    const {id, className, btnText, action, chilgren} = props;
+    const {id, className, btnText, action, children} = props;
 
     return (
         <button type="button"
@@ -11,7 +13,7 @@ export default function ButtonTemplate(props: BtnProps) {
             className={className}>
 
                 {btnText}
-                {chilgren ?? null}
+                {children ?? null}
 
         </button>
     )

@@ -43,10 +43,13 @@ export default function RecipeCategories(props: RecipeCategoriesProps) {
 
                 <ButtonTemplate 
                     btnText={category.title ?? 'не выбрана'}
-                    chilgren={AngleDown}
                     action={() => setShowCategories(!showCategories)} 
                     id="category-btn"
-                    className={`main-input`} />
+                    className={`main-input`} > 
+
+                        <AngleDown width={10} height={10}/> 
+
+                </ButtonTemplate>
 
                 <SelectCategory 
                     values={categories} 
