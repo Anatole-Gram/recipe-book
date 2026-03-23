@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-// const bcrypt = require('bcrypt'); // раскомментировать если используете хеширование
+// const bcrypt = require('bcrypt');
 
 // GET /users - получение списка всех пользователей
 router.get('/users', async (req, res) => {
@@ -39,7 +39,24 @@ router.get('/users/:id', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.json(user);
+    // Получаем ID рецептов пользователя
+    const userRecipes = await db.recipe.findAll({
+      where: { authorId: id },
+      attributes: ['id'],
+      order: [['id', 'ASC']]
+    });
+
+    const recipeIds = userRecipes.map(r => r.id);
+
+    res.json({
+      id: user.id,
+      name: user.name,
+      img: user.img,
+      auth: user.auth,
+      recipeIds: recipeIds,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error', details: err.message });
@@ -53,22 +70,16 @@ router.post('/users', async (req, res) => {
   try {
     const { name, img, log, pas } = req.body;
 
-    // Валидация обязательных полей
     if (!name) {
       await t.rollback();
-      return res.status(400).json({ 
-        error: 'name is required' 
-      });
+      return res.status(400).json({ error: 'name is required' });
     }
 
     if (!log || !pas) {
       await t.rollback();
-      return res.status(400).json({ 
-        error: 'log and pas are required' 
-      });
+      return res.status(400).json({ error: 'log and pas are required' });
     }
 
-    // Проверка: логин уже существует?
     const existingAuth = await db.auth.findOne({ 
       where: { log: log.trim() },
       transaction: t 
@@ -76,22 +87,17 @@ router.post('/users', async (req, res) => {
     
     if (existingAuth) {
       await t.rollback();
-      return res.status(400).json({ 
-        error: 'Login already exists' 
-      });
+      return res.status(400).json({ error: 'Login already exists' });
     }
 
-    // Создаём пользователя
     const newUser = await db.user.create({
       name: name.trim(),
       img: img || null
     }, { transaction: t });
 
-    // Хешируем пароль (если установлен bcrypt)
     // const hashedPassword = await bcrypt.hash(pas, 10);
-    const hashedPassword = pas; // без хеширования
+    const hashedPassword = pas;
 
-    // Создаём запись auth
     await db.auth.create({
       userId: newUser.id,
       log: log.trim(),
@@ -121,60 +127,45 @@ router.post('/users/login', async (req, res) => {
   try {
     const { log, pas } = req.body;
 
-    // Валидация
     if (!log || !pas) {
-      return res.status(400).json({ 
-        error: 'log and pas are required' 
-      });
+      return res.status(400).json({ error: 'log and pas are required' });
     }
 
-    // Ищем запись auth по логину
     const authRecord = await db.auth.findOne({
       where: { log: log.trim() }
     });
 
     if (!authRecord) {
-      return res.status(401).json({ 
-        error: 'Invalid login or password' 
-      });
+      return res.status(401).json({ error: 'Invalid login or password' });
     }
 
-    // Проверка пароля
-    // С хешированием:
     // const isPasswordValid = await bcrypt.compare(pas, authRecord.pas);
-    // Без хеширования:
     const isPasswordValid = pas === authRecord.pas;
 
     if (!isPasswordValid) {
-      return res.status(401).json({ 
-        error: 'Invalid login or password' 
-      });
+      return res.status(401).json({ error: 'Invalid login or password' });
     }
 
-    // Получаем данные пользователя
-    const user = await db.user.findByPk(authRecord.userId, {
-      attributes: ['id', 'name', 'img', 'createdAt', 'updatedAt']
+    const user = await db.user.findByPk(authRecord.userId);
+
+    // Получаем ID рецептов пользователя
+    const userRecipes = await db.recipe.findAll({
+      where: { authorId: authRecord.userId },
+      attributes: ['id'],
+      order: [['id', 'ASC']]
     });
 
-    if (!user) {
-      return res.status(404).json({ 
-        error: 'User not found' 
-      });
-    }
+    const recipeIds = userRecipes.map(r => r.id);
 
-    // Успешный ответ
     res.json({
       message: 'Login successful',
       user: {
         id: user.id,
         name: user.name,
-        img: user.img,
-        log: authRecord.log,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt
-      }
+        img: user.img
+      },
+      recipeIds: recipeIds
     });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error', details: err.message });

@@ -9,7 +9,7 @@ const initialState: RecipeFormState = {
     formIsActive: false,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
-    summaryTemplate: {title: '', categoryId: '0', img: '', description: ''},
+    summaryTemplate: {title: '', categoryId: '0', img: '', description: '', authorId: null},
     ingredientTemplate: {title: '', count: 0, unit: ''},
     stepTemplate: {description: '', img: ''},
     recipe: [{}, {}, {}],
@@ -58,6 +58,7 @@ const recipeFormSlice = createSlice({
             Object.assign(state.summaryTemplate, action.payload);
         },
         setSummary: (state) => {
+            console.log("+")
             if(state.valid.summary) { Object.assign(state.recipe[0], state.summaryTemplate) };
             increment(state);
         },

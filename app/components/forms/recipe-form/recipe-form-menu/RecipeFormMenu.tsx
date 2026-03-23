@@ -11,6 +11,7 @@ import { minMax } from "@/utils/base";
 export default function RecipeFormMenu() {
     const dispatch = useDispatch<AppDispatch>();
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
+    const user = useSelector((state: RootState) => state.user.data)
     const {step, valid, recipe, stepEditor}  = recipeForm;
     const ingredientsPermission: boolean =  Boolean(Object.keys(recipe[1]).length);
 
@@ -29,7 +30,7 @@ export default function RecipeFormMenu() {
 
     //Действия для формы
     const createRecipe = (): void => {
-        const response = dispatch(submitRecipe());
+        dispatch(submitRecipe(user.id));
     };
     const closeForm = async (): Promise<any> => {
         console.log('close form')
@@ -78,6 +79,10 @@ export default function RecipeFormMenu() {
             {action: stepEditor ? editorAction() : formAction() },
         ]
     };
+
+    React.useEffect(() => {
+        console.log(valid.summary)
+    })
 
     const index = minMax(step, [0, actionRecord.next.length - 1]);
 

@@ -11,9 +11,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
 
-    const user = useSelector((state: RootState) => state.user.data)
     const dispatch = useDispatch()
     const navigate =useNavigate()
+
+    const user = useSelector((state: RootState) => state.user.data)
+    const RecipesCount = user.recipeIds?.length ?? 0;
 
     const logOutt = () => {
         removeToken();
@@ -21,7 +23,6 @@ export default function UserProfile() {
         navigate('/login', {replace: true})
         
     }
-
 
     return (
         <div className={styles.userCard}>
@@ -40,7 +41,7 @@ export default function UserProfile() {
                 <span className={styles.userName}> { user.name } </span>
                 
                 <div className={styles.userInfo}>
-                    <span className={styles.userInfoRecipes}>мои рецепты: <span>0</span></span>
+                    <span className={styles.userInfoRecipes}>мои рецепты: <span> {RecipesCount} </span></span>
 
                     <span className={styles.userInfoRecipes}>на сайте с: <span>02.12.2025</span></span>
                 </div>  

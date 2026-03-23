@@ -4,7 +4,7 @@ import type {RecipeFormState, recipeDataToSubmit, RecipeSummary } from '@/store/
 
 function buildRecipePayload(state: RecipeFormState): recipeDataToSubmit {
   return {
-    summary: state.recipe[0] as RecipeSummary, 
+    summary: {...state.recipe[0] as RecipeSummary, authorId: null}, 
     ingredients: Object.values(state.recipe[1]), 
     steps: Object.values(state.recipe[2])
   };
@@ -13,16 +13,15 @@ function buildRecipePayload(state: RecipeFormState): recipeDataToSubmit {
 
 export const submitRecipe = createAsyncThunk<
   { recipeId: number }, 
-  void,              
+  number,              
   { state: RootState; rejectValue: string }
 >(
   'recipeForm/submit',
-  async (_, { getState, rejectWithValue }) => {
+  async (authorId, { getState, rejectWithValue }) => {
     try {
       const state = getState().recipeForm as any;
       const payload = buildRecipePayload(state);
-
-      console.log(payload)
+      payload.summary.authorId = authorId
 
       const res = await fetch('/api/recipes', {
         method: 'POST',

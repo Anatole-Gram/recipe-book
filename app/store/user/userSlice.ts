@@ -24,7 +24,8 @@ const initialState: userState = {
         id: 0,
         name: '',
         img: '',
-        log: ''
+        log: '',
+        recipeIds: [],
     },
     requests: {
         submitUser: {
@@ -53,7 +54,7 @@ const userSlice = createSlice({
         }, 
         resetUserData: (state) => {
             state.isAuth = false;
-            state.data = { id: 0, name: '', img: '', log: '' }
+            state.data = { id: 0, name: '', img: '', log: '', recipeIds: [] }
     },
         },
     extraReducers: (builder) => {
@@ -65,7 +66,7 @@ const userSlice = createSlice({
         })
         .addCase(submitUser.fulfilled, (state, action: PayloadAction<NewUserResponse>) =>{
             state.requests.submitUser.status = 'succeeded';
-            state.data = action.payload.user;
+            state.data = {...action.payload.user, recipeIds: []};
             state.isAuth = true;
             saveToken(action.payload.user.id.toString())
         })
@@ -81,8 +82,8 @@ const userSlice = createSlice({
         })
         .addCase(setUserData.fulfilled, (state, action: PayloadAction<DBUser>) => {
             state.requests.userByid.status = 'succeeded';
-            const {id, name, img, auth} = action.payload;
-            state.data = {id, name, img, log: auth.log};
+            const {id, name, img, auth, recipeIds} = action.payload;
+            state.data = {id, name, img, log: auth.log, recipeIds};
             state.isAuth = true;
         })
         .addCase(setUserData.rejected, (state, action) => {
@@ -97,7 +98,8 @@ const userSlice = createSlice({
         .addCase(loginUser.fulfilled,  (state, action: PayloadAction<DBUserLogged>) => {
             state.requests.login.status = 'succeeded';
             const {id, name, img, log} = action.payload.user;
-            state.data = {id, name, img, log};
+            const {recipeIds} = action.payload.user;
+            state.data = {id, name, img, log, recipeIds};
             saveToken(id.toString())
             state.isAuth = true;
         })

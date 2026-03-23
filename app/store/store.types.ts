@@ -10,6 +10,7 @@ export interface RecipeSummary {
     categoryId: string;
     img: string;
     description: string;
+    authorId: number | null;
 };
 
 //Ingredients
@@ -58,7 +59,7 @@ export type RecipeTuple = [Partial<RecipeSummary>, RecipeIngredients, RecipeStep
 
 
 //Recipe to submit
-export type recipeDataToSubmit = {summary: RecipeSummary, ingredients: RecipeIngredient[], steps: RecipeStep[]};
+export type recipeDataToSubmit = {summary: RecipeSummary, ingredients: RecipeIngredient[], steps: RecipeStep[],};
 
 //
 export type RequestProperty = { status: string; error: string | null };
@@ -107,6 +108,7 @@ export type User =  {
     name: string;
     img: string | null;
     log: string;
+    recipeIds: string[];
   }
 
 
@@ -124,4 +126,5 @@ interface UserLogged extends User, DBRecord {}
 export interface DBUserLogged {
     message: string;
     user: UserLogged;
+    recipeIds: number[];
 }
