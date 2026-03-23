@@ -71,8 +71,8 @@ export const loginUser = createAsyncThunk< DBUserLogged, {log: string, pas: stri
     'user/login', 
     async (payload, {rejectWithValue}) => {
         try {
-            const res = await fetch(`api/login`, {
-                method: 'GET',
+            const res = await fetch(`api/users/login`, {
+                method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
             })

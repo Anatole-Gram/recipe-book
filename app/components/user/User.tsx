@@ -1,16 +1,36 @@
 import React from "react";
 import styles from "./user.module.scss";
 import imgStub from "@/assets/images/recipe-img-stub.png"
+import Btn from "@/components/buttons/ButtonTemplate";
+import OutIcon from "@/assets/svg/bracket-solid.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
+import { resetUserData } from "@/store/user/userSlice";
+import { removeToken } from "@/utils/auth/authStorage"
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
 
     const user = useSelector((state: RootState) => state.user.data)
+    const dispatch = useDispatch()
+    const navigate =useNavigate()
+
+    const logOutt = () => {
+        removeToken();
+        dispatch(resetUserData());
+        navigate('/login', {replace: true})
+        
+    }
 
 
     return (
         <div className={styles.userCard}>
+
+            <Btn
+                action={logOutt}
+                className={styles.userOut}>
+                    <OutIcon className={styles.userOutIcon}/>
+            </Btn>
 
             <div className={styles.userCardHeader}></div>
 

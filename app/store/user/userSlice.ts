@@ -50,8 +50,12 @@ const userSlice = createSlice({
     reducers:  {
         setAuthInitialized: (state, action: PayloadAction<boolean>) => {
             state.authInitialized = action.payload;
-        }
-    }, 
+        }, 
+        resetUserData: (state) => {
+            state.isAuth = false;
+            state.data = { id: 0, name: '', img: '', log: '' }
+    },
+        },
     extraReducers: (builder) => {
         builder
         //Create user and login
@@ -104,5 +108,5 @@ const userSlice = createSlice({
     }
 });
 
-export const { setAuthInitialized } = userSlice.actions;
+export const { setAuthInitialized, resetUserData } = userSlice.actions;
 export default userSlice.reducer;
