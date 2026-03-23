@@ -1,8 +1,15 @@
 @use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins";
 
 .nav {
     width: 100%;
     display: flex;
     justify-content: space-around;
+    @include mixins.font-rules(0.9rem, 'Rubik');
     color: var.$text-on-black;
+    padding-bottom: 2px;
+}
+
+.active {
+    border-bottom: 2px solid var.$text-on-black;
 }
