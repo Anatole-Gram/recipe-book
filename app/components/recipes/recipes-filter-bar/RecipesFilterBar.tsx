@@ -11,6 +11,7 @@ import classNamesExpander from "@/utils/classNames/expander";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { fetchRecipes } from "@/store/recipes/recipesThunks";
+import useDebounse from "@/hooks/useDebounce";
 
 
 type RecipeFilterBarProps = {
@@ -32,6 +33,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
     //SearchInput
     const [searchValue, setSearchValue] = React.useState('');
+    const debouncedSearchValue = useDebounse<string>(searchValue, 500)
     const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const value = e.target.value;
         setSearchValue(value);
@@ -46,8 +48,8 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
         if(isMyRecipes) {
             params.set('authorId', user.id.toString());
         };
-        if(searchValue) {
-            params.set('search', searchValue);
+        if(debouncedSearchValue) {
+            params.set('search', debouncedSearchValue);
         };
         if(selectedCategories.length) {
             params.set('categories', selectedCategories.join(','));
@@ -56,15 +58,15 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
         const url = `/api/recipes${qryStr ? '?'+qryStr : ''}`;
         return url
         
-    }, [selectedCategories, searchValue, isMyRecipes]);
+    }, [selectedCategories, debouncedSearchValue, isMyRecipes]);
 
     const fetchFiltredRecipes = React.useCallback(() => {
-        dispatch(fetchRecipes(urlForFiltredFetch))
+        dispatch(fetchRecipes(urlForFiltredFetch));
     }, [urlForFiltredFetch])
 
     React.useEffect(() => {
         fetchFiltredRecipes();
-    }, [selectedCategories, searchValue, isMyRecipes]);
+    }, [fetchFiltredRecipes]);
 
     return (
         <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={`${className} ${styles.filterBar}`}>
