@@ -9,9 +9,8 @@ import { simpleInput, ClassNamesCommonInput } from "@/components/forms/form-item
 import { selectRegular, ClassNamesSelect } from "@/components/forms/form-items/select/classNames"; // classNames для SelectCategory
 import classNamesExpander from "@/utils/classNames/expander";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState, AppDispatch } from "@/store/store";
 import { fetchRecipes } from "@/store/recipes/recipesThunks";
-import { AppDispatch } from "@/store/store";
 
 
 type RecipeFilterBarProps = {
@@ -21,14 +20,14 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
     const {className} = props;
     const dispatch = useDispatch<AppDispatch>();
-
+    const user = useSelector((state: RootState) => state.user.data);
 
     //SelectCategory
     const {categories} = useSelector((state: RootState) => state.recipes)
 
     const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
     const handleChangeCategories = (value: string[]): void => setSelectedCategories(value);
-    const [showCategories, setShowCategories] = React.useState(true)
+    const [showCategories, setShowCategories] = React.useState(false)
 
 
     //SearchInput
@@ -40,10 +39,13 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
     // RadioToggle MyRecipes
     const [isMyRecipes, setIsMyRecipes] = React.useState<boolean>(false)
-    const isMyRecipeToggle = (condition: boolean): void => setIsMyRecipes(condition);
 
     const urlForFiltredFetch = React.useMemo(() => {
         const params = new URLSearchParams();
+
+        if(isMyRecipes) {
+            params.set('authorId', user.id.toString());
+        };
         if(searchValue) {
             params.set('search', searchValue);
         };
@@ -54,7 +56,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
         const url = `/api/recipes${qryStr ? '?'+qryStr : ''}`;
         return url
         
-    }, [selectedCategories, searchValue]);
+    }, [selectedCategories, searchValue, isMyRecipes]);
 
     const fetchFiltredRecipes = React.useCallback(() => {
         dispatch(fetchRecipes(urlForFiltredFetch))
@@ -62,7 +64,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
     React.useEffect(() => {
         fetchFiltredRecipes();
-    }, [selectedCategories, searchValue]);
+    }, [selectedCategories, searchValue, isMyRecipes]);
 
     return (
         <form action="/recipes" method="GET" aria-label="фильтры рецептов" className={`${className} ${styles.filterBar}`}>
@@ -81,7 +83,6 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
                     options={categories} 
                     setValue={handleChangeCategories} 
                     display={showCategories} 
-                    // className={`${styles.categoriesSelect}`}
                     classNames={classNamesExpander<ClassNamesSelect>('wrapper', `${styles.categoriesSelect}`, selectRegular)}/>
 
             </fieldset>
@@ -106,7 +107,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
                 </span>
 
                 <ToggleBtn  
-                    action={isMyRecipeToggle} 
+                    action={setIsMyRecipes} 
                     disabled={isMyRecipes} 
                     className={styles.ownRecipesBtn}/>
 
