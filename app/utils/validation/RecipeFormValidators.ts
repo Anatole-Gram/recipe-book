@@ -1,16 +1,17 @@
-import { RecipeSummary, RecipeIngredient, RecipeStep } from "../../store/recipe/recipeFormSlice.types";
-import {CYRILLIC_1_PLUS, CYRILLIC_3_PLUS, CYRILLIC_10_PLUS, NON_ZERO_NUMBER, IMG_URL_REGEX} from "../../constans/regex";
-import { auth } from "@/server/models";
+import type { RecipeSummary, RecipeIngredient, RecipeStep } from "../../store/recipe/recipeFormSlice.types";
+import type { LoginForm } from "@/components/forms/auth-form/AuthFormUser";
+import type { RegestrationFormType } from "@/components/forms/registration-form/RegistrationForm";
+import {CYRILLIC_1_PLUS, CYRILLIC_3_PLUS, CYRILLIC_10_PLUS, NON_ZERO_NUMBER, IMG_URL_REGEX, LOG_REGEX, PASS_REGEX} from "../../constans/regex";
 
 
-// Общий тип правила валидации: возвращает сообщение об ошибке или undefined 
+// Общий тип правила валидации: возвращает сообщение об ошибке или  typeundefined 
 type ValidationRule = (value: any) => string | undefined;
 
 // Схема валидации для типа T 
-type ValidationSchema<T> = { [K in keyof T]?: ValidationRule; };
+export type ValidationSchema<T> = { [K in keyof T]?: ValidationRule; };
 
 // Глобальная функция валидирования по схеме 
-function validateWithSchema<T>(data: T, schema: ValidationSchema<T>): { valid: boolean; errors: Partial<Record<keyof T, string>> } {
+ function validateWithSchema<T>(data: T, schema: ValidationSchema<T>): { valid: boolean; errors: Partial<Record<keyof T, string>> } {
 
     const errors: Partial<Record<keyof T, string>> = {};
 
@@ -52,5 +53,21 @@ const stepSchema: ValidationSchema<RecipeStep> = {
 };
 
 export const validateStep = (data: RecipeStep) => validateWithSchema(data, stepSchema);
+
+// Auth Form
+const loginShema: ValidationSchema<LoginForm> = {
+    login: (v: string) => LOG_REGEX.test(v) ? undefined : 'некорректный логин',
+    password: (v: string) => PASS_REGEX.test(v) ? undefined : 'некорректный пароль'
+};
+
+export const validAuth = (data: LoginForm) => validateWithSchema(data, loginShema);
+
+const registrationShema: ValidationSchema<RegestrationFormType> = {
+    name: (v: string) => LOG_REGEX.test(v) ? undefined : 'некорректное имя',
+    login: (v: string) => LOG_REGEX.test(v) ? undefined : 'некорректный логин',
+    password: (v: string) => PASS_REGEX.test(v) ? undefined : 'некорректный пароль'
+}
+
+export const validRegestration = (data: RegestrationFormType) =>  validateWithSchema(data, registrationShema);
 
 

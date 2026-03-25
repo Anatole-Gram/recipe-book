@@ -6,31 +6,19 @@ import { AppDispatch } from "@/store/store";
 import { Link } from "react-router-dom";
 import Input from "@/components/forms/form-items/common-input/CommonInput";
 import { dynamicLabel } from "@/components/forms/form-items/common-input/classNames"; //classNames для Input.
-import SubmitBtn from "@/components/buttons/BigBlackBtn";
-import { LOG_REGEX, PASS_REGEX } from "@/constans/regex"
+import { validAuth } from "@/utils/validation/RecipeFormValidators";
 import { useNavigate, useLocation } from 'react-router-dom';
+import useForm from "@/hooks/useForm";
+
+
+export type LoginForm = {
+    login: string;
+    password: string;
+}
  
 export default function AuthUser() {
 
-    const dispatch = useDispatch<AppDispatch>()
-    
-    const [log, setLog] = React.useState<string>('');
-    const [validLog, setValidLog] = React.useState<boolean>(false);
-    React.useEffect(() => {
-        setValidLog(LOG_REGEX.test(log))
-    }, [log])
-
-
-    const [pass, setPass] = React.useState<string>('');
-    const [validPass, setValidPass] = React.useState<boolean>(false)
-    React.useEffect(() => {
-        setValidPass(PASS_REGEX.test(pass));
-    }, [pass])
-
-    const handleChange = (setter: (str: string) => void) => (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => { setter(e.target.value) };
-
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -39,43 +27,39 @@ export default function AuthUser() {
         navigate(from, { replace: true });
     };
 
-    const login = async () => {
-    const payload = {log: log, pas: pass};
+    const onSubmit = async () => {
+    const payload = {log: values.login, pas: values.password};
     await dispatch(loginUser(payload)).unwrap()
         .then(() => handleLoginSuccess())
+        .catch((err) => alert(err))
     };
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if(validPass && validLog) {
-            login();
-        }
-    }
+    const { values, getFieldProps, handleSubmit, errors } = useForm<LoginForm>({
+        initialValues: {login: '', password: ''},
+        onSubmit: onSubmit,
+        validate: validAuth
+    })
 
     return (
-        <form onSubmit={onSubmit} action="/users/login" method="POST" aria-label="авторизация пользователя" className={styles.authForm}>
+        <form  onSubmit={handleSubmit}  aria-label="авторизация пользователя" className={styles.authForm}>
 
             <Input 
-                name="log" 
-                value={log}
-                handleChange={handleChange(setLog)} 
+                {...getFieldProps('login')}
                 label="Логин" 
                 classNames={ (dynamicLabel) }/>
 
             <Input 
-                name="pass" 
-                value={pass}
+                {...getFieldProps('password')}
                 type="password" 
-                handleChange={handleChange(setPass)} 
                 label="Пароль" 
                 classNames={ (dynamicLabel) }/>
 
-            <SubmitBtn 
-                disabled={!validLog && !validPass} 
-                btnText="войти" 
+            <button
                 type="submit"
-                action={login}/>
-                
+                className={'main-btn--black'}>
+                    войти
+            </button>
+
              <Link to={`/registration`}>зарегестрироваться</Link>
 
         </form>
