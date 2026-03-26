@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./recipes-filter-bar.module.scss";
 import ToggleBtn from "@/components/buttons/ToggleBtn";
 import SelectCategory from "@/components/forms/form-items/select/Select";
-import CommonBtn from "@/components/buttons/ButtonTemplate";
 import AngleDown from "@/assets/svg/angle-down.svg";
 import SearchInput from "@/components/forms/form-items/common-input/CommonInput";
 import { simpleInput, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames" // classNames для SearchInput.
@@ -29,7 +28,6 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
     const [selectedCategories, setSelectedCategories] = React.useState<string[]>([]);
     const handleChangeCategories = (value: string[]): void => setSelectedCategories(value);
     const [showCategories, setShowCategories] = React.useState(false)
-
 
     //SearchInput
     const [searchValue, setSearchValue] = React.useState('');
@@ -73,10 +71,13 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
 
             <fieldset className={`${styles.categories}`}>
 
-                <CommonBtn 
-                    btnText="категории"
-                    action={() => setShowCategories(!showCategories)}
-                    className={styles.categoriesBtn}/>
+
+                <button
+                    type="button"
+                    onClick={() => {setShowCategories(!showCategories)}}
+                    className={styles.categoriesBtn}>
+                        категории
+                </button>
 
                 <AngleDown  width="12"  height="12" fill="#1f1f1f"/>
 

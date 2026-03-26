@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./select.module.scss";
 import { ClassNamesSelect } from "./classNames"
-import Btn from "@/components/buttons/ButtonTemplate";
 import CheckAll from "@/assets/svg/circle-check-regular.svg";
 import Reset from "@/assets/svg/rotate-left-solid.svg";
 
@@ -11,7 +10,6 @@ type MultiSelectProps = {
     options: {title: string, id: string}[];
     display: boolean;
     id?: string;
-    // className?: string;
     classNames?: ClassNamesSelect;
     title?: string;
 }
@@ -52,24 +50,23 @@ export default function Select(props: MultiSelectProps) {
             
             <div className={classNames?.wrapperMenu}>
 
-                <Btn 
-                    action={()=> setAll(false)}
-                    className={''}>
 
-                    <Reset className={classNames?.reset}/>
+                <button
+                type="button"
+                    onClick={() => setAll(false)}>
+                        <Reset className={classNames?.reset}/>
+                </button>
 
-                </Btn>
-                
-                <Btn 
-                    action={() => setAll(true)}
-                    className={''}> 
-
-                    <CheckAll className={classNames?.selectAll}/>
-
-                </Btn>
+                <button
+                type="button"
+                    onClick={() => setAll(true)}>
+                        <CheckAll className={classNames?.selectAll}/>
+                </button>
 
             </div>
+
             <span className={classNames?.title}>{title ?? null}</span>
+
             {options.map(opt =>  {
                 const checked = checkList.includes(opt.id)
                 return (
@@ -83,6 +80,7 @@ export default function Select(props: MultiSelectProps) {
                     </label>
                 )}
             )}
+
         </div>
     )
 }

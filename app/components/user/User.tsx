@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./user.module.scss";
 import imgStub from "@/assets/images/recipe-img-stub.png"
-import Btn from "@/components/buttons/ButtonTemplate";
 import OutIcon from "@/assets/svg/bracket-solid.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
@@ -20,18 +19,20 @@ export default function UserProfile() {
     const logOutt = () => {
         removeToken();
         dispatch(resetUserData());
-        navigate('/login', {replace: true})
-        
-    }
+        navigate('/login', {replace: true});
+    };
+
+    console.log(user)
 
     return (
         <div className={styles.userCard}>
 
-            <Btn
-                action={logOutt}
+            <button
+                type="button"
+                onClick={logOutt}
                 className={styles.userOut}>
                     <OutIcon className={styles.userOutIcon}/>
-            </Btn>
+            </button>
 
             <div className={styles.userCardHeader}></div>
 
@@ -42,8 +43,6 @@ export default function UserProfile() {
                 
                 <div className={styles.userInfo}>
                     <span className={styles.userInfoRecipes}>мои рецепты: <span> {RecipesCount} </span></span>
-
-                    <span className={styles.userInfoRecipes}>на сайте с: <span>02.12.2025</span></span>
                 </div>  
             </div>
 

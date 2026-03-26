@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
 import SelectCategory from "@/components/forms/form-items/singel-select/SingelSelect";
 import { setSummaryTemplate } from "@/store/recipe/recipeFormSlice";
-import ButtonTemplate from "@/components/buttons/ButtonTemplate";
 import  AngleDown from "@/assets/svg/angle-down.svg";
 
 type RecipeCategoriesProps = {
@@ -41,15 +40,16 @@ export default function RecipeCategories(props: RecipeCategoriesProps) {
                         категория рецепта
                 </label>
 
-                <ButtonTemplate 
-                    btnText={category.title ?? 'не выбрана'}
-                    action={() => setShowCategories(!showCategories)} 
+                <button
+                    type="button"
+                    onClick={() => setShowCategories(!showCategories)}
                     id="category-btn"
-                    className={`main-input`} > 
+                    className={`main-input`}>
 
-                        <AngleDown width={10} height={10}/> 
+                        {category.title ?? 'не выбрана'}
+                        <AngleDown width={10} height={10}/>
 
-                </ButtonTemplate>
+                </button>
 
                 <SelectCategory 
                     values={categories} 
