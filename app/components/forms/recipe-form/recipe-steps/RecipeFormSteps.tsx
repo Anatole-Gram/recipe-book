@@ -5,7 +5,6 @@ import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setStepTemplate, removeStep,  setStepEditor, resetStepTemplate} from "@/store/recipe/recipeFormSlice";
 import InteractiveList from "@/components/forms/form-items/interactive-list/InteractiveList";
-import AddStepBtn from "@/components/buttons/BigBlackBtn";
 import RecipeStepEditor from "@/components/forms/recipe-form/recipe-steps/recipe-step/RecipeStep";
 
 
@@ -47,7 +46,12 @@ export default function RecipeFormStep (props: RecipeFormStepsProps ) {
             
             { editor ? <RecipeStepEditor step={step} handleChange={setStep} /> :
                 <>
-                    <AddStepBtn btnText="новый шаг" action={addStep}/>
+                    <button
+                        onClick={addStep}
+                        className="main-btn--black">
+                            новый шаг    
+                    </button>
+                    
                     <InteractiveList<RecipeStep> list={Object.entries(steps)} contentFn={content} remove={remove} edite={edite}/>
                 </>
             }

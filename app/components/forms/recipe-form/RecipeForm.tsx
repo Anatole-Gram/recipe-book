@@ -69,7 +69,7 @@ export default function RecipeForm() {
     }, []);
 
     const validSummary = validateSummary(summary);
-    React.useEffect(() => { dispatch(setValid({summary: validSummary.valid})); }, [validSummary]);
+    React.useEffect(() => { dispatch(setValid({summary: validSummary.valid})); console.log(validSummary) }, [validSummary]);
 
 
 //ingridients

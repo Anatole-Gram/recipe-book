@@ -3,7 +3,6 @@ import styles from "./recipe-form-ingredients.module.scss"
 import Input from "../../form-items/common-input/CommonInput";
 import { dynamicLabel, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames"; //classNames для Ingredien.
 import ClassNameExpander from "@/utils/classNames/expander"
-import AddButton from "@/components/buttons/BigBlackBtn";
 import { useDispatch } from "react-redux";
 import { setIngredientTemplate, removeIngredient } from "@/store/recipe/recipeFormSlice";
 import IngredientList from "@/components/forms/form-items/interactive-list/InteractiveList";
@@ -63,11 +62,13 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps) {
                     handleChange={setIngredient}
                     classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', 'ingredients_input-unit', dynamicLabel) }/>
                     
-                <AddButton 
-                    btnText='добавить' 
-                    action={setIngredients} 
+                <button
+                    type="button"
+                    onClick={setIngredients}
                     disabled={!canSave}
-                    className={styles.inputBtn} />
+                    className={`${styles.inputBtn} main-btn--black`}>
+                        добавить
+                </button>
             </div>
 
             <IngredientList<RecipeIngredient> list={Object.entries(ingredients)} contentFn={content} remove={remove} edite={edite}/>
