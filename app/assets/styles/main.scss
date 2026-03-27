@@ -120,26 +120,6 @@ body {
 
 
 
-//recipe
-.recipe {
-
-    //recipeCard
-    &Card {
-        padding: var.$second-gap;
-        box-sizing: border-box;
-        margin-bottom: var.$second-gap;
-
-
-        border: thin outset #8c8c8c80;
-        border-radius: 10px;
-
-        -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
-        -moz-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
-        box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.6);
-    }
-}
-
-
 
 //FilterBar
 .filter-bar {

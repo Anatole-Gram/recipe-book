@@ -3,6 +3,7 @@ import { submitUser, setUserData, loginUser } from "./userThunks";
 import type { NewUserResponse } from "./userThunks";
 import type  { RequestProperty, User, DBUser, DBUserLogged } from "../store.types";
 import { saveToken } from "@/utils/auth/authStorage";
+import { data } from "react-router-dom";
 
 
 interface userState {
@@ -16,6 +17,14 @@ interface userState {
     };
 };
 
+
+const userData: User = {
+        id: 0,
+        name: '',
+        img: '',
+        log: '',
+        recipeIds: [],
+    }
 
 const initialState: userState = {
     isAuth: false,
@@ -43,7 +52,9 @@ const initialState: userState = {
     }
 }
 
-
+const setUser = (state: userState, data?: User) => {
+    state.data = data ?? userData
+};
 
 const userSlice = createSlice({
     name: 'user-slice', 
@@ -54,7 +65,7 @@ const userSlice = createSlice({
         }, 
         resetUserData: (state) => {
             state.isAuth = false;
-            state.data = { id: 0, name: '', img: '', log: '', recipeIds: [] }
+            setUser(state)
     },
         },
     extraReducers: (builder) => {
@@ -98,6 +109,7 @@ const userSlice = createSlice({
         .addCase(loginUser.fulfilled,  (state, action: PayloadAction<DBUserLogged>) => {
             state.requests.login.status = 'succeeded';
             const {id, name, img, log} = action.payload.user;
+            console.log(action.payload)
             const {recipeIds} = action.payload.user;
             state.data = {id, name, img, log, recipeIds};
             saveToken(id.toString())

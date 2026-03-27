@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./recipe-card.module.scss";
+import styles from "./recipe-card-is-open.module.scss";
 import type { DBRecipe } from "@/store/store.types";
 import { setRecipeIsActive } from "@/store/recipes/recipesSlice";
 import { useDispatch } from "react-redux";
@@ -8,12 +8,12 @@ import Ingredients from "@/components/recipes/recipe-card/recipe-ingredients/Rec
 import Steps from "@/components/recipes/recipe-card/recipe-steps/RecipeSteps";
 
 
-type RecipeCardProps = {
+type RecipeCardIsOpenProps = {
     recipe: DBRecipe;
     className?: string;
 }
 
-export default function RecipeCard(props: RecipeCardProps) {
+export default function RecipeCardIsOpen(props: RecipeCardIsOpenProps) {
 
     const dispatch = useDispatch();
 
@@ -26,12 +26,12 @@ export default function RecipeCard(props: RecipeCardProps) {
         dispatch(setRecipeIsActive(false));
     }, [])
 
-    const {id, title, img, description, ingredients, steps} = props.recipe
+    const {title, img, description, ingredients, steps} = props.recipe
     const { className } = props
 
     return (
         <div className={`${styles.card} ${className ?? ''}`}>
-            <Summary id={id} title={title} img={img} description={description} />
+            <Summary title={title} img={img} description={description} />
             <Ingredients list={ingredients}/>
             <Steps list={steps}/>
         </div>

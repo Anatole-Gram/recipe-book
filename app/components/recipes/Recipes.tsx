@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import FilterBar from "./recipes-filter-bar/RecipesFilterBar";
 import RecipesList from "@/components/recipes/recipes-list/RecipesList";
 import type { DBRecipe } from "@/store/store.types"
-import Recipe from "@/components/recipes/recipe-card/Recipe-Card";
+import Recipe from "@/components/recipes/recipe-card/recope-card-is-open/RecipeCardIsOpen";
  
 
 export default function Recipes() {

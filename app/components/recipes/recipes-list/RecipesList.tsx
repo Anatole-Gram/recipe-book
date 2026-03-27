@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import styles from "./recipes- list.module.scss";
+import React from "react";
 import RecipeSummary from "@/components/recipes/recipe-card/recipe-card-summary/RecipeCardSummary";
 import type { DBRecipes, DBRecipe } from "@/store/store.types";
 
@@ -12,16 +11,13 @@ type RecipesListProps = {
 
 export default function RecipesList(props: RecipesListProps) {
 
-
-
-
     const {recipes,selectRecipe, className} = props;
     return (
-        <div className={`${styles.list} ${className ?? ''}`}>
+        <div className={`${className ?? ''}`}>
             {recipes.map((recipe)  => {
                 const {id, title, img, description} = recipe
                 return (
-                    <RecipeSummary id={id} key={id} title={title} img={img} description={description} showRecipe={() => selectRecipe(recipe)} className={styles.summary}/>
+                    <RecipeSummary key={id} title={title} img={img} description={description} showRecipe={() => selectRecipe(recipe)}/>
                 )
             })}
         </div>

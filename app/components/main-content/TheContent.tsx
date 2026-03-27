@@ -2,7 +2,7 @@ import React from "react";
 import Main from "@/components/user/User";
 import Recipes from "@/components/recipes/Recipes";
 import RecipeForm from "@/components/forms/recipe-form/RecipeForm";
-import AuthUser from "@/components/forms/auth-form/ AuthFormUser";
+import AuthUser from "@/components/forms/auth-form/AuthFormUser";
 import RegistrationForm from "../forms/registration-form/RegistrationForm";
 import ProtectedRoute from "@/components/protected-route/ProtectedRoute";
 import styles from "./content.module.scss"
