@@ -1,4 +1,83 @@
+@use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins" as mixins;
 
 .input {
         display: none
-    };
+};
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+
+    // wrapperSmallColumn
+    &SmallColumn {
+        width: 150px;
+        align-self: flex-start;
+    }
+
+    // wrapperRegular
+    &Regular {
+        height: 300px;
+        justify-content: start;
+        align-items: center;
+        height: 300px;
+    }
+};
+
+.img {
+    border-radius: 10px;
+    margin-top: 20px;
+    align-self: center;
+
+    // // imgSmallColumn
+    // &SmallColumn {
+
+    // }
+
+    // // imgRegular
+    // &Regular {
+
+    // }
+};
+
+.label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    box-sizing: border-box;
+    padding: var.$input-padding;
+    @include mixins.font-rules(0.8rem, 'Rubik');
+    background-color: var.$whiteColor;
+    border-radius: var.$input-radius;
+    @include mixins.input-shadow;
+
+    // // labelSmallColumn
+    // &SmallColumn {
+
+    // }
+
+    // labelRegular
+    &Regular {
+        width: 150px;
+    }
+};
+
+.title {
+    margin-bottom: 3px;
+    @include mixins.font-rules(0.9rem, 'Rubik');
+    color: #888; 
+
+    // titleSmallColumn
+    &SmallColumn {
+        text-align: end;
+    }
+
+    // titleRegular
+    &Regular {
+        text-align: center;
+    }
+}
+
+

@@ -16,26 +16,26 @@
     gap: 20px 14px;
     box-sizing: border-box
  };
- .input {
 
 
-    //input title
-    &Title {
-        grid-area: title;
+ .title {
+    grid-area: title;
+ }
+ .count {
+    grid-area: count;
+
+    & input {
+        width: 100%;
     }
-    //input count
-    &Count {
-        grid-area: count;
-    }
-    //input unit
-    &Unit {
-        grid-area: unit;
-    }
-    //input Button
-    &Btn {
-        grid-area: btn;
-    }
- };
+ }
+ .unit {
+    grid-area: unit;    
+ }
+ .btn {
+    grid-area: btn;
+ }
+
+
  .label {
     top: 50%;
  }

@@ -1,4 +1,4 @@
-@use "@/assets/styles/mixins";
+@use "@/assets/styles/mixins" as mixins;
 @use "@/assets/styles/variables" as var;
 
 .categories {
@@ -49,4 +49,8 @@
             }
         }
     }
+}
+
+.selectedCtegory {
+    @include mixins.main-input-box;
 }

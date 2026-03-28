@@ -1,3 +1,5 @@
+import styles from "./photo-input.module.scss";
+
 
 export type  ClassNamesPhotoInput = {
     wrapper: string;
@@ -7,15 +9,15 @@ export type  ClassNamesPhotoInput = {
 };
 
 export const smallColumn = {
-    wrapper: 'photo-wrapper',
-    img: 'photo-image',
-    label: 'photo-label',
-    title: 'photo-title'
+    wrapper: `${styles.wrapper} ${styles.wrapperSmallColumn}`,
+    img: `${styles.img}`,
+    label: ` ${styles.label}`,
+    title: `${styles.title} ${styles.SmallColumn}`
 }
 
 export const regularColumn = {
-    wrapper: 'photo-wrapper--reg',
-    img: 'photo-image--reg',
-    label: 'photo-label--reg',
-    title: 'photo-title--reg'
+    wrapper: `${styles.wrapper} ${styles.wrapperRegular}`,
+    img: `${styles.img} ${styles.labelRegular}`,
+    label: ` ${styles.label}`,
+    title: `${styles.title} ${styles.titleRegular}`
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./recipe-step.module.scss";
 import StepPhoto from "@/components/forms/form-items/photo-input/PhotoInput";
 import { regularColumn } from "@/components/forms/form-items/photo-input/classNames";
 import  Input from "@/components/forms/form-items/common-input/CommonInput";
@@ -32,7 +33,7 @@ export default function RecipeStep(props: RecipeStepProps) {
                 value={step.description}
                 textArea={true}
                 handleChange={handleChange}
-                classNames={classNamesExpander<ClassNamesCommonInput>('input', 'description', dynamicLabel)}/>
+                classNames={classNamesExpander<ClassNamesCommonInput>('input', `${styles.description}`, dynamicLabel)}/>
         </>
     )
 }

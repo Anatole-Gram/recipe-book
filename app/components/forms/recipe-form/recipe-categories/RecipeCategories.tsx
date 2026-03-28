@@ -44,7 +44,7 @@ export default function RecipeCategories(props: RecipeCategoriesProps) {
                     type="button"
                     onClick={() => setShowCategories(!showCategories)}
                     id="category-btn"
-                    className={`main-input`}>
+                    className={`${styles.selectedCtegory}`}>
 
                         {category.title ?? 'не выбрана'}
                         <AngleDown width={10} height={10}/>

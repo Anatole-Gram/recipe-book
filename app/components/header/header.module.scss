@@ -10,11 +10,22 @@
     align-items: center;
     justify-content: center;
 
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
     & h3 {
         color: var.$text-on-black;
         font-family: "Hachi Maru Pop";
         margin-bottom: 8px;
-        align-self: flex-start;
-        padding-left: 16px;
+        margin-left: 16px;
     }
+ }
+
+ .icon {
+    display: block;
+    margin-right: 36px;
+    width: 362x;
+    height: 32px;
  }

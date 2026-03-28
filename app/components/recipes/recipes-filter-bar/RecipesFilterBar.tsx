@@ -98,7 +98,7 @@ export default function RecipeFilterBar(props: RecipeFilterBarProps) {
                     placeholder="поиск" 
                     value={searchValue} 
                     handleChange={handleChangeSearch} 
-                    classNames={classNamesExpander<ClassNamesCommonInput>('input', 'filter-bar_serch-input', simpleInput)}/>
+                    classNames={classNamesExpander<ClassNamesCommonInput>('input', `${styles.searchInput}`, simpleInput)}/>
 
             </fieldset>
 

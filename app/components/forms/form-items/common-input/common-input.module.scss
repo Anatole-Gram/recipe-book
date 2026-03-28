@@ -1,0 +1,57 @@
+@use "@/assets/styles/variables" as var;
+@use "@/assets/styles/mixins" as mixins;
+
+.wrapper {
+    position: relative;
+    display: flex;
+
+    // // wrapperRegular
+    // &Regular {
+
+    // }
+
+    // wrapperDynamic
+    &Dynamic {
+
+        & input:focus + label, input:not(:placeholder-shown) + label, textarea:focus + label, textarea:not(:placeholder-shown) + label{
+            top: 0; 
+            transform: translateY(-100%); 
+            color: #555; 
+        }
+    }
+}
+
+.input {
+    @include mixins.main-input-box();
+
+    // // inputRegular
+    // &Regular {
+
+    // }
+
+    // // inputDynamic
+    // &Dynamic {
+
+    // }
+}
+
+.label {
+    @include mixins.font-rules(0.9rem, 'Rubik');
+    color: #888;
+    
+    // // labelRegular
+    // &Regular {
+
+    // }
+
+    // labelDynamic
+    &Dynamic {
+        position: absolute; 
+        left: 3px;
+        top: var.$input-padding;
+        pointer-events: none; 
+        transition: all 0.2s ease; 
+        background: transparent; 
+        z-index: 1; 
+    }
+}

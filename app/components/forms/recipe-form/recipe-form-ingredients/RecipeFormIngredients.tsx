@@ -45,7 +45,7 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps) {
                     name="title"
                     value={ingredient.title} 
                     handleChange={setIngredient}
-                    classNames={ ClassNameExpander<ClassNamesCommonInput>('wrapper', 'ingredients_input-name', dynamicLabel) }/>
+                    classNames={ ClassNameExpander<ClassNamesCommonInput>('wrapper', `${styles.title}`, dynamicLabel) }/>
                 
                 <Input 
                     type="number"
@@ -53,20 +53,20 @@ export default function RecipeFormIngredients(props: RecipeIngredientsProps) {
                     name="count"
                     value={ingredient.count}
                     handleChange={setIngredient}
-                    classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', 'ingredients_input-count', dynamicLabel) }/>
+                    classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', `${styles.count}`, dynamicLabel) }/>
 
                 <Input 
                     label="ед. измерения"
                     name="unit"
                     value={ingredient.unit} 
                     handleChange={setIngredient}
-                    classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', 'ingredients_input-unit', dynamicLabel) }/>
+                    classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', `${styles.unit}`, dynamicLabel) }/>
                     
                 <button
                     type="button"
                     onClick={setIngredients}
                     disabled={!canSave}
-                    className={`${styles.inputBtn} main-btn--black`}>
+                    className={`${styles.btn} main-btn--black`}>
                         добавить
                 </button>
             </div>

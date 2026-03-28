@@ -50,7 +50,7 @@ export default function RecipeFormSummary(props: RecipeFormSummaryProps) {
                 value={description} 
                 handleChange={changeItem} 
                 textArea={true} 
-                classNames={classNamesExpander<ClassNamesCommonInput>('input', 'description', dynamicLabel)} />
+                classNames={classNamesExpander<ClassNamesCommonInput>('input', `${styles.description}`, dynamicLabel)} />
 
         </fieldset>
     )
