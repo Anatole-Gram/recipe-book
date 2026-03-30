@@ -105,7 +105,7 @@ module.exports = {
         headers: {
         "Content-Security-Policy": 
             "default-src 'self'; " +
-            "img-src 'self' https://placehold.jp; " +
+            "img-src 'self' blob: data: https://placehold.jp; " +
             "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
             "style-src 'self' 'unsafe-inline'; " +
             "connect-src 'self' ws: http://localhost:8080;"
