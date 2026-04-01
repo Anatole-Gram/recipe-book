@@ -1,12 +1,49 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getBlob, hasBlob } from '@/utils/cache/blobCache';
 import type { RootState } from '@/store/store';
-import type {RecipeFormState, recipeDataToSubmit, RecipeSummary } from '@/store/store.types';
+import type {RecipeFormState, recipeDataToSubmit, RecipeSummaryToSend, RecipeStepToSend} from '@/store/store.types';
 
-function buildRecipePayload(state: RecipeFormState): recipeDataToSubmit {
+
+
+async function buildRecipePayload(state: RecipeFormState): Promise<recipeDataToSubmit> {
+
+  const loadedImgs = new Map();
+  const formData = new FormData();
+  const summary = state.recipe[0]
+  const steps = Object.values(state.recipe[2]);
+
+
+  [summary, ...steps].forEach(el => {
+    if(el.id && hasBlob(el.id)) {
+      formData.append('files', getBlob(el.id) as Blob, el.id );
+    };
+  });
+
+  const res = await fetch(`/api//upload/images`, {
+    method: 'POST',
+    body: formData
+  })
+    .then(data => data.json())
+    .then((urlsData: [id:string, url:string][]) => {urlsData.forEach(el => loadedImgs.set(...el))});
+
+  console.log(loadedImgs)
+
+  const summaryToSend = {
+      title: summary.title,
+      categoryId: summary.categoryId,
+      img: loadedImgs.get('summary'),
+      description: summary.description,
+      authorId: null
+    } as RecipeSummaryToSend
+
+  const stepsToSend: RecipeStepToSend[] = steps.map((step) => ({description: step.description, img: loadedImgs.get(step.id)}));
+
+    console.log(summaryToSend)
+
   return {
-    summary: {...state.recipe[0] as RecipeSummary, authorId: null}, 
+    summary: summaryToSend,
     ingredients: Object.values(state.recipe[1]), 
-    steps: Object.values(state.recipe[2])
+    steps: stepsToSend
   };
 }
 
@@ -20,7 +57,7 @@ export const submitRecipe = createAsyncThunk<
   async (authorId, { getState, rejectWithValue }) => {
     try {
       const state = getState().recipeForm as any;
-      const payload = buildRecipePayload(state);
+      const payload = await buildRecipePayload(state);
       payload.summary.authorId = authorId
 
       const res = await fetch('/api/recipes', {

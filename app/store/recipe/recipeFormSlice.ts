@@ -9,16 +9,13 @@ const initialState: RecipeFormState = {
     formIsActive: false,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
-    summaryTemplate: {title: '', categoryId: '0', img: '', description: '', authorId: null},
-    ingredientTemplate: {title: '', count: 0, unit: ''},
-    stepTemplate: {description: '', img: ''},
+    summaryTemplate: {id: '', title: '', categoryId: '0', img: {url: ''}, description: '', authorId: null},
+    ingredientTemplate: {id: '', title: '', count: 0, unit: ''},
+    stepTemplate: {id: '', description: '', img: {url: ''}},
     recipe: [{}, {}, {}],
     submitting: false,
     submitError: null,
     submittedId: null,
-
-
-
 };
 
 const increment = (state: RecipeFormState): void => {
@@ -31,11 +28,11 @@ const newIngredient = (state: RecipeFormState): void =>  {
     state.ingredientTemplate = {title: '', count: 0, unit: ''};
 };
 const newStep = (state: RecipeFormState): void => {
-    state.stepTemplate = {description: '', img: ''};
+    state.stepTemplate = {description: '', img: {url: ''}};
 };
 const nextStepTemplate = (state: RecipeFormState, id: string|null ): void => {
     if(!id) { 
-        state.stepTemplate = {description: '', img: ''};
+        state.stepTemplate = {description: '', img: {url: ''}};
     } else {
         Object.assign(state.stepTemplate, state.recipe[2][id]);
     };

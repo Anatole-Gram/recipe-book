@@ -1,4 +1,4 @@
-import type { RecipeSummary, RecipeIngredient, RecipeStep } from "../../store/recipe/recipeFormSlice.types";
+import type { RecipeSummary, RecipeIngredient, RecipeStep } from "@/store/store.types";
 import type { LoginForm } from "@/components/forms/auth-form/AuthFormUser";
 import type { RegestrationFormType } from "@/components/forms/registration-form/RegistrationForm";
 import {CYRILLIC_1_PLUS, CYRILLIC_3_PLUS, CYRILLIC_10_PLUS, NON_ZERO_NUMBER, IMG_URL_REGEX, LOG_REGEX, PASS_REGEX} from "../../constans/regex";

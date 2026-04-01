@@ -15,7 +15,7 @@ interface ImageLoaderProps {
     close: () => void;
 }
 
-export default function ImageLoader({ onCrop }: ImageLoaderProps) {
+export default function ImageLoader({ onCrop, close }: ImageLoaderProps) {
 
 
     const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
@@ -512,7 +512,7 @@ export default function ImageLoader({ onCrop }: ImageLoaderProps) {
                     onTouchEnd={handleEnd}
                 />
             </div>
-                            <button 
+                <button 
                     type="button" 
                     onClick={close} 
                     disabled={isLoading}

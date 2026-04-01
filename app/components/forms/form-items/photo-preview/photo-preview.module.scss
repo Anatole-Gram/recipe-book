@@ -8,7 +8,7 @@
 
 .wrapper {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
 
     // wrapperSmallColumn
     &SmallColumn {
@@ -31,9 +31,10 @@
     align-self: center;
 
     // // imgSmallColumn
-    // &SmallColumn {
-
-    // }
+    &SmallColumn {
+        width: 128px;
+        height: 128px;
+    }
 
     // // imgRegular
     // &Regular {
@@ -41,7 +42,7 @@
     // }
 };
 
-.label {
+.btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,28 +54,30 @@
     border-radius: var.$input-radius;
     @include mixins.input-shadow;
 
-    // // labelSmallColumn
+    // // btnSmallColumn
     // &SmallColumn {
 
     // }
 
-    // labelRegular
+    // btnRegular
     &Regular {
         width: 150px;
     }
 };
 
-.title {
+.label {
     margin-bottom: 3px;
+
     @include mixins.font-rules(0.9rem, 'Rubik');
     color: #888; 
+    
 
-    // titleSmallColumn
+    // labelSmallColumn
     &SmallColumn {
         text-align: end;
     }
 
-    // titleRegular
+    // labelRegular
     &Regular {
         text-align: center;
     }
