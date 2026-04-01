@@ -105,8 +105,8 @@ module.exports = {
         headers: {
         "Content-Security-Policy": 
             "default-src 'self'; " +
-            "img-src 'self' blob: data: https://placehold.jp; " +
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+            "img-src 'self' blob: data: https://placehold.jp;" +
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval';" +
             "style-src 'self' 'unsafe-inline'; " +
             "connect-src 'self' ws: http://localhost:8080;"
         },
@@ -116,6 +116,12 @@ module.exports = {
                 context: ['/api'],
                 target: 'http://back:3000',
                 pathRewrite: { '^/api': '' },
+                changeOrigin: true,
+                secure: false,
+            },
+            {
+                context: ['/uploads'],
+                target: 'http://back:3000',
                 changeOrigin: true,
                 secure: false,
             },
