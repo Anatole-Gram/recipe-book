@@ -2,9 +2,14 @@ import React from "react";
 import MenuPanel from "@/components/footer/footer-menu/FooterMenu"; 
 import { RootState, AppDispatch} from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { setSummary, setIngredients,  setRecipeStep, stepForward, stepBack, setStepEditor} from "@/store/recipe/recipeFormSlice";
+import { setSummary,  setRecipeStep, stepForward, stepBack, setStepEditor, resetSlice, setFormIsActive, resetStepTemplate} from "@/store/recipe/recipeFormSlice";
 import { submitRecipe } from "@/store/recipe/recipeFormThunks";
 import { minMax } from "@/utils/base";
+
+type IsComponent = 'summary' | 'ingredients' | 'step';
+type IsComponentIndex = 0 | 1 | 2;
+
+const COMPONENTS: IsComponent[] = ['summary', 'ingredients', 'step'] as const;
 
 
 
@@ -13,7 +18,7 @@ export default function RecipeFormMenu() {
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
     const user = useSelector((state: RootState) => state.user.data)
     const {step, valid, recipe, stepEditor}  = recipeForm;
-    const ingredientsPermission: boolean =  Boolean(Object.keys(recipe[1]).length);
+
 
 
     //Действия для редактора
@@ -22,80 +27,57 @@ export default function RecipeFormMenu() {
         dispatch(setStepEditor(false));
     };
     const closeEditor = (): void => {
-       console.log('close')
+       dispatch(setStepEditor(false));
+       dispatch(resetStepTemplate());
     };
-
-    //Выбераем действие для редактора
-    const editorAction = (): any => valid.step ? addStep : closeEditor;
 
     //Действия для формы
     const createRecipe = (): void => {
         dispatch(submitRecipe(user.id));
     };
-    const closeForm = async (): Promise<any> => {
-        console.log('close form')
+    const resetForm = (): void => {
+        dispatch(resetSlice())
+        dispatch(setFormIsActive(true))
     };
 
-    //Устанавливаем состоение для выбора действия формы
-    const [canCreate, setCanCreate] = React.useState<boolean>(false);
 
-    //Меняем условие для выбора формы
-    //true - все елементы recipe не пустые
-    //false - recipe имеет пустой объект
-    React.useEffect(() => {
-        const notEmpty = new Set()
-        for(let i = 0; i < recipe.length; i++ ) {
-            notEmpty.add(Boolean(Object.keys(recipe[i]).length));
+    //получаем индек компонента
+    const componentIndex = minMax(step, [0, 2]) as IsComponentIndex;
+
+    //получаем имя копонента по индексу
+    const componetn: IsComponent = COMPONENTS[componentIndex]
+
+    const btnProps = () => {
+        // получаем разрешение на действия стрелок
+        const permission = {
+            back: componetn !== 'summary' ? true : false,
+            next: componetn === 'ingredients' ? Object.keys(recipe[1]).length > 0 : valid[componetn]
         };
-        setCanCreate(!notEmpty.has(false));
-    }, [recipe]);
-
-    //Выбераем действие для формы
-    const formAction = (): any => canCreate && !stepEditor ? createRecipe : closeForm;
-
-    //Устанавливыаем состояние для изменения стилей кнопки CrossBtn
-    //Меняем состояние отслеживая  stepEditor, valid.step и canCreate
-    const [crossBtnState, setCrossBtnState] = React.useState<boolean>(false)
-    React.useEffect(() => {
-        if(!stepEditor) {setCrossBtnState(canCreate)};
-        if(stepEditor) {setCrossBtnState(valid.step)};
-    }, [stepEditor, valid.step, canCreate]);
-
-
-    const actionRecord = {
-        next: [
-            {permission: valid.summary, action: () => dispatch(setSummary())},
-            {permission: ingredientsPermission, action: () => dispatch(stepForward())},
-            {permission: valid.step, action: () => dispatch(setRecipeStep())},
-        ],
-        back: [
-            {permission: step > 0, action: () => dispatch(stepBack())},
-            {permission: true, action: () => dispatch(stepBack())},
-            {permission: true, action: () => dispatch(stepBack())},
-        ], 
-        cross: [
-            {action: stepEditor ? editorAction() : formAction() },
-            {action: stepEditor ? editorAction() : formAction() },
-            {action: stepEditor ? editorAction() : formAction() },
-        ]
+        //устанавливаем состояние крестика + или х
+        const isPlus = stepEditor ? valid.step : recipe.every(item => Object.keys(item).length > 0);
+        //устанавливаем действия для кнопок
+        const action= {
+            //всегда шаг назад (если компонент крайний 'summary', то разрешения на действие ограничит permission)
+            back: () => dispatch(stepBack()),
+            //
+            next: componetn === 'summary' ? () => dispatch(setSummary()) : () => dispatch(stepForward()),
+            cross: stepEditor ? (isPlus ? addStep : closeEditor) : (isPlus ? createRecipe : resetForm)
+        };
+        
+        return ({
+            permission: {...permission},
+            action: {...action},
+            isPlus
+        });
     };
 
-    React.useEffect(() => {
-        console.log(valid.summary)
-    })
-
-    const index = minMax(step, [0, actionRecord.next.length - 1]);
-
-    const next = actionRecord.next[index];
-    const back = actionRecord.back[index];
-    const cross = actionRecord.cross[index]
+    const {permission, isPlus, action} = btnProps()
 
     return(
-
-        <MenuPanel 
-            back={{ action: back.action, permission: back.permission }}
-            cross={{ action: cross.action, state: crossBtnState }}
-            next={{ action: next.action, permission: next.permission }}
-        />
+    <MenuPanel
+        back={{permission: permission.back, action: action.back}}
+        cross={{state: isPlus, action: action.cross}}
+        next={{permission: permission.next, action: action.next}}
+    />
     )
 }

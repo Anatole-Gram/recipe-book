@@ -7,15 +7,16 @@ type FooterMenuProps = {
     back: { action: () => void, permission: boolean };
     cross: { action: () => void, state: boolean };
     next: { action: () => void, permission: boolean };
+    className?: string;
 };
 
 export default function FooterMenu(props: FooterMenuProps) {
 
-    const { back, cross, next } = props;
+    const { back, cross, next, className} = props;
 
     return (
 
-        <div className={styles.menu}>
+        <div className={`${styles.menu} ${className}`}>
 
             <ArrowBtn action={back.action} disabled={back.permission} direction={0} className={styles.btn }/>
 
