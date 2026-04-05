@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getBlob, hasBlob } from '@/utils/cache/blobCache';
+import { getBlob, hasBlob, notEmptyBlob } from '@/utils/cache/blobCache';
 import type { RootState } from '@/store/store';
 import type {RecipeFormState, recipeDataToSubmit, RecipeSummaryToSend, RecipeStepToSend} from '@/store/store.types';
 
@@ -7,38 +7,48 @@ import type {RecipeFormState, recipeDataToSubmit, RecipeSummaryToSend, RecipeSte
 
 async function buildRecipePayload(state: RecipeFormState): Promise<recipeDataToSubmit> {
 
-  const loadedImgs = new Map();
+  const loadedImgs: Map<string, string>  = new Map();
   const formData = new FormData();
-  const summary = state.recipe[0]
+  const summary = state.recipe[0];
   const steps = Object.values(state.recipe[2]);
 
+  if(notEmptyBlob()) {
 
   [summary, ...steps].forEach(el => {
-    if(el.id && hasBlob(el.id)) {
-      formData.append('files', getBlob(el.id) as Blob, el.id );
-    };
-  });
+      if(el.id && hasBlob(el.id)) {
+        formData.append('files', getBlob(el.id) as Blob, el.id );
+      };
+    });
 
-  const res = await fetch(`/api//upload/images`, {
-    method: 'POST',
-    body: formData
-  })
-    .then(data => data.json())
-    .then((urlsData: [id:string, url:string][]) => {urlsData.forEach(el => loadedImgs.set(...el))});
+    await fetch(`/api/upload/images`, {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => { 
+        if(!response.ok) {
+          throw new Error(`${response.statusText}`)
+        }
+        return response.json()
+      })
+      .then((data: [id:string, url:string][]) => {
+        data.forEach(el => loadedImgs.set(...el));
+      })
+      .catch(error => {
+        console.log(`Ошибка при загрузке изображений: ${error}`)
+      })
+  }
 
-  console.log(loadedImgs)
 
-  const summaryToSend = {
+
+  const summaryToSend: RecipeSummaryToSend  = {
       title: summary.title,
       categoryId: summary.categoryId,
-      img: loadedImgs.get('summary'),
+      img: loadedImgs.get('summary') ?? null,
       description: summary.description,
       authorId: null
     } as RecipeSummaryToSend
 
-  const stepsToSend: RecipeStepToSend[] = steps.map((step) => ({description: step.description, img: loadedImgs.get(step.id)}));
-
-    console.log(summaryToSend)
+  const stepsToSend: RecipeStepToSend[] = steps.map((step) => ({description: step.description, img: step.id ? loadedImgs.get(step.id) || null : null}));
 
   return {
     summary: summaryToSend,
@@ -56,7 +66,7 @@ export const submitRecipe = createAsyncThunk<
   'recipeForm/submit',
   async (authorId, { getState, rejectWithValue }) => {
     try {
-      const state = getState().recipeForm as any;
+      const state = getState().recipeForm;
       const payload = await buildRecipePayload(state);
       payload.summary.authorId = authorId
 
