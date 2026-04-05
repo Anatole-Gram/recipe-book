@@ -5,19 +5,24 @@ import styles from "./singel-select.module.scss";
 type SingelSelectProps = {
     values: {id: string, title: string}[];
     handleChange: (id: string) => void;
+    selectedDefault?: string;
     display: boolean;
     className?:string
 }
 
-export default function SingelSelect(props: SingelSelectProps) {
+export default function SingelSelect({values, selectedDefault, handleChange, display, className}: SingelSelectProps) {
 
-    const {values, handleChange, display, className} = props;
-    const [selected, setSelected] = React.useState<string>('');
+    const [selected, setSelected] = React.useState<string>(selectedDefault ?? '');
     const selectItem = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const {id} = e.target
         setSelected(id);
         handleChange(id);
     };
+
+
+    React.useEffect(() => {
+        handleChange(selected)
+    }, [])
 
     return (
         <div className={`${className ?? ''} ${display ? '' : styles.hide}`}>

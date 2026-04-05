@@ -10,15 +10,13 @@ type RecipeCategoriesProps = {
     className?: string;
 }
 
-export default function RecipeCategories(props: RecipeCategoriesProps) {
-
-    const {className} = props;
-
+export default function RecipeCategories({className}: RecipeCategoriesProps) {
+    
     const dispatch = useDispatch()
 
     const categories = useSelector((state: RootState) => state.recipes.categories);
 
-    const [category, setCategory] = React.useState<{id: string, title: string}>({id: '0', title: 'Прочее'});
+    const [category, setCategory] = React.useState<{id: string, title: string}>({id: '1', title: 'Прочее'});
 
     const categorySelector = (id: string) => {
         const selected =  categories.find(cat => cat.id == id);
@@ -54,6 +52,7 @@ export default function RecipeCategories(props: RecipeCategoriesProps) {
                 <SelectCategory 
                     values={categories} 
                     handleChange={categorySelector} 
+                    selectedDefault={category.id}
                     display={showCategories} 
                     className={styles.categoriesList} />
 
