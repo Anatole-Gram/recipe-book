@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setFormIsActive, setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate } from "@/store/recipe/recipeFormSlice";
 import { validateSummary, validateIngredient, validateStep} from "@/utils/validation/RecipeFormValidators";
 import { minMax } from "@/utils/base";
+import { saveBlob, getBlob } from "@/utils/cache/blobCache";
 
 
 type StepValue = 'summary' | 'ingredients' | 'step';
@@ -22,6 +23,20 @@ export default function RecipeForm() {
     React.useEffect(() => () => {
         dispatch(setFormIsActive(false));
     }, [])
+
+    const setImg = (blob: Blob): void => {
+            const save = step ? setStepTemplate : setSummaryTemplate;
+            const id = !step ? 'summary' : `id-${step}`
+            const img = {
+                url: URL.createObjectURL(blob),
+                type: blob.type, 
+                name: `${step ? 'step'+(step-2) : 'summary'}`
+            };
+            saveBlob(id, blob)
+            dispatch(save({id, img}));
+            console.log(getBlob(id))
+    }
+
 
     const recipeForm = useSelector((state: RootState) => state.recipeForm);
     const dispatch = useDispatch()
@@ -47,6 +62,7 @@ export default function RecipeForm() {
             }
         }
     }, [step])
+
  
 //recipe title
     const titleList: string[] = ['новый рецепт', 'список ингредиентов', `шаги рецепта`];
@@ -69,15 +85,23 @@ export default function RecipeForm() {
     }, []);
 
     const validSummary = validateSummary(summary);
-    React.useEffect(() => { dispatch(setValid({summary: validSummary.valid})); console.log(validSummary) }, [validSummary]);
-
+    React.useEffect(() => { dispatch(setValid({summary: validSummary.valid}));}, [validSummary]);
 
 //ingridients
     const ingredient = recipeForm.ingredientTemplate;
 
     const handleChangeIngredient = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-        const {name, value} = e.target; 
-        dispatch(setIngredientTemplate({[name]: value}));
+        const {name, value} = e.target;
+        let normolizeValue = ''
+        switch(name) {
+            case('count'): {
+                //убираем лишние 0 в начале числа
+                normolizeValue = value.replace(/^0+$/, '0').replace(/^0+(?=\d)/, '');
+                break;
+            }
+            default: normolizeValue = value
+        }
+        dispatch(setIngredientTemplate({[name]: normolizeValue}));
     }, []);
 
     const validIngredient = validateIngredient(ingredient).valid;
@@ -108,13 +132,17 @@ export default function RecipeForm() {
     React.useEffect(() => {dispatch(setValid({step: validStep}))}, [recipeStep]);
 
 
+    
+
+
 
     function renderStep() {
     switch (stepValue) {
         case 'summary':
         return (
             <RecipeFormSummary 
-            setDataItem={handleChangeSummary} 
+            setDataItem={handleChangeSummary}
+            saveImage={setImg}
             summary={summary} 
             />
         );
@@ -132,6 +160,7 @@ export default function RecipeForm() {
         return (
             <RecipeFormSteps
             setStep={handleChangeStep}
+            saveImage={setImg}
             steps={stepsRecord}
             step={recipeStep}
             />

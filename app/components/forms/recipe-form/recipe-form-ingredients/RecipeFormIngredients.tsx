@@ -16,9 +16,7 @@ type RecipeIngredientsProps = {
     setIngredients: () => void;
  }
 
-export default function RecipeFormIngredients(props: RecipeIngredientsProps) {
-
-    const {ingredients, ingredient, canSave, setIngredient, setIngredients} = props;
+export default function RecipeFormIngredients({ingredients, ingredient, canSave, setIngredient, setIngredients}: RecipeIngredientsProps) {
 
     const dispatch = useDispatch()
 
