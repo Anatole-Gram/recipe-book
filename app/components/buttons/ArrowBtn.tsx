@@ -16,7 +16,7 @@ export default function ArrowBtn(props: ArrowBtnProps) {
 
     return(
         <button
-            disabled={!disabled}
+            disabled={disabled}
             onClick={action}
             className={styles.btn}>
                 <Icon className={className}/>

@@ -3,7 +3,14 @@
 .btn { 
     width: 24px;
     height: 24px;
-    color: var.$text-on-black;
+    //btnEnabled
+    &Enabled {
+        color: var.$text-on-black;
+    }
+    // btnDisabled
+    &Disabled {
+        color: #888;
+    }
 }
 .menu {
     display: flex;
@@ -23,6 +30,10 @@
         &Close {
 
         };
+        //menuBtnReset
+        &Reset {
+            margin-right: 32px;
+        }
         //menu_btn--active
         &Active {
             color: var.$active-btn;
@@ -32,4 +43,5 @@
             color: var.$non-active-btn;
         };
     }
+   
 }

@@ -40,28 +40,27 @@ export default function RecipeFormMenu() {
         dispatch(setFormIsActive(true))
     };
 
-
-    //получаем индек компонента
     const componentIndex = minMax(step, [0, 2]) as IsComponentIndex;
 
-    //получаем имя копонента по индексу
-    const componetn: IsComponent = COMPONENTS[componentIndex]
+    const component: IsComponent = COMPONENTS[componentIndex]
 
     const btnProps = () => {
-        // получаем разрешение на действия стрелок
+
         const permission = {
-            back: componetn !== 'summary' ? true : false,
-            next: componetn === 'ingredients' ? Object.keys(recipe[1]).length > 0 : valid[componetn]
+            back: (component === 'summary') || stepEditor ? false : true,
+            next:  component === 'ingredients' ? Object.keys(recipe[1]).length > 0 : (component === 'summary' ? valid[component] : false),
+            cross: stepEditor || recipe.every(item => Object.keys(item).length > 0),
         };
-        //устанавливаем состояние крестика + или х
+
+
         const isPlus = stepEditor ? valid.step : recipe.every(item => Object.keys(item).length > 0);
-        //устанавливаем действия для кнопок
+
+
         const action= {
-            //всегда шаг назад (если компонент крайний 'summary', то разрешения на действие ограничит permission)
             back: () => dispatch(stepBack()),
-            //
-            next: componetn === 'summary' ? () => dispatch(setSummary()) : () => dispatch(stepForward()),
-            cross: stepEditor ? (isPlus ? addStep : closeEditor) : (isPlus ? createRecipe : resetForm)
+            next: component === 'summary' ? () => dispatch(setSummary()) : () => dispatch(stepForward()),
+            cross: stepEditor ? (isPlus ? addStep : closeEditor) : createRecipe,
+            reset: stepEditor ? () => dispatch(resetStepTemplate()) : resetForm
         };
         
         return ({
@@ -76,7 +75,8 @@ export default function RecipeFormMenu() {
     return(
     <MenuPanel
         back={{permission: permission.back, action: action.back}}
-        cross={{state: isPlus, action: action.cross}}
+        reset={{permission: true, action: action.reset}}
+        cross={{isPlus, action: action.cross, permission: permission.cross}}
         next={{permission: permission.next, action: action.next}}
     />
     )

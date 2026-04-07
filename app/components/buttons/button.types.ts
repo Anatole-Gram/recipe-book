@@ -16,6 +16,6 @@ type BntConditional = {
 
 export type ArrowBtnProps =  BtnProps & { direction: 0 | 1; } & BntConditional;
 
-export type CrossBtnProps = BtnProps & { isPlus: boolean };
+export type CrossBtnProps = BtnProps & { isPlus: boolean } & BntConditional;
 
 export type ToggleBtnProps = BtnProps & BntConditional;

@@ -4,11 +4,11 @@ import CrossIcon from "@/assets/svg/close-x.svg";
 import { CrossBtnProps } from "./button.types";
 
 
-export default function CrossBtn(props: CrossBtnProps) {
-    const {action, isPlus, className} = props;
+export default function CrossBtn({action, isPlus, disabled, className}: CrossBtnProps) {
+
     
     return (
-        <button type="button" onClick={action}>
+        <button type="button" onClick={action} disabled={disabled}>
             <CrossIcon className={`${isPlus?styles.iconPlus:null} ${className}`}/>
         </button>
     )
