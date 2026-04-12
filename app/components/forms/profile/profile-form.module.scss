@@ -1,0 +1,90 @@
+ @use "@/assets/styles/variables" as var;
+
+.form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    padding: 16px;
+    box-sizing: border-box;
+    z-index: 9;
+    background-color: #888;
+}
+
+.inputWrapper {
+    margin: 16px 0;
+    width: 100%;
+}
+
+.menu {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 16px;
+
+    // menuBnt
+    &Bnt {
+        padding: 5px;
+        border: thin groove var.$text-on-black;
+        border-radius: var.$main-box-radius;
+        font-size: 0.9rem;
+        color: var.$text-on-black;
+    }
+}
+
+.box {
+    padding: 5px;
+    box-sizing: border-box;
+    min-height: 24px;
+    background-color: #888;
+    border: thin groove var.$text-on-black;
+    border-radius: var.$main-box-radius;
+    font-size: 0.9rem;
+    color: var.$text-on-black;
+}
+
+.input {
+    flex: 1 1 auto;
+    background-color: transparent;
+    color: var.$text-on-black;
+    font-size: 0.9rem;
+    // inputWrapper
+    &Wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-top: 32px;
+    }
+    // inputLabel
+    &Label {
+        position: absolute;
+        top: -16px;
+        left: 5px;
+    }
+}
+
+.prev {
+    
+    &Wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    &Img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 16px;
+    }
+
+    &Label {
+        display: none;
+    }
+
+}
+

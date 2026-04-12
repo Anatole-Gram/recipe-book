@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./user.module.scss";
-import imgStub from "@/assets/images/recipe-img-stub.png"
+import imgStub from "@/assets/images/recipe-img-stub.png";
 import OutIcon from "@/assets/svg/bracket-solid.svg";
+import Edit from "@/assets/svg/pen-to-square-solid.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState, AppDispatch } from "@/store/store";
+import { setUserData } from "@/store/user/userThunks";
 import { resetUserData } from "@/store/user/userSlice";
 import { removeToken } from "@/utils/auth/authStorage"
 import { useNavigate } from "react-router-dom";
+import ProfileForm from "@/components/forms/profile/ProfileForm";
 
 export default function UserProfile() {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const navigate =useNavigate()
 
-    const user = useSelector((state: RootState) => state.user.data)
-    const RecipesCount = user.recipeIds?.length ?? 0;
+    const user = useSelector((state: RootState) => state.user.data);
+    const RecipesCount = user.recipeIds?.length ?? 'нет данных';
+
+    const [profileEditor, setProfileEditor] = React.useState<boolean>(true);
 
     const logOutt = () => {
         removeToken();
@@ -22,17 +27,35 @@ export default function UserProfile() {
         navigate('/login', {replace: true});
     };
 
-    console.log(user)
+
+
+    useEffect(() => {
+        dispatch(setUserData(user.id))
+    }, [])
 
     return (
-        <div className={styles.userCard}>
+        <>
+        {profileEditor && <ProfileForm data={{id: user.id, name: user.name, img: user.img ?? null}} closeEditor={() => setProfileEditor(false)}/>}
 
-            <button
-                type="button"
-                onClick={logOutt}
-                className={styles.userOut}>
-                    <OutIcon className={styles.userOutIcon}/>
-            </button>
+        <div className={styles.userCard}>
+            <menu className={styles.menu}>
+                <li>
+                    <button
+                        type="button"
+                        onClick={() => setProfileEditor(true)}
+                        className={`${styles.menuBtn} ${styles.menuEdit}`}>
+                            <Edit className={styles.menuIcon}/>
+                    </button>
+                </li>
+                <li>
+                    <button
+                        type="button"
+                        onClick={logOutt}
+                        className={`${styles.menuBtn} ${styles.menuOut}`}>
+                            <OutIcon className={styles.menuIcon}/>
+                    </button>
+                </li>
+            </menu>
 
             <div className={styles.userCardHeader}></div>
 
@@ -47,5 +70,6 @@ export default function UserProfile() {
             </div>
 
         </div>
+        </>
     )
 }
