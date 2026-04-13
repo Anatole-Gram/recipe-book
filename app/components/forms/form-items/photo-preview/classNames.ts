@@ -21,3 +21,10 @@ export const regularColumn = {
     label: ` ${styles.label} ${styles.labelRegular}`,
     btn: `${styles.btn}`
 }
+
+export const profilePreview = {
+    wrapper: `${styles.wrapper} ${styles.wrapperProfile}`,
+    img: `${styles.imgProfile} `,
+    label: ` ${styles.label} ${styles.labelRegular}`,
+    btn: `${styles.btn} ${styles.btnProfile}`
+}

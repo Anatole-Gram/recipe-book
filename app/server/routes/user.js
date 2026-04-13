@@ -122,6 +122,50 @@ router.post('/users', async (req, res) => {
   }
 });
 
+// POST /users/:id/update - обновление name и/или img пользователя
+  router.post('/users/:id/update', async (req, res) => {
+  const { id } = req.params;
+  const { name, img } = req.body;
+
+  // Минимум одно поле должно быть передано
+  if (name === undefined && img === undefined) {
+    return res.status(400).json({ error: 'name or img must be provided' });
+  }
+
+  try {
+    const user = await db.user.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const updates = {};
+
+    if (name !== undefined) {
+      if (typeof name !== 'string' || name.trim().length === 0) {
+        return res.status(400).json({ error: 'Invalid name' });
+      }
+      updates.name = name.trim();
+    }
+
+    if (img !== undefined) {
+      updates.img = img;
+    }
+
+    await user.update(updates);
+
+    res.json({
+      id: user.id,
+      name: user.name,
+      img: user.img,
+      updatedAt: user.updatedAt
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+
+
 // POST /users/login - авторизация пользователя
 router.post('/users/login', async (req, res) => {
   try {

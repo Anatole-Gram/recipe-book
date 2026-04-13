@@ -6,6 +6,14 @@ export function saveBlob(id: string, blob: Blob) {
     blobStore.set(id, blob);
 };
 
+export function notEmptyBlob(): number {
+    return blobStore.size
+}
+
+export function clearBlob(): void {
+    blobStore.clear()
+} 
+
 export function getBlob (id: string): Blob | undefined {
     return blobStore.get(id);
 };

@@ -30,7 +30,7 @@ export default function App() {
                 .then(data => {console.log(data)})
                 .catch(err => {console.log(err)})
             dispatch(setAuthInitialized(true))
-        }
+        };
         init()
     },[dispatch]);
     

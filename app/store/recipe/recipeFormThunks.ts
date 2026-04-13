@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getBlob, hasBlob, notEmptyBlob } from '@/utils/cache/blobCache';
+import { getBlob, hasBlob, notEmptyBlob, clearBlob } from '@/utils/cache/blobCache';
 import type { RootState } from '@/store/store';
 import type {RecipeFormState, recipeDataToSubmit, RecipeSummaryToSend, RecipeStepToSend} from '@/store/store.types';
 

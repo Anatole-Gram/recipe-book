@@ -47,7 +47,7 @@ export const submitUser = createAsyncThunk<
     );
 
 export const setUserData = createAsyncThunk<
-    DBUser, 
+    DBUser,
     number,
     {state: RootState, rejectValue: string}>(
         'user/fetchUserData',

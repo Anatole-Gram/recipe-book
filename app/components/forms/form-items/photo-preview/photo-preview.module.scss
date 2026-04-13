@@ -23,6 +23,10 @@
         align-items: center;
         height: 300px;
     }
+    // wrapperProfile
+    &Profile {
+        flex-direction: column-reverse;
+    }
 };
 
 .img {
@@ -40,6 +44,13 @@
     // &Regular {
 
     // }
+
+    // imgProfile
+    &Profile {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
 };
 
 .btn {
@@ -62,6 +73,11 @@
     // btnRegular
     &Regular {
         width: 150px;
+    }
+
+    // btnProfile
+    &Profile {
+        margin-top: 16px;
     }
 };
 

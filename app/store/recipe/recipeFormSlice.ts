@@ -9,7 +9,7 @@ const initialState: RecipeFormState = {
     formIsActive: false,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
-    summaryTemplate: {id: '', title: '', categoryId: '0', img: {url: ''}, description: '', authorId: null},
+    summaryTemplate: {id: '', title: '', categoryId: '', img: {url: ''}, description: '', authorId: null},
     ingredientTemplate: {id: '', title: '', count: 0, unit: ''},
     stepTemplate: {id: '', description: '', img: {url: ''}},
     recipe: [{}, {}, {}],
@@ -43,6 +43,7 @@ const recipeFormSlice = createSlice({
     name: "recipe-form",
     initialState,
     reducers: {
+        resetSlice: () => initialState,
 
         setFormIsActive: (state, action: PayloadAction<boolean>) => { state.formIsActive = action.payload; },
 
@@ -157,5 +158,5 @@ const recipeFormSlice = createSlice({
   }
 });
 
-export const { setFormIsActive, stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, setStepEditor, resetStepTemplate, setRecipeStep, removeStep} = recipeFormSlice.actions;
+export const {resetSlice, setFormIsActive, stepForward, stepBack, setSummaryTemplate, setIngredientTemplate, setSummary, setValid, setIngredients, removeIngredient, setStepTemplate, setStepEditor, resetStepTemplate, setRecipeStep, removeStep} = recipeFormSlice.actions;
 export default recipeFormSlice.reducer

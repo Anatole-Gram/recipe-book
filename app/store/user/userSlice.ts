@@ -109,7 +109,6 @@ const userSlice = createSlice({
         .addCase(loginUser.fulfilled,  (state, action: PayloadAction<DBUserLogged>) => {
             state.requests.login.status = 'succeeded';
             const {id, name, img, log} = action.payload.user;
-            console.log(action.payload)
             const {recipeIds} = action.payload.user;
             state.data = {id, name, img, log, recipeIds};
             saveToken(id.toString())

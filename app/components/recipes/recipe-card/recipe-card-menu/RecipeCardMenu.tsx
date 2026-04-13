@@ -37,7 +37,7 @@ export default function RecipeCardMenu() {
 return (
     <MenuPanel 
         back={{ action: previousSection, permission: true }}
-        cross={{ action: crossAction, state: false }}
+        cross={{ action: crossAction, isPlus: false, permission: true }}
         next={{ action: nextSection, permission: true }}
     />
 )

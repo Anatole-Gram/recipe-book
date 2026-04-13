@@ -1,5 +1,5 @@
 import React from "react";
-import type { RecipeStep, RecipeSteps } from "@/store/recipe/recipeFormSlice.types";
+import type { RecipeStep, RecipeSteps } from "@/store/store.types";
 import styles from "./recipe-steps.module.scss";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,12 +11,11 @@ import RecipeStepEditor from "@/components/forms/recipe-form/recipe-steps/recipe
 type RecipeFormStepsProps = {
     steps: RecipeSteps;
     step: RecipeStep;
+    saveImage: (blob: Blob) => void;
     setStep: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-export default function RecipeFormStep (props: RecipeFormStepsProps ) {
-
-    const { steps, step, setStep } = props;
+export default function RecipeFormStep ({ steps, step, setStep, saveImage }: RecipeFormStepsProps ) {
 
     const dispatch = useDispatch();
 
@@ -44,7 +43,7 @@ export default function RecipeFormStep (props: RecipeFormStepsProps ) {
     return(
         <fieldset className={styles.stepsWraper}>
             
-            { editor ? <RecipeStepEditor step={step} handleChange={setStep} /> :
+            { editor ? <RecipeStepEditor step={step} handleChange={setStep} saveImage={saveImage}/> :
                 <>
                     <button
                         onClick={addStep}

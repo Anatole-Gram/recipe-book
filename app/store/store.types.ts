@@ -1,3 +1,9 @@
+export type Img = {
+    url: string;
+    name?: string;
+    type?: string
+}
+
 //Recipes
 
 export type Category = {id: string; title: string};
@@ -6,12 +12,21 @@ export type Categories = Category[];
 
 //Summary
 export interface RecipeSummary {
+    id?: string;
     title: string;
     categoryId: string;
-    img: string;
+    img: Img;
     description: string;
     authorId: number | null;
 };
+export interface RecipeSummaryToSend {
+    id?: string;
+    title: string;
+    categoryId: string;
+    img: string | null;
+    description: string;
+    authorId: number | null;
+}  
 
 //Ingredients
 export interface RecipeIngredient {
@@ -26,9 +41,15 @@ export type RecipeIngredients = Record<string, RecipeIngredient>;
 //steps
 export interface RecipeStep {
     id?: string;
-    img: string;
+    img: Img;
     description: string;
 };
+export interface RecipeStepToSend {
+    id?: string;
+    img?: string | null;
+    description: string;
+}
+
 export type RecipeSteps = Record<string, RecipeStep>;
 
 
@@ -59,7 +80,7 @@ export type RecipeTuple = [Partial<RecipeSummary>, RecipeIngredients, RecipeStep
 
 
 //Recipe to submit
-export type recipeDataToSubmit = {summary: RecipeSummary, ingredients: RecipeIngredient[], steps: RecipeStep[],};
+export type recipeDataToSubmit = {summary: RecipeSummaryToSend, ingredients: RecipeIngredient[], steps: RecipeStepToSend[],};
 
 //
 export type RequestProperty = { status: string; error: string | null };

@@ -18,6 +18,9 @@ export default function Recipes() {
         if(!recipeIsActive) {setCurrentRecipe(null)};
     }, [recipeIsActive])
 
+    React.useEffect(() => {
+        console.log(list)
+    }, [list])
 
     return (
 

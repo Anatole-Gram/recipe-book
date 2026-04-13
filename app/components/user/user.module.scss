@@ -2,12 +2,13 @@
 @use "@/assets/styles/mixins";
 
 .user {
-
     // userName
     &Name {
         grid-area: title;
         justify-self: center;
         align-self: center;
+        font-size: 1.1rem;
+        color: #666666;
 
     }
 
@@ -21,9 +22,10 @@
 
         // userInfoRecipes
         &Recipes {
-            
+            color: #666666;
+            size: 1rem;
             & span  {
-                font-size: 0.86rem;
+                font-size: 0.8rem;
             }
         }
     }
@@ -47,12 +49,15 @@
         &Header {
             grid-area: header;
             @include mixins.contentShadow;
+            background-color: #ffffff8e;
             
         }
         // userCardFooter
         &Footer {
             grid-area: footer;
-            @include mixins.grayGradientBg;
+
+            background: url("/app/assets/images/recipe_book_1.jpg") no-repeat bottom / contain;
+            background-color: #fff;
 
             display: grid; 
             grid-template-rows: 80px 50px 1fr;
@@ -79,18 +84,26 @@
             box-shadow: 0px -1px 10px 4px rgba(34, 60, 80, 0.07);
         }
     }
+}
 
-    // userOut
+.menu {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    box-sizing: border-box;
+
     &Out {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        
-        // userOutIcon
-        &Icon {
-            width: 24px;
-            height:  24px;
-            fill: var.$main-color;
-        }
+
+    }
+    &Edit {
+
+    }
+    &Icon {
+        width: 24px;
+        height:  24px;
+        fill: #888;
     }
 }

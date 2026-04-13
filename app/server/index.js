@@ -6,26 +6,26 @@ const path = require('path');
 const fs = require('fs');
 
 // Функция для начального заполнения категорий
-async function seedCategories() {
-  const categoryNames = ['Прочее', 'Завтраки', 'Супы', 'Десерты', 'Горячее', 'Закуски', 'Напитки'];
-  for (const title of categoryNames) {
-    await db.category.findOrCreate({ where: { title } });
-  }
-  console.log('Seeded initial recipe categories');
-}
+// async function seedCategories() {
+//   const categoryNames = ['Прочее', 'Завтраки', 'Супы', 'Десерты', 'Горячее', 'Закуски', 'Напитки'];
+//   for (const title of categoryNames) {
+//     await db.category.findOrCreate({ where: { title } });
+//   }
+//   console.log('Seeded initial recipe categories');
+// }
 
 async function startServer() {
   try {
-    await db.sequelize.sync({ force: true });
-    console.log('#SEQUELIZE: Drop and re-synced db.');
+    // await db.sequelize.sync({ force: true });
+    // console.log('#SEQUELIZE: Drop and re-synced db.');
 
     await db.sequelize.sync();
-    const count = await db.category.count();
-    if (count === 0) {
-      await seedCategories();
-    } else {
-      console.log('Categories already seeded or not empty.');
-    }
+    // const count = await db.category.count();
+    // if (count === 0) {
+    //   await seedCategories();
+    // } else {
+    //   console.log('Categories already seeded or not empty.');
+    // }
 
     // Поддержка загрузки файлов
     const uploadDir = path.resolve(__dirname, 'uploads');
