@@ -4,7 +4,6 @@ import type { RootState } from '@/store/store';
 import type {RecipeFormState, recipeDataToSubmit, RecipeSummaryToSend, RecipeStepToSend} from '@/store/store.types';
 
 
-
 async function buildRecipePayload(state: RecipeFormState): Promise<recipeDataToSubmit> {
 
   const loadedImgs: Map<string, string>  = new Map();

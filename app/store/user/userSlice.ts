@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { submitUser, setUserData, loginUser } from "./userThunks";
+import { submitUser, setUserData, loginUser, updateUserData } from "./userThunks";
 import type { NewUserResponse } from "./userThunks";
-import type  { RequestProperty, User, DBUser, DBUserLogged } from "../store.types";
+import type  { RequestProperty, User, DBUser, DBUserLogged , UpdatedUser} from "../store.types";
 import { saveToken } from "@/utils/auth/authStorage";
 import { data } from "react-router-dom";
 
@@ -12,6 +12,7 @@ interface userState {
     data: User;
     requests: {
         submitUser: RequestProperty;
+        updatedata: RequestProperty;
         userByid: RequestProperty;
         login: RequestProperty
     };
@@ -49,6 +50,11 @@ const initialState: userState = {
             status: '',
             error: null
         },
+        updatedata: {
+            status: '',
+            error: null
+        }
+
     }
 }
 
@@ -66,8 +72,11 @@ const userSlice = createSlice({
         resetUserData: (state) => {
             state.isAuth = false;
             setUser(state)
-    },
         },
+        updateUser: (state, action: PayloadAction<Partial<User>>) => {
+            Object.assign(state.data, action.payload);
+        }
+    },
     extraReducers: (builder) => {
         builder
         //Create user and login
@@ -101,6 +110,21 @@ const userSlice = createSlice({
             state.requests.userByid.status = 'faild';
             state.requests.userByid.error = (action.payload as string) ?? action.error?.message ?? 'Uncnown error';
         }) 
+        //updateUserData
+        .addCase(updateUserData.pending, (state) => {
+            state.requests.updatedata.status = 'loading';
+            state.requests.updatedata.error = null;     
+        })
+        .addCase(updateUserData.fulfilled, (state, action: PayloadAction<UpdatedUser>) => {
+            state.requests.updatedata.status = 'succeeded';
+            const {name, img, updatedAt} = action.payload;
+            const update = Object.fromEntries(Object.entries({name, img, updatedAt}).filter(el => Boolean(el[0] && el[1])));
+            Object.assign(state.data, update);
+        })
+        .addCase(updateUserData.rejected, (state, action) => {
+            state.requests.updatedata.status = 'faild';
+            state.requests.updatedata.error = (action.payload as string) ?? action.error?.message ?? 'Uncnown error';
+        }) 
         //loginByPass
         .addCase(loginUser.pending, (state) => {
             state.requests.login.status = 'loading';
@@ -121,5 +145,5 @@ const userSlice = createSlice({
     }
 });
 
-export const { setAuthInitialized, resetUserData } = userSlice.actions;
+export const { setAuthInitialized, resetUserData, updateUser } = userSlice.actions;
 export default userSlice.reducer;

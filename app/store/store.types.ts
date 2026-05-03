@@ -143,6 +143,13 @@ interface UserAuth {
 }
 export interface DBUser  extends User, UserAuth, DBRecord {}
 
+export interface UpdatedUser {
+    id: number;
+    name: string;
+    img: string | null;
+    updatedAt: string;
+}
+
 interface UserLogged extends User, DBRecord {}
 export interface DBUserLogged {
     message: string;

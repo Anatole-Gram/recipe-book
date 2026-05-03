@@ -1,20 +1,28 @@
 import React from "react"; 
 import styles from "./recipe-form.module.scss";
-import RecipeFormSummary from "@/components/forms/recipe-form/recipe-form-summary/RecipeFormSummary";
-import RecipeFormIngredients from "./recipe-form-ingredients/RecipeFormIngredients";
-import RecipeFormSteps from "@/components/forms/recipe-form/recipe-steps/RecipeFormSteps";
+import Summary from "@/components/forms/recipe-form/recipe-form-summary/RecipeFormSummary";
+import Ingredients from "./recipe-form-ingredients/RecipeFormIngredients";
+import Steps from "@/components/forms/recipe-form/recipe-steps/RecipeFormSteps";
 import { RootState } from "app/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import { setFormIsActive, setSummaryTemplate, setIngredientTemplate, setValid, setIngredients, setStepTemplate } from "@/store/recipe/recipeFormSlice";
-import { validateSummary, validateIngredient, validateStep} from "@/utils/validation/RecipeFormValidators";
+import { setFormIsActive } from "@/store/recipe/recipeFormSlice";
 import { minMax } from "@/utils/base";
-import { saveBlob, getBlob } from "@/utils/cache/blobCache";
 
 
-type StepValue = 'summary' | 'ingredients' | 'step';
+const COMPONENTS = ['summary', 'ingredients', 'steps'] as const;
+
+type ComponentKey = typeof COMPONENTS[number];
+
+const CONTENT: Record<ComponentKey, React.ReactElement> = {
+    summary: <> <h5>Новый рецепт</h5> <Summary /> </>, 
+    ingredients: <> <h5>Список ингредиентов</h5> <Ingredients /> </>, 
+    steps: <> <h5>Шаги рецепта</h5>  <Steps /> </>
+};
 
 
 export default function RecipeForm() {
+
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         dispatch(setFormIsActive(true));
@@ -22,159 +30,20 @@ export default function RecipeForm() {
 
     React.useEffect(() => () => {
         dispatch(setFormIsActive(false));
-    }, [])
-
-    const setImg = (blob: Blob): void => {
-            const save = step ? setStepTemplate : setSummaryTemplate;
-            const id = !step ? 'summary' : `id-${step}`
-            const img = {
-                url: URL.createObjectURL(blob),
-                type: blob.type, 
-                name: `${step ? 'step'+(step-2) : 'summary'}`
-            };
-            saveBlob(id, blob)
-            dispatch(save({id, img}));
-            console.log(getBlob(id))
-    }
-
-
-    const recipeForm = useSelector((state: RootState) => state.recipeForm);
-    const dispatch = useDispatch()
-    const recipeSteps = recipeForm.recipe[2]
-
-    const step = recipeForm.step ;
-
-    const [stepValue, setStepValue]  = React.useState<StepValue>('summary');
-
-    React.useEffect(() => {
-        switch(true) {
-            case(step === 0): { 
-                setStepValue('summary');
-                break; 
-            };
-            case(step === 1): { 
-                setStepValue('ingredients');
-                break; 
-            };
-            case(step >= 2): { 
-                setStepValue('step');
-                break; 
-            }
-        }
-    }, [step])
-
- 
-//recipe title
-    const titleList: string[] = ['новый рецепт', 'список ингредиентов', `шаги рецепта`];
-    
-    const [formTitle, setFormTitle] = React.useState<string>('');
-    React.useEffect(():void => setFormTitle(titleList[minMax(step, [0, titleList.length-1])]) , [step]);
-
-//summary
-    const summary = recipeForm.summaryTemplate;
-    //проверяем пустой ли summary в recipe, если нет устанавливаем его в шаблон
-    React.useEffect(() => {
-        if(Object.keys(recipeForm.recipe[0]).length) {
-            dispatch(setSummaryTemplate(recipeForm.recipe[0]))
-        }
-    },[])
-
-    const handleChangeSummary = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-        const {name, value} = e.target; 
-        dispatch(setSummaryTemplate({[name]: value}))
     }, []);
 
-    const validSummary = validateSummary(summary);
-    React.useEffect(() => { dispatch(setValid({summary: validSummary.valid}));}, [validSummary]);
+    const {step} = useSelector((state: RootState) => state.recipeForm) ;
 
-//ingridients
-    const ingredient = recipeForm.ingredientTemplate;
-
-    const handleChangeIngredient = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-        const {name, value} = e.target;
-        let normolizeValue = ''
-        switch(name) {
-            case('count'): {
-                //убираем лишние 0 в начале числа
-                normolizeValue = value.replace(/^0+$/, '0').replace(/^0+(?=\d)/, '');
-                break;
-            }
-            default: normolizeValue = value
-        }
-        dispatch(setIngredientTemplate({[name]: normolizeValue}));
-    }, []);
-
-    const validIngredient = validateIngredient(ingredient).valid;
-
-    const ingredientsRecord = recipeForm.recipe[1];
-
-    const addIngredient = (): void => { dispatch(setIngredients()) };
-
-//steps
-    const recipeStep = recipeForm.stepTemplate;
-    const stepsRecord = recipeForm.recipe[2];
-    
-    React.useEffect(() => {
-        const stepsKeys = Object.keys(recipeSteps);
-        const currenIndex = step - 2;
-        if(currenIndex >= 0 && currenIndex < stepsKeys.length) {
-            const current = stepsKeys[step - 2];
-            dispatch(setStepTemplate({id: current, ...recipeSteps[current]}))
-        }    
-    }, [step])
-
-    const handleChangeStep =  React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-        const { name, value } = e.target;
-        dispatch(setStepTemplate({[name]: value}));
-    }, [])
-
-    const validStep = validateStep(recipeStep).valid;
-    React.useEffect(() => {dispatch(setValid({step: validStep}))}, [recipeStep]);
-
-
-    
-
-
-
-    function renderStep() {
-    switch (stepValue) {
-        case 'summary':
-        return (
-            <RecipeFormSummary 
-            setDataItem={handleChangeSummary}
-            saveImage={setImg}
-            summary={summary} 
-            />
-        );
-        case 'ingredients':
-        return (
-            <RecipeFormIngredients
-            setIngredient={handleChangeIngredient}
-            setIngredients={addIngredient}
-            ingredients={ingredientsRecord}
-            ingredient={ingredient}
-            canSave={validIngredient}
-            />
-        );
-        case 'step':
-        return (
-            <RecipeFormSteps
-            setStep={handleChangeStep}
-            saveImage={setImg}
-            steps={stepsRecord}
-            step={recipeStep}
-            />
-        );
-    }
-    }
+    const current = React.useMemo(() => {
+        const index: number = minMax(step, [0, COMPONENTS.length - 1]);
+        return COMPONENTS[index];
+    }, [step]);
 
 
     return(
     <form className={styles.recipeForm}>
 
-        <h5>{ formTitle }</h5>
-
-        {renderStep()}
+        {CONTENT[current]}
 
     </form>)
 }

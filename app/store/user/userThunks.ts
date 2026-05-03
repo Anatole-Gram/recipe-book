@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '@/store/store';
-import { DBUser, DBUserLogged } from "@/store/store.types";
+import { DBUser, DBUserLogged, UpdatedUser } from "@/store/store.types";
 
 export type BodyResponse = {
         name: string;
@@ -17,6 +17,9 @@ export type NewUserResponse = {
         log: string;
     };
 }
+
+ export type PaylodFromUpdateUser = {id: number, name?: string, img?: string | null}
+
 
 export const submitUser = createAsyncThunk<
     NewUserResponse,
@@ -65,6 +68,31 @@ export const setUserData = createAsyncThunk<
             }
         }
     );
+
+export const updateUserData = createAsyncThunk<
+    UpdatedUser,
+    PaylodFromUpdateUser,
+    {state: RootState, rejectValue: string}>(
+        'user/updateUserData',
+        async (newData, {rejectWithValue}) => {
+            try {
+                const body = Object.assign({}, {name: newData?.name, img: newData?.img});
+                const res = await fetch(`api/users/${newData.id}/update`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(body)
+                });
+                if(!res.ok) {
+                    const text = await res.text();
+                    return rejectWithValue(text || `HTTP ${res.status}`);
+                };
+                const data = await res.json();
+                return data;
+            } catch (err: any) {
+                return rejectWithValue(err?.message || 'Network error')
+            }
+        }
+    )
 
 
 export const loginUser = createAsyncThunk< DBUserLogged, {log: string, pas: string}, {state: RootState, rejectValue: string}>(

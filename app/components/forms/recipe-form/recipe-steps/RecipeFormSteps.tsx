@@ -1,27 +1,44 @@
 import React from "react";
-import type { RecipeStep, RecipeSteps } from "@/store/store.types";
+import type {RecipeStep} from "@/store/store.types";
 import styles from "./recipe-steps.module.scss";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setStepTemplate, removeStep,  setStepEditor, resetStepTemplate} from "@/store/recipe/recipeFormSlice";
+import { setStepTemplate, setValid, removeStep,  setStepEditor, resetStepTemplate} from "@/store/recipe/recipeFormSlice";
 import InteractiveList from "@/components/forms/form-items/interactive-list/InteractiveList";
 import RecipeStepEditor from "@/components/forms/recipe-form/recipe-steps/recipe-step/RecipeStep";
+import {validateStep} from "@/utils/validation/RecipeFormValidators";
 
 
-type RecipeFormStepsProps = {
-    steps: RecipeSteps;
-    step: RecipeStep;
-    saveImage: (blob: Blob) => void;
-    setStep: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}
 
-export default function RecipeFormStep ({ steps, step, setStep, saveImage }: RecipeFormStepsProps ) {
+export default function RecipeFormStep () {
 
     const dispatch = useDispatch();
 
+    const {stepTemplate: template, stepEditor: editor, step} = useSelector((state: RootState) => state.recipeForm);
+    const steps = useSelector((state: RootState) => state.recipeForm.recipe[2]);
+
+    const handleChange =  (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+        const { name, value } = e.target;
+        dispatch(setStepTemplate({[name]: value}));
+    };
+
+
+    React.useEffect(() => {
+        const stepsKeys = Object.keys(steps);
+        const currenIndex = step - 2;
+        if(currenIndex >= 0 && currenIndex < stepsKeys.length) {
+            const current = stepsKeys[step - 2];
+            dispatch(setStepTemplate({id: current, ...steps[current]}))
+        }    
+    }, [step])
+
+    const validStep = validateStep(template).valid;
+    React.useEffect(() => {dispatch(setValid({step: validStep}))}, [template]);
+
     //for list item
     const content = (item: RecipeStep) => {
-        return `${item.description.slice(0, 30)}...`;
+        const text = item.description
+        return text.length > 30 ? `${text.slice(0, 30)}...` : text;
     };
 
     const remove = (id: string): void => {
@@ -34,7 +51,7 @@ export default function RecipeFormStep ({ steps, step, setStep, saveImage }: Rec
     };
 
     //for step ediror
-    const editor = useSelector((state: RootState) => state.recipeForm.stepEditor);
+
     const addStep = (): void => {
         dispatch(resetStepTemplate());
         dispatch(setStepEditor(true));
@@ -43,7 +60,7 @@ export default function RecipeFormStep ({ steps, step, setStep, saveImage }: Rec
     return(
         <fieldset className={styles.stepsWraper}>
             
-            { editor ? <RecipeStepEditor step={step} handleChange={setStep} saveImage={saveImage}/> :
+            { editor ? <RecipeStepEditor recipeStep={template} numberStep={step} handleChange={handleChange} /> :
                 <>
                     <button
                         onClick={addStep}

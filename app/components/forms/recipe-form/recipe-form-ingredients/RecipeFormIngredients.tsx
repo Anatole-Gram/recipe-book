@@ -1,24 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./recipe-form-ingredients.module.scss"
 import Input from "../../form-items/common-input/CommonInput";
 import { dynamicLabel, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames"; //classNames для Ingredien.
 import ClassNameExpander from "@/utils/classNames/expander"
-import { useDispatch } from "react-redux";
-import { setIngredientTemplate, removeIngredient } from "@/store/recipe/recipeFormSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { setIngredientTemplate, removeIngredient, setIngredients} from "@/store/recipe/recipeFormSlice";
 import IngredientList from "@/components/forms/form-items/interactive-list/InteractiveList";
-import type { RecipeIngredients, RecipeIngredient } from "@/store/store.types";
+import type {RecipeIngredient} from "@/store/store.types";
+import {validateIngredient} from "@/utils/validation/RecipeFormValidators";
 
 type RecipeIngredientsProps = {
-    ingredients: RecipeIngredients;
-    ingredient: RecipeIngredient;
-    canSave: boolean;
-    setIngredient: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; 
-    setIngredients: () => void;
+    // ingredients: RecipeIngredients;
+    // ingredient: RecipeIngredient;
+    // canSave: boolean;
+    // setIngredient: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void; 
+    // setIngredients: () => void;
  }
 
-export default function RecipeFormIngredients({ingredients, ingredient, canSave, setIngredient, setIngredients}: RecipeIngredientsProps) {
+export default function RecipeFormIngredients() {
 
     const dispatch = useDispatch()
+
+    ///
+    const {ingredientTemplate: template} = useSelector((state: RootState) => state.recipeForm);
+    const ingredients = useSelector((state: RootState) => state.recipeForm.recipe[1]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+        const {name, value} = e.target;
+        let normolizeValue = ''
+        switch(name) {
+            case('count'): {
+                //убираем лишние 0 в начале числа
+                normolizeValue = value.replace(/^0+$/, '0').replace(/^0+(?=\d)/, '');
+                break;
+            }
+            default: normolizeValue = value
+        }
+        dispatch(setIngredientTemplate({[name]: normolizeValue}));
+    };
+
+    const validIngredient = validateIngredient(template).valid;
+
+    const addIngredient = (): void => { dispatch(setIngredients()) };
+
+    ///
+
+
+
 
     const content = (item: RecipeIngredient): string => {
         return (
@@ -41,29 +70,29 @@ export default function RecipeFormIngredients({ingredients, ingredient, canSave,
                 <Input 
                     label="название" 
                     name="title"
-                    value={ingredient.title} 
-                    handleChange={setIngredient}
+                    value={template.title} 
+                    handleChange={handleChange}
                     classNames={ ClassNameExpander<ClassNamesCommonInput>('wrapper', `${styles.title}`, dynamicLabel) }/>
                 
                 <Input 
                     type="number"
                     label="количество"
                     name="count"
-                    value={ingredient.count}
-                    handleChange={setIngredient}
+                    value={template.count}
+                    handleChange={handleChange}
                     classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', `${styles.count}`, dynamicLabel) }/>
 
                 <Input 
                     label="ед. измерения"
                     name="unit"
-                    value={ingredient.unit} 
-                    handleChange={setIngredient}
+                    value={template.unit} 
+                    handleChange={handleChange}
                     classNames={ClassNameExpander<ClassNamesCommonInput>('wrapper', `${styles.unit}`, dynamicLabel) }/>
                     
                 <button
                     type="button"
-                    onClick={setIngredients}
-                    disabled={!canSave}
+                    onClick={addIngredient}
+                    disabled={!validIngredient}
                     className={`${styles.btn} main-btn--black`}>
                         добавить
                 </button>

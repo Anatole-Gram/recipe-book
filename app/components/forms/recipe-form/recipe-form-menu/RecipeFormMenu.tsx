@@ -32,12 +32,14 @@ export default function RecipeFormMenu() {
     };
 
     //Действия для формы
-    const createRecipe = (): void => {
-        dispatch(submitRecipe(user.id));
-    };
     const resetForm = (): void => {
-        dispatch(resetSlice())
-        dispatch(setFormIsActive(true))
+        dispatch(resetSlice());
+        dispatch(setFormIsActive(true));
+    };
+    const createRecipe = async (): Promise<void> => {
+        await dispatch(submitRecipe(user.id)).unwrap()
+            .then(() => resetForm())
+            .catch(err => console.log(err))
     };
 
     const componentIndex = minMax(step, [0, 2]) as IsComponentIndex;

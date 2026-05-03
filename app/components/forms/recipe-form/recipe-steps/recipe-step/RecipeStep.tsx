@@ -7,22 +7,28 @@ import { dynamicLabel, ClassNamesCommonInput } from "@/components/forms/form-ite
 import classNamesExpander from "@/utils/classNames/expander";
 import type { RecipeStep } from "@/store/store.types";
 import ImageLoader from "@/components/forms/form-items/image-loader/ImageLoader";
+import useImageLoader from "@/hooks/useImageLoader";
+import { useDispatch } from "react-redux";
+import {setStepTemplate } from "@/store/recipe/recipeFormSlice";
 
 
 type RecipeStepProps = {
-    step:  RecipeStep;
+    recipeStep:  RecipeStep;
+    numberStep: number;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    saveImage: (blob: Blob) => void;
 };
 
-export default function RecipeStep({step, handleChange, saveImage}: RecipeStepProps) {
+export default function RecipeStep({recipeStep, numberStep, handleChange}: RecipeStepProps) {
 
+    const dispatch = useDispatch()
+    const {loader, loaderOpen, loaderClose, saveImage} = useImageLoader();
 
-    const [imageLoader, setImageLoader] = React.useState<boolean>(false)
 
     const handleBlop = (blob: Blob) => {
-        saveImage(blob);
-        setImageLoader(false);
+        const name = recipeStep?.id ?? `id-${numberStep}`;
+        const img = saveImage(blob, name);
+        dispatch(setStepTemplate({id: name, img}));
+        loaderClose();
     }
 
     return (
@@ -31,19 +37,19 @@ export default function RecipeStep({step, handleChange, saveImage}: RecipeStepPr
             <Photopreview 
                 btnText="изменить изображение"
                 label="фото шага" 
-                url={step.img.url} 
-                openLoader={() => {setImageLoader(true)}}
+                url={recipeStep.img.url} 
+                openLoader={loaderOpen}
                 classNames={regularColumn} />
 
             <Input 
                 label="описание"
                 name="description"
-                value={step.description}
+                value={recipeStep.description}
                 textArea={true}
                 handleChange={handleChange}
                 classNames={classNamesExpander<ClassNamesCommonInput>('input', `${styles.description}`, dynamicLabel)}/>
 
-            {imageLoader && <ImageLoader onCrop={handleBlop} close={() => {setImageLoader(false)}}/>}
+            {loader && <ImageLoader onCrop={handleBlop} close={loaderClose}/>}
         </>
     )
 }

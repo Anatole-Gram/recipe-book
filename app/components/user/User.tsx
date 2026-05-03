@@ -10,6 +10,7 @@ import { resetUserData } from "@/store/user/userSlice";
 import { removeToken } from "@/utils/auth/authStorage"
 import { useNavigate } from "react-router-dom";
 import ProfileForm from "@/components/forms/profile/ProfileForm";
+import { toRelative } from "@/utils/base";
 
 export default function UserProfile() {
 
@@ -19,7 +20,7 @@ export default function UserProfile() {
     const user = useSelector((state: RootState) => state.user.data);
     const RecipesCount = user.recipeIds?.length ?? 'нет данных';
 
-    const [profileEditor, setProfileEditor] = React.useState<boolean>(true);
+    const [profileEditor, setProfileEditor] = React.useState<boolean>(false);
 
     const logOutt = () => {
         removeToken();
@@ -35,7 +36,7 @@ export default function UserProfile() {
 
     return (
         <>
-        {profileEditor && <ProfileForm data={{id: user.id, name: user.name, img: user.img ?? null}} closeEditor={() => setProfileEditor(false)}/>}
+        {profileEditor && <ProfileForm data={{id: user.id, name: user.name, img: user.img ? toRelative(user.img) : imgStub}} closeEditor={() => setProfileEditor(false)}/>}
 
         <div className={styles.userCard}>
             <menu className={styles.menu}>
@@ -59,7 +60,7 @@ export default function UserProfile() {
 
             <div className={styles.userCardHeader}></div>
 
-            <img src={imgStub} alt="user photo"  width={150} height={150} className={styles.userCardImg}/>
+            <img src={toRelative(user.img ?? imgStub)} alt="user photo"  width={150} height={150} className={styles.userCardImg}/>
 
             <div className={styles.userCardFooter}>
                 <span className={styles.userName}> { user.name } </span>

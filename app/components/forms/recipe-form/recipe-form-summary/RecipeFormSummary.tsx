@@ -4,42 +4,58 @@ import InputComponent from "@/components/forms/form-items/common-input/CommonInp
 import { dynamicLabel, ClassNamesCommonInput } from "@/components/forms/form-items/common-input/classNames"; //classNames для InputComponent.
 import { smallColumn } from "@/components/forms/form-items/photo-preview/classNames"; ////classNames для RecipePhoto
 import Categories from "@/components/forms/recipe-form/recipe-categories/RecipeCategories";
-import type { RecipeSummary } from "@/store/store.types"
 import classNamesExpander from "@/utils/classNames/expander";
 import PhotoPreview from "@/components/forms/form-items/photo-preview/PhotoPreview";
 import ImageLoader from "@/components/forms/form-items/image-loader/ImageLoader";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store/store";
+import {setSummaryTemplate, setValid} from "@/store/recipe/recipeFormSlice";
+import {validateSummary} from "@/utils/validation/RecipeFormValidators";
+import useImageLoader from "@/hooks/useImageLoader";
 
 
-type  RecipeFormSummaryProps = {
-    setDataItem: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-    saveImage: (blob: Blob) => void
-    summary: RecipeSummary;
-};
-
-
-export default function RecipeFormSummary({setDataItem: changeItem, summary, saveImage}: RecipeFormSummaryProps) {
+export default function RecipeFormSummary() {
     
-    const { title, img, description } = summary;
+    const dispatch = useDispatch();
+    const summary = useSelector((state: RootState) => state.recipeForm.recipe[0]);
+    const  template = useSelector((state: RootState) => state.recipeForm.summaryTemplate);
+    const {loader, loaderOpen, loaderClose, saveImage} = useImageLoader();
 
-    const [imageLoader, setImageLoader] = React.useState<boolean>(false);
+    //проверяем пустой ли summary в recipe, если нет устанавливаем его в шаблон
+    React.useEffect(() => {
+        if(Object.keys(summary).length) {
+            dispatch(setSummaryTemplate(summary))
+        }
+    },[])
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+        const {name, value} = e.target; 
+        dispatch(setSummaryTemplate({[name]: value}))
+    };
+
+    const validSummary = validateSummary(template);
+    React.useEffect(() => { dispatch(setValid({summary: validSummary.valid}));}, [validSummary]);
 
     const handleBlop = (blob: Blob) => {
-        saveImage(blob); 
-        setImageLoader(false);
-    }
+        const name: string = 'summary';
+        const img = saveImage(blob, name);
+        dispatch(setSummaryTemplate({id: name, img}));
+        loaderClose();
+    };
 
     
 
     return(
         <fieldset className={styles.formSummary}>
 
+            {loader && <ImageLoader onCrop={handleBlop} close={loaderClose}/>}
+
             <InputComponent 
                 label="название" 
                 name="title" 
-                value={title} 
-                handleChange={changeItem} 
-                classNames={ dynamicLabel }
-            />
+                value={template.title} 
+                handleChange={handleChange} 
+                classNames={ dynamicLabel }/>
             
             <div className={styles.centralWraper}>
 
@@ -48,8 +64,8 @@ export default function RecipeFormSummary({setDataItem: changeItem, summary, sav
                 <PhotoPreview 
                     btnText=""
                     label="фото рецепта"
-                    url={img.url}
-                    openLoader={() => {setImageLoader(true)}}
+                    url={template.img.url}
+                    openLoader={loaderOpen}
                     classNames={smallColumn}/>
 
             </div>
@@ -57,14 +73,10 @@ export default function RecipeFormSummary({setDataItem: changeItem, summary, sav
             <InputComponent 
                 label="описание" 
                 name="description" 
-                value={description} 
-                handleChange={changeItem} 
+                value={template.description} 
+                handleChange={handleChange} 
                 textArea={true} 
                 classNames={classNamesExpander<ClassNamesCommonInput>('input', `${styles.description}`, dynamicLabel)} />
-
-
-            {imageLoader && <ImageLoader onCrop={handleBlop} close={() => {setImageLoader(false)}}/>}
-            
 
         </fieldset>
     )

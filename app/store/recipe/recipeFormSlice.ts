@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import type { RecipeFormState, RecipeSummary, RecipeIngredient, RecipeStep, ValidTemplate } from "@/store/store.types";
 import { submitRecipe } from "./recipeFormThunks";
+import { recipe } from "@/server/models";
 
 
 const initialState: RecipeFormState = {
-    step: 0,
+    step: 2,
     formIsActive: false,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},
@@ -29,14 +30,6 @@ const newIngredient = (state: RecipeFormState): void =>  {
 };
 const newStep = (state: RecipeFormState): void => {
     state.stepTemplate = {description: '', img: {url: ''}};
-};
-const nextStepTemplate = (state: RecipeFormState, id: string|null ): void => {
-    if(!id) { 
-        state.stepTemplate = {description: '', img: {url: ''}};
-    } else {
-        Object.assign(state.stepTemplate, state.recipe[2][id]);
-    };
-
 };
 
 const recipeFormSlice = createSlice({
@@ -99,36 +92,13 @@ const recipeFormSlice = createSlice({
             };
 
         },
-        removeStep: (state, action: PayloadAction<string>): void => {
-
-            const deleted = action.payload;
+        removeStep: (state, action: PayloadAction<string>) => {
             const steps = state.recipe[2];
-            const keys = Object.keys(steps || {});
-            const idx = keys.findIndex(key => key === deleted);
-
-            let nextTemplateId: string | null = null;
-
-            if (idx >= 0) {
-                const hasRight = idx < keys.length - 1;
-                const hasLeft = idx > 0;
-
-                if (hasRight) {
-                    nextTemplateId = keys[idx + 1];
-                    increment(state);
-
-                } else if (hasLeft) {
-                    nextTemplateId = keys[idx - 1];
-                    decrement(state);
-
-                } else {
-                    nextTemplateId = null;
-                }
-            }
-
-            nextStepTemplate(state, nextTemplateId);
-            if (idx >= 0) {
-                delete steps[deleted];
-        }
+            const deleted = action.payload;
+            if(steps[deleted]) {
+                delete steps[deleted]
+            };
+            
         },
         setStepEditor: (state, action: PayloadAction<boolean>) => {
             if((state.stepEditor !== action.payload) ) { state.stepEditor = action.payload };
@@ -141,6 +111,7 @@ const recipeFormSlice = createSlice({
             decrement(state);
         }
     },
+
     extraReducers: (builder) => {
         builder
         .addCase(submitRecipe.pending, (state) => {
