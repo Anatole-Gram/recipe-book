@@ -1,31 +1,57 @@
-@use  "../../assets/styles/variables.scss" as var; 
+@use  "../../assets/styles/variables.scss" as var;
+@use "@/assets/styles/mixins" as mixins;
 
 .header {
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     height: var.$header-height;
-    background-color: var.$main-color;
+    background-color: var.$color-main;
 
-    align-items: center;
-    justify-content: center;
-
-    .wrapper {
+    &Logo {
         display: flex;
         justify-content: space-between;
-        width: 100%;
-    }
-    & h3 {
+        margin-top: 6px;
+        & span {
         color: var.$text-on-black;
-        font-family: "Hachi Maru Pop";
-        margin-bottom: 8px;
-        margin-left: 16px;
+        @include mixins.font-rules(0.9rem, "Hachi Maru Pop");
+        }
     }
  }
 
  .icon {
-    display: block;
-    margin-right: 36px;
-    width: 362x;
-    height: 32px;
+    width: 24px;
+    height: 24px;
+ }
+ 
+ @media(min-width: 640px) {
+    .header {
+        height: var.$header-height-second;
+        justify-content: space-around;
+
+        &Logo {
+            & span {
+                font-size:  1rem;
+            }
+        }
+    }
+
+    .icon {
+        width: 28px;
+        height: 28px;
+    }
+ }
+
+ @media (min-width: 1024px) {
+    .header {
+
+        &Logo {
+            justify-content: flex-end;
+
+            & span {
+                margin-right: 16px;
+            }
+        }
+    }
  }

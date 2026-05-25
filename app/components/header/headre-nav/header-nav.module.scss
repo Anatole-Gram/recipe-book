@@ -2,14 +2,51 @@
 @use "@/assets/styles/mixins";
 
 .nav {
-    width: 100%;
     display: flex;
-    justify-content: space-around;
-    @include mixins.font-rules(0.9rem, 'Rubik');
-    color: var.$text-on-black;
-    padding-bottom: 2px;
+    justify-content: space-between;
+    @include mixins.font-rules(1.2rem, 'Marck_Script');
+    & a {
+        color: var.$link-color-non-active;
+    }
 }
 
 .active {
     border-bottom: 2px solid var.$text-on-black;
 }
+
+@media (min-width: 480px) {
+    .nav {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .nav {
+        justify-content: center;
+        font-size: 1.5rem;
+        & a {
+            margin-right: 36px;
+            
+            &:hover {
+                cursor: pointer;
+                color: var.$link-color-active;
+            }
+            &:focus {
+                color: var.$link-color-active;
+            }
+        }
+    }
+    .active {
+        border-bottom: 2px solid var.$link-color-active;
+    }
+}
+
+@media (min-width: 1200px) {
+    .nav {
+
+        & a {
+            margin-right: 42px;
+        }
+    }
+}
+

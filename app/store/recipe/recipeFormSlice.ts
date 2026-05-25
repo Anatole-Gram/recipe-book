@@ -2,11 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 import type { RecipeFormState, RecipeSummary, RecipeIngredient, RecipeStep, ValidTemplate } from "@/store/store.types";
 import { submitRecipe } from "./recipeFormThunks";
-import { recipe } from "@/server/models";
 
 
 const initialState: RecipeFormState = {
-    step: 2,
+    step: 0,
     formIsActive: false,
     stepEditor: false,
     valid: {summary: false, ingredients: false, step: false},

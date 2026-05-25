@@ -11,19 +11,19 @@ export default function HeaderNav() {
             <NavLink 
                 to={`/main`} end
                 className={({isActive}) => (isActive ? styles.active : undefined)}>
-                    главная
+                    Главная
             </NavLink>
 
             <NavLink 
                 to={`/recipe-form`} end
                 className={({isActive}) => (isActive ? styles.active : undefined)}>
-                    новый рецепт
+                    Новый рецепт
             </NavLink>
 
             <NavLink 
                 to={`/recipes`} end
                 className={({isActive}) => (isActive ? styles.active : undefined)}>
-                    рецепты
+                    Рецепты
             </NavLink>
 
         </nav>

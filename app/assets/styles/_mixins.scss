@@ -1,6 +1,6 @@
 @use "@/assets/styles/variables" as var;
 
-@mixin font-rules($size:1em, $family:'Rubik') {
+@mixin font-rules($size: 1em, $family:'Rubik') {
     font: {
         size: $size;
         family :$family;
