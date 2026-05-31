@@ -43,6 +43,14 @@ body {
         'footer';
 }
 
+button, label {
+    &:hover {
+        cursor: pointer;
+        opacity: 0.9;
+        transition: 0.2s;
+    }
+}
+
 .main-btn--black {
     width: 100%;
     height: var.$firstHS;

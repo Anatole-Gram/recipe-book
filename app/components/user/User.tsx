@@ -37,7 +37,7 @@ export default function UserProfile() {
     return (
         <>
         {profileEditor && <ProfileForm data={{id: user.id, name: user.name, img: user.img ? toRelative(user.img) : imgStub}} closeEditor={() => setProfileEditor(false)}/>}
-
+        {!profileEditor && 
         <div className={styles.userCard}>
             <menu className={styles.menu}>
                 <li>
@@ -70,7 +70,7 @@ export default function UserProfile() {
                 </div>  
             </div>
 
-        </div>
+        </div>}
         </>
     )
 }
