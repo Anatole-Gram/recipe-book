@@ -6,14 +6,19 @@ import PetIcon from "@/assets/svg/pet.svg"
 export default function TheHeader () {
 
     return (
-        <div className={styles.header + ` container`}>
-
-            <div className={styles.headerLogo}>
-                <span>Recipe book</span>
-                <PetIcon  className={styles.icon} />
-            </div>
+        <div className={styles.header}>
             
-            <Navigation />
+            <div className="container">
+
+                <div className={styles.headerLogo}>
+                    <span>Recipe book</span>
+                    <PetIcon  className={styles.icon} />
+                </div>
+            
+                <Navigation />
+
+            </div>
+
         </div>
     );
 }

@@ -9,9 +9,11 @@
     box-sizing: border-box;
     background-color: var.$bg-color;
     border-radius: var.$main-box-radius;
-
     @include mixins.contentShadow;
 
-
+    @media(min-width: 480px) {
+        border-radius: unset;
+        box-shadow: unset;
+    }
 }
 

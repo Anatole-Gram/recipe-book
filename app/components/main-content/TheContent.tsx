@@ -10,7 +10,7 @@ import { Routes, Route } from "react-router-dom";
 
 export default function TheContent () {
     return (
-        <section className={styles.content}> 
+        <section className={styles.content + ` container`}>
             <Routes>
 
                 <Route path={`/login`} element={ <AuthUser /> } /> 

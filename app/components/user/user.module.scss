@@ -8,7 +8,7 @@
         justify-self: center;
         align-self: center;
         font-size: 1.1rem;
-        color: #666666;
+        color: var.$text-gray;
 
     }
 
@@ -22,7 +22,7 @@
 
         // userInfoRecipes
         &Recipes {
-            color: #666666;
+            color: var.$text-gray;
             size: 1rem;
             & span  {
                 font-size: 0.8rem;
@@ -49,16 +49,11 @@
         &Header {
             grid-area: header;
             @include mixins.contentShadow;
-            background-color: #ffffff8e;
-            
         }
         // userCardFooter
         &Footer {
             grid-area: footer;
-
-            background: url("/app/assets/images/recipe_book_1.jpg") no-repeat bottom / contain;
-            background-color: #fff;
-
+            background: url("/app/assets/images/recipe_book_2.png") no-repeat bottom / contain;
             display: grid; 
             grid-template-rows: 80px 50px 1fr;
             grid-template-columns: 1fr 150px 1fr;
@@ -93,7 +88,6 @@
     display: flex;
     justify-content: space-between;
     padding: 16px;
-    box-sizing: border-box;
 
     &Out {
 
@@ -104,6 +98,48 @@
     &Icon {
         width: 24px;
         height:  24px;
-        fill: #888;
+        fill: var.$text-gray;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+            transition: 0.2s;
+        }
     }
 }
+
+@media(min-width: 480px) {
+    .user {
+        &Card {
+            &Header {
+                box-shadow: unset;
+                border-bottom: thin solid #666666;
+                
+
+            }
+            &Footer {
+                box-shadow: unset;
+            }
+        }
+    }
+}
+
+@media (min-width: 1024px) {
+    .user {
+        &Card {
+            &Footer {
+                background-size: 60%;
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .user {
+        &Card {
+            &Footer {
+                background-size: 50%;
+            }
+        }
+    }
+}
+

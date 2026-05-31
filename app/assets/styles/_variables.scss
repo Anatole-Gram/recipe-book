@@ -1,6 +1,8 @@
 ///
 /// 
-
+/// 
+$color-white: #fff;
+$color-gray: #f2f2f2;
 $color-main: #1a1a1a;
 $container-width-second: 450px;
 $container-width-third: 720px;
@@ -10,11 +12,16 @@ $container-width-fifth: 1024px;
 $header-height: 70px;
 $header-height-second: 80px;
 
+$link-color-non-active: #ececec;
+$link-color-active: rgba(240, 248, 255, 0.5);
+
 $padding-main: 8px;
 $padding-second: 12px;
 
-$link-color-non-active: #ececec;
-$link-color-active: rgba(240, 248, 255, 0.5);
+$text-gray: #666666;
+$text-on-black: rgb(236, 236, 236);
+
+
 
 ///
 // $header-height: 10vh;
@@ -25,7 +32,6 @@ $bg-color: #F2F2F2;
 //color
 $main-color: #1a1a1a;
 
-$text-on-black: rgb(236, 236, 236);
 $whiteColor: #fff;
 $main-gap: 16px;
 $second-gap: 8px;
