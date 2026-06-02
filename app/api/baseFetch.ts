@@ -1,5 +1,5 @@
 
-import { getBlob } from "@/utils/cache/blobCache";
+import {blobStore} from "@/store/blob.store";
 
 
 
@@ -23,7 +23,7 @@ export async function uploadImages(blobNames: string[]): Promise<ReturnData> {
     const formData = new FormData();
 
     for(let i = 0; i < blobNames.length; i++) {
-        const blob = getBlob(blobNames[i]);
+        const blob = blobStore.getBlob(blobNames[i]);
         if(!blob) continue;
         formData.append('files', blob, blobNames[i]);
     };

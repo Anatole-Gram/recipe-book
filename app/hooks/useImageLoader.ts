@@ -1,5 +1,5 @@
 import React from "react"
-import { saveBlob, getBlob } from "@/utils/cache/blobCache";
+import { blobStore } from "@/store/blob.store";
 
 interface Img {
     url: string;
@@ -16,7 +16,7 @@ export default function useImageLoader() {
     
     const saveImage = (blob: Blob, name: string): Img => {
 
-        saveBlob(name, blob);
+        blobStore.saveBlob(name, blob)
 
         const img: Img = {
             url: URL.createObjectURL(blob),

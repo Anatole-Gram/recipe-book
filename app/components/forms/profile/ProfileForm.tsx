@@ -5,7 +5,7 @@ import type {ClassNamesCommonInput} from "@/components/forms/form-items/common-i
 import ImageLoader from "@/components/forms/form-items/image-loader/ImageLoader";
 import  PhotoPreview from "@/components/forms/form-items/photo-preview/PhotoPreview";
 import {ClassNamesPhotoInput} from "@/components/forms/form-items/photo-preview/classNames";
-import {saveBlob} from "@/utils/cache/blobCache";
+import { blobStore } from "@/store/blob.store";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "@/store/store";
 import {updateUserData} from "@/store/user/userThunks";
@@ -53,7 +53,7 @@ export default function  ProfileForm({data, closeEditor}: PofileFormProps) {
     }
     const handleBlop = (blob: Blob): void => {
         if(!blob) return;
-        saveBlob(image.name , blob);
+        blobStore.saveBlob(image.name, blob)
         setImage(prev => ({...prev, url: URL.createObjectURL(blob)}));
         setImageLoader(false);
     };

@@ -1,27 +1,28 @@
 
+export class BlobStore {
+    #blobStore = new Map<string, Blob>();
 
-const blobStore = new Map<string, Blob>();
+    saveBlob(id: string, blob: Blob): void {
+        this.#blobStore.set(id, blob)
+    };
 
-export function saveBlob(id: string, blob: Blob) {
-    blobStore.set(id, blob);
-};
+    notEmptyBlob(): number {
+        return this.#blobStore.size;
+    };
 
-export function notEmptyBlob(): number {
-    return blobStore.size
+    clearBlob(): void {
+        this.#blobStore.clear();
+    };
+
+    getBlob (id: string): Blob | undefined {
+        return this.#blobStore.get(id);
+    };
+
+    hasBlob (id: string): boolean {
+        return this.#blobStore.has(id);
+    };
+
+    evokeBlob(id: string): void {
+        this.#blobStore.delete(id);
+    } 
 }
-
-export function clearBlob(): void {
-    blobStore.clear()
-} 
-
-export function getBlob (id: string): Blob | undefined {
-    return blobStore.get(id);
-};
-
-export function hasBlob (id: string): boolean {
-    return blobStore.has(id);
-}
-
-export function revokeBlob(id: string) {
-    blobStore.delete(id)
-} 

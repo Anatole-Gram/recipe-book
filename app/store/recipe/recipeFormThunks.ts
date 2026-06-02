@@ -1,6 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getBlob, hasBlob, notEmptyBlob, clearBlob } from '@/utils/cache/blobCache';
-import type { RootState } from '@/store/store';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import {blobStore} from "@/store/blob.store";
+import type {RootState} from '@/store/store';
 import type {RecipeFormState, recipeDataToSubmit, RecipeSummaryToSend, RecipeStepToSend} from '@/store/store.types';
 
 
@@ -11,11 +11,11 @@ async function buildRecipePayload(state: RecipeFormState): Promise<recipeDataToS
   const summary = state.recipe[0];
   const steps = Object.values(state.recipe[2]);
 
-  if(notEmptyBlob()) {
+  if(blobStore.notEmptyBlob()) {
 
   [summary, ...steps].forEach(el => {
-      if(el.id && hasBlob(el.id)) {
-        formData.append('files', getBlob(el.id) as Blob, el.id );
+      if(el.id && blobStore.hasBlob(el.id)) {
+        formData.append('files', blobStore.getBlob(el.id) as Blob, el.id );
       };
     });
 
