@@ -1,13 +1,21 @@
+export interface IBlobStore {
+    saveBlob: (id: string, blob: Blob) => void;
+    notEmptyBlob: () => boolean;
+    clearBlob: () => void;
+    getBlob: (id: string) => Blob | undefined;
+    hasBlob: (id: string) => boolean;
+    deleteBlob: (id: string) => void;
+};
 
-export class BlobStore {
+export class BlobStore implements IBlobStore{
     #blobStore = new Map<string, Blob>();
 
     saveBlob(id: string, blob: Blob): void {
         this.#blobStore.set(id, blob)
     };
 
-    notEmptyBlob(): number {
-        return this.#blobStore.size;
+    notEmptyBlob(): boolean {
+        return this.#blobStore.size !== 0;
     };
 
     clearBlob(): void {
@@ -22,7 +30,7 @@ export class BlobStore {
         return this.#blobStore.has(id);
     };
 
-    evokeBlob(id: string): void {
+    deleteBlob(id: string): void {
         this.#blobStore.delete(id);
     } 
 }
