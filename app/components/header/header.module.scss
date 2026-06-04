@@ -2,12 +2,15 @@
 @use "@/assets/styles/mixins" as mixins;
 
 .header {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: var.$header-height;
     background-color: var.$color-main;
+    
+    //headerContainer
+    &Container {
+        display:  flex;
+        height: var.$header-height;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
     &Logo {
         display: flex;

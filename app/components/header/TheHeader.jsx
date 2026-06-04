@@ -8,7 +8,7 @@ export default function TheHeader () {
     return (
         <div className={styles.header}>
             
-            <div className="container">
+            <div className={styles.headerContainer + ` container`}>
 
                 <div className={styles.headerLogo}>
                     <span>Recipe book</span>
