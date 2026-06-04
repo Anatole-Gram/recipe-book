@@ -1,5 +1,5 @@
 import React from "react";
-import TheHeader from "./components/header/TheHeader";
+import Header from "./components/header/Header";
 import TheContent from "./components/main-content/TheContent";
 import TheFootrer from "./components/footer/TheFooter";
 import { AppDispatch, RootState} from "app/store/store";
@@ -40,7 +40,7 @@ export default function App() {
     }
     return (
     <>
-        <TheHeader></TheHeader>
+        <Header></Header>
         <TheContent></TheContent>
         <TheFootrer></TheFootrer>
     </>
