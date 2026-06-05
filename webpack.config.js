@@ -33,6 +33,7 @@ module.exports = {
                     options: {
                         modules: {
                             namedExport: false,
+                            localIdentName: '[local]--[hash:base64:5]',
                         },
                     importLoaders: 1,
                     sourceMap: !production
@@ -40,7 +41,7 @@ module.exports = {
                     },
                     'sass-loader'
                 ],
-                },
+            },
             {
                 test: /\.scss$/,
                 exclude: /\.module\.scss$/,
@@ -50,10 +51,7 @@ module.exports = {
                     'sass-loader'
                 ],
             },
-            // {
-            //     test: /\.svg$/,
-            //     use: ['@svgr/webpack'],
-            // },
+
              { test: /.svg/i, oneOf: [ { resourceQuery: /url/, 
                 type: 'asset/resource',
                 generator: { 
