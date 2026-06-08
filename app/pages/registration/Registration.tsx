@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./registration-form.module.scss"
+import styles from "./registration.module.scss"
 import Input from "@/components/forms/form-items/common-input/CommonInput";
 import { dynamicLabel } from "@/components/forms/form-items/common-input/classNames"; //classNames для RecipeName.
 import { submitUser } from "@/store/user/userThunks";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { useNavigate } from "react-router-dom";
-import type { LoginForm } from "@/components/forms/auth-form/AuthFormUser";
+import type { LoginForm } from "@/pages/autch/Autch";
 import useForm from "@/hooks/useForm";
 import { validRegestration } from "@/utils/validation/RecipeFormValidators";
 

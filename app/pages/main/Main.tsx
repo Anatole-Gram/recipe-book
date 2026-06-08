@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./user.module.scss";
+import styles from "./main.module.scss";
 import imgStub from "@/assets/images/recipe-img-stub.png";
 import OutIcon from "@/assets/svg/bracket-solid.svg";
 import Edit from "@/assets/svg/pen-to-square-solid.svg";
@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileForm from "@/components/forms/profile/ProfileForm";
 import { toRelative } from "@/utils/base";
 
-export default function UserProfile() {
+export default function Main() {
 
     const dispatch = useDispatch<AppDispatch>()
     const navigate =useNavigate()

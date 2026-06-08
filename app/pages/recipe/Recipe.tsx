@@ -1,9 +1,9 @@
 import React from "react"; 
-import styles from "./recipe-form.module.scss";
+import styles from "./recipe.module.scss";
 import Summary from "@/components/forms/recipe-form/recipe-form-summary/RecipeFormSummary";
-import Ingredients from "./recipe-form-ingredients/RecipeFormIngredients";
+import Ingredients from "@/components/forms/recipe-form/recipe-form-ingredients/RecipeFormIngredients";
 import Steps from "@/components/forms/recipe-form/recipe-steps/RecipeFormSteps";
-import { RootState } from "app/store/store";
+import { RootState } from "@/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setFormIsActive } from "@/store/recipe/recipeFormSlice";
 import { minMax } from "@/utils/base";

@@ -1,8 +1,9 @@
 import React from "react";
 import Header from "./components/header/Header";
-import TheContent from "./components/main-content/TheContent";
+// import TheContent from "./components/main-content/TheContent";
+import AppRoutes from "./routes";
 import TheFootrer from "./components/footer/TheFooter";
-import { AppDispatch, RootState} from "app/store/store";
+import { AppDispatch, RootState } from "app/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "./store/recipes/recipesThunks";
 import { setUserData } from "@/store/user/userThunks";
@@ -40,8 +41,12 @@ export default function App() {
     }
     return (
     <>
-        <Header></Header>
-        <TheContent></TheContent>
-        <TheFootrer></TheFootrer>
+        <Header />
+
+        <section className="container content">
+            <AppRoutes />
+        </section>
+
+        <TheFootrer />
     </>
 )}

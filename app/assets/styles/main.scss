@@ -68,6 +68,22 @@ button, label {
 .container {
     padding: 0 var.$padding-main;
 }
+
+.content {
+    position: relative;
+    grid-area: content;
+    overflow: auto;
+    padding: var.$main-gap var.$second-gap;
+    background-color: var.$bg-color;
+    border-radius: var.$main-box-radius;
+    @include mixins.contentShadow;
+
+    @media(min-width: 480px) {
+        border-radius: unset;
+        box-shadow: unset;
+    }
+}
+
 @media (min-width: 480px) {
     .container {
         width: var.$container-width-second;

@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./recipes.module.scss";
-import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-import FilterBar from "./recipes-filter-bar/RecipesFilterBar";
+import { RootState } from "@/store/store";
+import styles from "./recipes.module.scss";
+import FilterBar from "@/components/recipes/recipes-filter-bar/RecipesFilterBar";
 import RecipesList from "@/components/recipes/recipes-list/RecipesList";
 import type { DBRecipe } from "@/store/store.types"
 import Recipe from "@/components/recipes/recipe-card/recope-card-is-open/RecipeCardIsOpen";
@@ -17,10 +17,6 @@ export default function Recipes() {
     React.useEffect(() => {
         if(!recipeIsActive) {setCurrentRecipe(null)};
     }, [recipeIsActive])
-
-    React.useEffect(() => {
-        console.log(list)
-    }, [list])
 
     return (
 

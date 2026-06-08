@@ -1,13 +1,13 @@
 import React from "react";
-import styles from "./auth-form-user.module.scss";
-import { useDispatch } from "react-redux";
-import { loginUser } from "@/store/user/userThunks";
-import { AppDispatch } from "@/store/store";
 import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
+import styles from "./auth.module.scss";
+import { loginUser } from "@/store/user/userThunks";
 import Input from "@/components/forms/form-items/common-input/CommonInput";
 import { dynamicLabel } from "@/components/forms/form-items/common-input/classNames"; //classNames для Input.
 import { validAuth } from "@/utils/validation/RecipeFormValidators";
-import { useNavigate, useLocation } from 'react-router-dom';
 import useForm from "@/hooks/useForm";
 
 
