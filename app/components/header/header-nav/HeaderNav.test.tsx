@@ -3,12 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import HeaderNav from "@/components/header/header-nav/HeaderNav";
-
-const MAIN_CLASS = 'header-main-link';
-const RECIPE_CLASS = 'header-recipe-link';
-const RECIPES_CLASS = 'header-recipes-link';
-
-const ACTIVE_CLASS = /active/;
+import headerIds from "@/components/header/Header.selectors";
 
 const LocationDisplay = () => {
     const location = useLocation();
@@ -22,9 +17,9 @@ describe('HeaderNav', () => {
                 <HeaderNav />
             </MemoryRouter>
         );
-        expect(screen.getByTestId(MAIN_CLASS)).toBeInTheDocument();
-        expect(screen.getByTestId(RECIPE_CLASS)).toBeInTheDocument();
-        expect( screen.getByTestId(RECIPES_CLASS)).toBeInTheDocument()
+        expect(screen.getByTestId(headerIds.NAV_MAIN_LINK)).toBeInTheDocument();
+        expect(screen.getByTestId(headerIds.NAV_RECIPE_LINK)).toBeInTheDocument();
+        expect( screen.getByTestId(headerIds.NAV_RECIPES_LINK)).toBeInTheDocument()
     });
 
     it('применяет активный класс к текущему маршруту', async () => {
@@ -42,19 +37,19 @@ describe('HeaderNav', () => {
 
         const currentPath = screen.getByTestId('current-path');
         
-        const mainLink = screen.getByTestId(MAIN_CLASS);
-        const recipeLink = screen.getByTestId(RECIPE_CLASS);
-        const recipesLink = screen.getByTestId(RECIPES_CLASS);
+        const mainLink = screen.getByTestId(headerIds.NAV_MAIN_LINK);
+        const recipeLink = screen.getByTestId(headerIds.NAV_RECIPE_LINK);
+        const recipesLink = screen.getByTestId(headerIds.NAV_RECIPES_LINK);
 
         expect(currentPath).toHaveTextContent('/main');
-        expect(mainLink).toHaveClass(ACTIVE_CLASS);
-        expect(recipeLink).not.toHaveClass(ACTIVE_CLASS);
-        expect(recipesLink).not.toHaveClass(ACTIVE_CLASS);
+        expect(mainLink).toHaveClass(headerIds.NAV_ACTIVE);
+        expect(recipeLink).not.toHaveClass(headerIds.NAV_ACTIVE);
+        expect(recipesLink).not.toHaveClass(headerIds.NAV_ACTIVE);
 
         await userEvent.click(recipeLink);
         expect(currentPath).toHaveTextContent('/recipe-form');
-        expect(mainLink).not.toHaveClass(ACTIVE_CLASS);
-        expect(recipeLink).toHaveClass(ACTIVE_CLASS);
-        expect(recipesLink).not.toHaveClass(ACTIVE_CLASS);
+        expect(mainLink).not.toHaveClass(headerIds.NAV_ACTIVE);
+        expect(recipeLink).toHaveClass(headerIds.NAV_ACTIVE);
+        expect(recipesLink).not.toHaveClass(headerIds.NAV_ACTIVE);
     });
 });
